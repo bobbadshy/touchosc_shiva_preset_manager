@@ -26,6 +26,12 @@
 
 Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
 
+### Bug reports and feature suggestions
+
+Please file an issue in the [Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues) section.
+
+As this is just a hobby project in my freetime, I cannot promise I will get to any of them, but nevertheless, suggestions and bug reports are welcome! 🙂
+
 ### Screenshots
 
 **Settings:**
