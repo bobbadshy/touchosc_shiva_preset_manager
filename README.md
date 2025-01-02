@@ -46,4 +46,4 @@ Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/
 
 **Preset name entry:**
 
-![image](https://github.com/user-attachments/assets/15eb85eb-9bcb-4a1c-a0eb-a4336b3e1c09)
+![image](https://github.com/user-attachments/assets/0bbdb360-eeb9-40d9-b6c4-0a1b41254911)
