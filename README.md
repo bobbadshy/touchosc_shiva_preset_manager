@@ -25,3 +25,25 @@
 ### Download
 
 Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
+
+### Screenshots
+
+**Settings:**
+
+![image](https://github.com/user-attachments/assets/d3d8f3a0-67bb-486a-b923-20b36f47331a)
+
+**Direct load mode:**
+
+![image](https://github.com/user-attachments/assets/d015df2b-acfe-4626-9107-6bfba0beae03)
+
+**Extended mode:**
+
+![image](https://github.com/user-attachments/assets/5019d143-d3fd-40db-aefe-de0d16441ba0)
+
+**Fader active:**
+
+![image](https://github.com/user-attachments/assets/7e2174ea-d617-4fb6-9db4-e45d6da983ee)
+
+**Preset name entry:**
+
+![image](https://github.com/user-attachments/assets/15eb85eb-9bcb-4a1c-a0eb-a4336b3e1c09)
