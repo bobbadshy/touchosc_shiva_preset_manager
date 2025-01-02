@@ -13,6 +13,7 @@
 - Last preset is automatically loaded on surface startup.
 - Auto-detect and indicate if controls have been modified since preset load.
 - Restore controls working state cache with 10 undo steps, if you accidently loaded a preset and want to revert to a previous working state.
+- Simple skin settings config to allow changing colors and borders of elements.
 - ...
 
 ### Usage
