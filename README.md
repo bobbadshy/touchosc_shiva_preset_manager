@@ -37,7 +37,7 @@ As this is just a hobby project in my freetime, I cannot promise I will get to a
 
 **Settings:**
 
-![image](https://github.com/user-attachments/assets/d3d8f3a0-67bb-486a-b923-20b36f47331a)
+![image](https://github.com/user-attachments/assets/8d03c7e0-a5eb-4802-85f9-55430766c563)
 
 **Direct load mode:**
 
