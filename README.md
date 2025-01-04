@@ -37,24 +37,40 @@ As this is just a hobby project in my freetime, I cannot promise I will get to a
 
 ### Screenshots
 
-**Settings:**
+**Preset manager module in TouchOSC editor view:**
 
-![image](https://github.com/user-attachments/assets/8d03c7e0-a5eb-4802-85f9-55430766c563)
+![image](https://github.com/user-attachments/assets/45b2a77f-6f18-4974-a17b-d0ed00175eac)
+
+**Preset manager module with its (hidden) settings and skin options:**
+
+![image](https://github.com/user-attachments/assets/e038f75b-e762-4125-aab5-cf6a5ccd16dc)
+
+To change settings, open the "settings" group, and edit its value on the right:
+
+![image](https://github.com/user-attachments/assets/1000ed6a-0be0-4f4e-b27d-7a289107bfd7)
 
 **Direct load mode:**
 
-![image](https://github.com/user-attachments/assets/d015df2b-acfe-4626-9107-6bfba0beae03)
+![image](https://github.com/user-attachments/assets/4d999af5-5f7c-4e57-853d-a21dd1ddeee1)
 
 **Extended mode:**
 
-![image](https://github.com/user-attachments/assets/5019d143-d3fd-40db-aefe-de0d16441ba0)
+![image](https://github.com/user-attachments/assets/3532fbd3-a83e-4c80-9f2e-0265b459f151)
 
-**Fader active:**
+Fail-safe savng and loading by requiring function select before tapping "ENTER":
 
-![image](https://github.com/user-attachments/assets/7e2174ea-d617-4fb6-9db4-e45d6da983ee)
+![image](https://github.com/user-attachments/assets/69cf5947-68a0-4251-859a-c2d13b89f203)
+
+**Fader:**
+
+Select length:
+
+![image](https://github.com/user-attachments/assets/ad3f555f-fae2-40b0-9804-bf69d323fe62)
+
+Fader active:
+
+![image](https://github.com/user-attachments/assets/c0886cd2-5cf1-4b9b-9761-bbf7ce6bec0c)
 
 **Preset name entry:**
 
-![image](https://github.com/user-attachments/assets/0bbdb360-eeb9-40d9-b6c4-0a1b41254911)
-
-
+![image](https://github.com/user-attachments/assets/c4e254d5-d08f-45a3-a68d-63793c6b64bb)
