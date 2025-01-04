@@ -47,11 +47,11 @@ As this is just a hobby project in my freetime, I cannot promise I will get to a
 
 **Preset manager module in TouchOSC editor view:**
 
-![image](https://github.com/user-attachments/assets/45b2a77f-6f18-4974-a17b-d0ed00175eac)
+![image](https://github.com/user-attachments/assets/5e8cc508-7f93-416b-bd1f-a345b4ab5523)
 
 **Preset manager module with its (hidden) settings and skin options:**
 
-![image](https://github.com/user-attachments/assets/e038f75b-e762-4125-aab5-cf6a5ccd16dc)
+![image](https://github.com/user-attachments/assets/a3854b87-f970-44bc-b048-d000ad180fd0)
 
 To change settings, open the "settings" group, and edit its value on the right:
 
@@ -59,26 +59,31 @@ To change settings, open the "settings" group, and edit its value on the right:
 
 **Direct load mode:**
 
-![image](https://github.com/user-attachments/assets/4d999af5-5f7c-4e57-853d-a21dd1ddeee1)
+![image](https://github.com/user-attachments/assets/10d927e4-4742-4cc2-ab9e-443e416f5808)
+
+**Copy-and-Paste menu:**
+
+![image](https://github.com/user-attachments/assets/f61e51a8-501d-44d8-a357-fc7817ab14c9)
 
 **Extended mode:**
 
-![image](https://github.com/user-attachments/assets/3532fbd3-a83e-4c80-9f2e-0265b459f151)
+![image](https://github.com/user-attachments/assets/b0f5bd8f-d94f-4a65-b8ae-cbc3d9021986)
 
-Fail-safe savng and loading by requiring function select before tapping "ENTER":
+Fail-safe savvng and loading by requiring function select before tapping "ENTER":
 
-![image](https://github.com/user-attachments/assets/69cf5947-68a0-4251-859a-c2d13b89f203)
+![image](https://github.com/user-attachments/assets/01ad1eb3-3e65-4f98-a916-6590f95a1a88)
 
 **Fader:**
 
 Select length:
 
-![image](https://github.com/user-attachments/assets/ad3f555f-fae2-40b0-9804-bf69d323fe62)
+![image](https://github.com/user-attachments/assets/fa5bebf2-22f7-4537-a2d1-9d11fc7cbf9c)
+
 
 Fader active:
 
-![image](https://github.com/user-attachments/assets/c0886cd2-5cf1-4b9b-9761-bbf7ce6bec0c)
+![image](https://github.com/user-attachments/assets/dd4e2095-f94a-4803-bbaa-2f4e35eacf4a)
 
 **Preset name entry:**
 
-![image](https://github.com/user-attachments/assets/c4e254d5-d08f-45a3-a68d-63793c6b64bb)
+![image](https://github.com/user-attachments/assets/2c001d3f-cc80-4003-aa1b-53d62cb1cbe6)
