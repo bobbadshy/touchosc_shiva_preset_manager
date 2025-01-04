@@ -9,6 +9,10 @@
   - Tap on the multi-line name display to edit the currenttly active preset name.
 - Direct access load mode
 - Extended manager mode (for saving and loading)
+- Context menu for cut, copy, paste, and delete presets between preset slots
+  - The context menu is invoked when you long-tap (hold) on:
+    - the selected preset no. display
+    - any of the preset buttons in Direct access mode
 - Fail-safe load and save
 - Automatic and manual preset crossfading
 - Last preset is automatically loaded on surface startup.
