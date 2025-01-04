@@ -3,18 +3,19 @@
 *Shiva Preset Manager* is a sophisticated preset module that can be added to TouchOSC control surfaces.
 
 ### Supported features:
-- Select controls by tag prefix or all with MIDI msg attached
+- Select controls by tag prefix or all with MIDI msg attached.
 - Optionally limit preset to a certain base group, so multiple preset modules can be added to a surface, e.g. one on every pager page.
-- Preset name editor
+- Preset name editor.
+  - Tap on the multi-line name display to edit the currenttly active preset name.
 - Direct access load mode
 - Extended manager mode (for saving and loading)
 - Fail-safe load and save
 - Automatic and manual preset crossfading
 - Last preset is automatically loaded on surface startup.
-- Auto-detect and indicate if controls have been modified since preset load.
-  - Tap on preset info display to *blink ;)* all controls that were modified.
+- Auto-detect and indicate if controls have been modified since last preset loading.
+  - Tap on the single-line preset info display to *blink ;)* all controls that currently differ from preset values.
 - Restore controls working state cache with 10 undo steps, if you accidently loaded a preset and want to revert to a previous working state.
-- Simple skin settings config to allow changing colors and borders of elements.
+- A basic skin settings config to allow (easier) changing colors and borders of elements.
 - ...
 
 ### Usage
