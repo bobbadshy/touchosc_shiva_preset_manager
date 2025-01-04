@@ -8,6 +8,7 @@
 - Preset name editor.
   - Tap on the multi-line name display to edit the currenttly active preset name.
 - Direct access load mode
+- Small collapsed mode (tap on heading)
 - Extended manager mode (for saving and loading)
 - Cut, copy-&-paste, or delete presets between preset slots through context menu.
   - The context menu is invoked when you long-tap (hold) on:
@@ -72,6 +73,10 @@ To change settings, open the "settings" group, and edit its value on the right:
 Fail-safe savvng and loading by requiring function select before tapping "ENTER":
 
 ![image](https://github.com/user-attachments/assets/01ad1eb3-3e65-4f98-a916-6590f95a1a88)
+
+**Fully collapsed (tap on heading):**
+
+![image](https://github.com/user-attachments/assets/86cb105b-9ddb-4303-9d87-4b2fdbfde95d)
 
 **Fader:**
 
