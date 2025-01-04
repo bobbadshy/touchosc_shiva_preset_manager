@@ -44,7 +44,7 @@ A short demonstration is available on YouTube:
 | **Preset manager module with its (hidden) settings and skin options:** | **To change settings, open the "settings" group, and edit its value on the right:** |
 | ![image](https://github.com/user-attachments/assets/feba1030-49fa-4441-8203-5d0c948d1401) | ![image](https://github.com/user-attachments/assets/f31e4e80-4a80-48d9-bc7a-b97bc8a73522) |
 | **Direct load mode:** | **Copy-and-Paste menu:** |
-| ![image](https://github.com/user-attachments/assets/92ec8db9-135b-4b23-a27b-52dad95b0c06) | ![image](https://github.com/user-attachments/assets/92ec8db9-135b-4b23-a27b-52dad95b0c06) | 
+| ![image](https://github.com/user-attachments/assets/d37e96c9-ce7a-4597-8817-4fdd95cd2e0b) | ![image](https://github.com/user-attachments/assets/92ec8db9-135b-4b23-a27b-52dad95b0c06) | 
 | **Extended mode** with fail-safe loading and saving by requiring function select before tapping "ENTER": | **Fully collapsed (tap on heading):** |
 | ![image](https://github.com/user-attachments/assets/a908229c-af5a-4d4f-a077-386906a0a5fe) | ![image](https://github.com/user-attachments/assets/86cb105b-9ddb-4303-9d87-4b2fdbfde95d) |
 | **Fader**, selecting duration: | **Fader active:* |
