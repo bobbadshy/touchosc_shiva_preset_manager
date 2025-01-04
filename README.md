@@ -43,7 +43,12 @@ As this is just a hobby project in my freetime, I cannot promise I will get to a
 ### Future features wishlist
 
 - ...?
-  
+
+### Demo video
+
+A short demonstration is available on YouTube:
+- https://www.youtube.com/watch?v=QXi5oVgauT8
+
 ### Screenshots
 
 **Preset manager module in TouchOSC editor view:**
