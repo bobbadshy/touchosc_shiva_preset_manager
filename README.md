@@ -3,8 +3,15 @@
 *Shiva Preset Manager* is a sophisticated preset module that can be added to TouchOSC control surfaces.
 
 ### Supported features:
-- Select controls by tag prefix or all with MIDI msg attached.
+- Select controls by:
+  - MIDI message attached
+  - OSC message attached *(**experimental** ..might need further refinement for the selection process!)*
+  - All controls whose tag field starts with the string ***"shiva"**
 - Optionally limit preset to a certain base group, so multiple preset modules can be added to a surface, e.g. one on every pager page.
+- Support saving the following TouchOSC values:
+  - `x` (buttons, faders etc.)
+  - `text` (labels, multi-line text controls)
+  - `xy`(XY panels)
 - Preset name editor.
   - Tap on the multi-line name display to edit the currenttly active preset name.
 - Direct access load mode
@@ -35,6 +42,8 @@
 Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
 
 ### Bug reports and feature suggestions
+
+*As the version  tags suggest, this is currently a brand new project. The first public release was Jan 2025. So, while it seems to work really well already, please keep in mind that it is **currently in testing and not ready for production**. Thank you!*
 
 Please file an issue in the [Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues) section.
 
