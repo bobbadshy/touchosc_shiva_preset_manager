@@ -15,7 +15,7 @@
 - Auto-detect and indicate if controls have been modified since last preset loading.
   - Tap on the single-line preset info display to *blink ;)* all controls that currently differ from preset values.
 - Restore controls working state cache with 10 undo steps, if you accidently loaded a preset and want to revert to a previous working state.
-- A basic skin settings config to allow (easier) changing colors and borders of elements.
+- A basic skin settings config to allow quick changes to colors, borders, backgrounds, etc. of elements.
 - ...
 
 ### Usage
