@@ -7,6 +7,7 @@
   - MIDI message attached
   - OSC message attached *(**experimental** ..might need further refinement for the selection process!)*
   - All controls whose tag field starts with the string ***"shiva"**
+- Regardless of the above mode, controls can always be manually excluded by adding the string **"noshiva"** to the start of the tag field! 
 - Optionally limit preset to a certain base group, so multiple preset modules can be added to a surface, e.g. one on every pager page.
 - Support saving the following TouchOSC values:
   - `x` (buttons, faders etc.)
