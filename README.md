@@ -2,7 +2,7 @@
 
 *Shiva Preset Manager* is a sophisticated preset module that can be added to TouchOSC control surfaces.
 
-### Supported features:
+## Supported features:
 - Select controls by:
   - MIDI message attached
   - OSC message attached *(**experimental** ..might need further refinement for the selection process!)*
@@ -31,35 +31,12 @@
 - A basic skin settings config to allow quick changes to colors, borders, backgrounds, etc. of elements.
 - ...
 
-### Usage
-
-- Download and open the preset module `.tosc` file in the TouchOSC editor.
-- Copy and paste the control into your surface.
-- Go to the "config" group inside the module, and adjust the "Preset root control" setting.
-- Enjoy!
-
-### Download
-
-Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
-
-### Bug reports and feature suggestions
-
-*As the version  tags suggest, this is currently a brand new project. The first public release was Jan 2025. So, while it seems to work really well already, please keep in mind that it is **currently in testing and not ready for production**. Thank you!*
-
-Please file an issue in the [Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues) section.
-
-As this is just a hobby project in my freetime, I cannot promise I will get to any of them, but nevertheless, suggestions and bug reports are welcome! 🙂
-
-### Future features wishlist
-
-- ...?
-
-### Demo video
+## Demo video
 
 A short demonstration is available on YouTube:
 - https://www.youtube.com/watch?v=QXi5oVgauT8
 
-### Screenshots
+## Screenshots
 
 **Preset manager module in TouchOSC editor view:**
 
@@ -107,3 +84,40 @@ Fader active:
 **Preset name entry:**
 
 ![image](https://github.com/user-attachments/assets/2c001d3f-cc80-4003-aa1b-53d62cb1cbe6)
+
+## Usage
+
+- Download and open the preset module `.tosc` file in the TouchOSC editor.
+- Copy and paste the control into your surface.
+- Go to the "config" group inside the module, and adjust the "Preset root control" setting.
+- Enjoy!
+
+## Download
+
+Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
+
+## Bug reports, Feature Suggestions or Contributing
+
+*As the version  tags suggest, this is currently a brand new project. The first public release was Jan 2025. So, while it seems to work really well already, please keep in mind that it is **currently in testing and not ready for production**. Thank you!*
+
+Please file an issue in the [Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues) section.
+
+As this is just a hobby project in my freetime, I cannot promise I will get to any of them, but nevertheless, suggestions and bug reports are welcome! 🙂
+
+If you have any ideas or want to contribute to the project yourself, feel free to fork it and submit the changes back to me.
+
+## Planned features wishlist
+
+- ...none at the moment, but who knows what tomorrow morning's coffee will bring ;) ...
+- ...
+
+## Donations
+
+This is an Open Source software and free to use for everyone in any which way possible! :)
+
+|    |  PayPal  |
+| -- | -------- |
+|  If you still feel that this template made your life a gazillion times easier, and that you were yearning for exacly this kind of preset manager for years (.. as I have ..) .. you can buy me a beer 🍺 (..or beers 🍻..) and I will merrily put out a toast to you for saving yet another evening! 😃<br><br>*(I currently only have a PayPal button, but I may check out getting a Patreon or some "Buy me a coffee" in the future.)* |  [![image](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_idCGDJVVGG5V8LU&)  |
+
+
+
