@@ -35,6 +35,11 @@ Please file an issue in the [Issues](https://github.com/bobbadshy/touchosc_shiva
 
 As this is just a hobby project in my freetime, I cannot promise I will get to any of them, but nevertheless, suggestions and bug reports are welcome! 🙂
 
+### Future features wishlist
+
+- Hold long-tap on preset button in Direct Access mode opens a context menu that allows cut, copy and paste the preset to another preset position. ;P
+- ...?
+  
 ### Screenshots
 
 **Preset manager module in TouchOSC editor view:**
