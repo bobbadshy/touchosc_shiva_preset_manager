@@ -18,7 +18,7 @@
 - Direct access load mode
 - Small collapsed mode (tap on heading)
 - Extended manager mode (for saving and loading)
-- Cut, copy-&-paste, or delete presets between preset slots through context menu.
+- Cut, copy and paste, or delete presets between preset slots through context menu.
   - The context menu is invoked when you long-tap (hold) on:
     - the selected preset no. display, or
     - any of the preset buttons in Direct access mode.
@@ -38,52 +38,19 @@ A short demonstration is available on YouTube:
 
 ## Screenshots
 
-**Preset manager module in TouchOSC editor view:**
-
-![image](https://github.com/user-attachments/assets/5e8cc508-7f93-416b-bd1f-a345b4ab5523)
-
-**Preset manager module with its (hidden) settings and skin options:**
-
-![image](https://github.com/user-attachments/assets/a3854b87-f970-44bc-b048-d000ad180fd0)
-
-To change settings, open the "settings" group, and edit its value on the right:
-
-![image](https://github.com/user-attachments/assets/1000ed6a-0be0-4f4e-b27d-7a289107bfd7)
-
-**Direct load mode:**
-
-![image](https://github.com/user-attachments/assets/10d927e4-4742-4cc2-ab9e-443e416f5808)
-
-**Copy-and-Paste menu:**
-
-![image](https://github.com/user-attachments/assets/f61e51a8-501d-44d8-a357-fc7817ab14c9)
-
-**Extended mode:**
-
-![image](https://github.com/user-attachments/assets/b0f5bd8f-d94f-4a65-b8ae-cbc3d9021986)
-
-Fail-safe savvng and loading by requiring function select before tapping "ENTER":
-
-![image](https://github.com/user-attachments/assets/01ad1eb3-3e65-4f98-a916-6590f95a1a88)
-
-**Fully collapsed (tap on heading):**
-
-![image](https://github.com/user-attachments/assets/86cb105b-9ddb-4303-9d87-4b2fdbfde95d)
-
-**Fader:**
-
-Select length:
-
-![image](https://github.com/user-attachments/assets/fa5bebf2-22f7-4537-a2d1-9d11fc7cbf9c)
-
-
-Fader active:
-
-![image](https://github.com/user-attachments/assets/dd4e2095-f94a-4803-bbaa-2f4e35eacf4a)
-
-**Preset name entry:**
-
-![image](https://github.com/user-attachments/assets/2c001d3f-cc80-4003-aa1b-53d62cb1cbe6)
+| Screenhots | |
+| ---- | ---- |
+|  **Preset manager module in TouchOSC editor view:**  |  ![image](https://github.com/user-attachments/assets/e6ed1e3f-08a0-4ea2-be9d-c8e23caabb12) |
+| **Preset manager module with its (hidden) settings and skin options:** | **To change settings, open the "settings" group, and edit its value on the right:** |
+| ![image](https://github.com/user-attachments/assets/feba1030-49fa-4441-8203-5d0c948d1401) | ![image](https://github.com/user-attachments/assets/f31e4e80-4a80-48d9-bc7a-b97bc8a73522) |
+| **Direct load mode:** | **Copy-and-Paste menu:** |
+| ![image](https://github.com/user-attachments/assets/92ec8db9-135b-4b23-a27b-52dad95b0c06) | ![image](https://github.com/user-attachments/assets/92ec8db9-135b-4b23-a27b-52dad95b0c06) | 
+| **Extended mode** with fail-safe loading and saving by requiring function select before tapping "ENTER": | **Fully collapsed (tap on heading):** |
+| ![image](https://github.com/user-attachments/assets/a908229c-af5a-4d4f-a077-386906a0a5fe) | ![image](https://github.com/user-attachments/assets/86cb105b-9ddb-4303-9d87-4b2fdbfde95d) |
+| **Fader**, selecting duration: | **Fader active:* |
+| ![image](https://github.com/user-attachments/assets/fa5bebf2-22f7-4537-a2d1-9d11fc7cbf9c) | ![image](https://github.com/user-attachments/assets/dd4e2095-f94a-4803-bbaa-2f4e35eacf4a) |
+| **Preset name entry:** |  |
+| ![image](https://github.com/user-attachments/assets/2c001d3f-cc80-4003-aa1b-53d62cb1cbe6) |  |
 
 ## Usage
 
