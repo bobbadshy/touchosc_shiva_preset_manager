@@ -37,7 +37,7 @@ As this is just a hobby project in my freetime, I cannot promise I will get to a
 
 ### Future features wishlist
 
-- Hold long-tap on preset button in Direct Access mode opens a context menu that allows cut, copy and paste the preset to another preset position. ;P
+- Hold long-tap on preset button in Direct Access mode opens a context menu that allows cut, copy and paste of presets to another preset position. ;P
 - ...?
   
 ### Screenshots
