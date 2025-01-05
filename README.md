@@ -60,7 +60,7 @@ A short demonstration is available on YouTube:
 | **Fader**, selecting duration: | **Fader active:* |
 | ![image](https://github.com/user-attachments/assets/fa5bebf2-22f7-4537-a2d1-9d11fc7cbf9c) | ![image](https://github.com/user-attachments/assets/dd4e2095-f94a-4803-bbaa-2f4e35eacf4a) |
 | **Preset name entry:** |  |
-| ![image](https://github.com/user-attachments/assets/2c001d3f-cc80-4003-aa1b-53d62cb1cbe6) |  |
+| ![image](https://github.com/user-attachments/assets/cb431ade-b14f-4a39-9889-2c8506e89358) |  |
 
 ## Usage
 
