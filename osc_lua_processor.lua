@@ -546,6 +546,9 @@ function directLoad()
   shiva.btnFnLoad.values.x = 0
   if not applySelectedPreset() then
     disableFade()
+    -- blink to also indicate in DirectLoad that empty preset was NOT LOADED.
+    addControlToBlink(shiva.groupDirectLoadButtons[math.fmod(getSelectedPreset(),   10) + 1])
+    state.blinking = 3
     return false
   end
   return true
