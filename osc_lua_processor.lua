@@ -104,7 +104,7 @@ local state = {
   msgLcdSent = 0,
   msgLcd = '',
   -- crossfade update
-  fadeDelay = 10.0,
+  fadeDelay = 5.0,
   fadeLast = 0,
   -- slow update
   relaxDelay = 2000,
@@ -115,53 +115,6 @@ local state = {
 }
 
 -- === INIT  ===
-
-function registerHandlers()
-  handlers = {
-    btnFnEnter = loadOrSave,
-    btnFnLoad = toggleLoad,
-    btnFnSave = toggleSave,
-    fdrCrossfade = fadeStart,
-    fadeState = fadeUpdate,
-    lcdMessage = lcdTap,
-    -- btnToggleEdit = toggleEdit,
-    btnFnDirectBackActive = directBackToActivePreset,
-    btnKbdClose = saveKeyboardValue,
-    lblFadeMode = toggleFadeMode,
-    btnRestore = restoreWork,
-    btnClearWork = clearWork,
-    btnBankMinus = bankSwitch,
-    btnBankPlus = bankSwitch,
-    btnPrgMinus = prgSwitch,
-    btnPrgPlus = prgSwitch,
-    btnDirectBankLoadMinus = bankSwitchDirect,
-    btnDirectBankLoadPlus = bankSwitchDirect,
-    lblDirectHeading = toggleCollapse,
-    lblDirectEdit = toggleEdit,
-    dspInfo = addChangedControlsToBlink,
-    entryCut = clipBoardCut,
-    entryCopy = clipBoardCopy,
-    entryPaste = clipBoardPaste,
-    entryDelete = deletePreset,
-  }
-end
-
-function toggleCollapse()
-  if shiva.menuContext.visible then return end
-  if state.collapsed and not shiva.grpManagerMain.visible then
-    shiva.grpManagerMain.visible = true
-    shiva.groupDirectLoadButtonsMain.visible = false
-    shiva.borderGroupBottom.visible = true
-    shiva.btnDirectToggleEdit.values.x = 1
-    state.collapsed = false
-  else
-    shiva.grpManagerMain.visible = false
-    shiva.groupDirectLoadButtonsMain.visible = false
-    shiva.borderGroupBottom.visible = false
-    shiva.btnDirectToggleEdit.values.x = 0
-    state.collapsed = true
-  end
-end
 
 function init()
   initDebug()
@@ -259,6 +212,69 @@ function onReceiveNotify(cmd, val)
   end
 end
 
+function update()
+  local now = getMillis()
+  updateFast(now)
+  updateSlow(now)
+  updateFade(now)
+end
+
+function registerHandlers()
+  handlers = {
+    btnFnEnter = loadOrSave,
+    btnFnLoad = toggleLoad,
+    btnFnSave = toggleSave,
+    fdrCrossfade = fadeStart,
+    fadeState = fadeUpdate,
+    lcdMessage = lcdTap,
+    -- btnToggleEdit = toggleEdit,
+    btnFnDirectBackActive = directBackToActivePreset,
+    btnKbdClose = saveKeyboardValue,
+    lblFadeMode = toggleFadeMode,
+    btnRestore = restoreWork,
+    btnClearWork = clearWork,
+    btnBankMinus = bankSwitch,
+    btnBankPlus = bankSwitch,
+    btnPrgMinus = prgSwitch,
+    btnPrgPlus = prgSwitch,
+    btnDirectBankLoadMinus = bankSwitchDirect,
+    btnDirectBankLoadPlus = bankSwitchDirect,
+    lblDirectHeading = toggleCollapse,
+    lblDirectEdit = toggleEdit,
+    dspInfo = addChangedControlsToBlink,
+    entryCut = clipBoardCut,
+    entryCopy = clipBoardCopy,
+    entryPaste = clipBoardPaste,
+    entryDelete = deletePreset,
+  }
+end
+
+--[[
+Main event handler loop. Nearly all LUA functionality is triggered from here.
+Almost all controls send their name (os some a special tag value) here for
+further processing.]] --
+function onValueChanged()
+  local cmd = self.values.text
+  self.values.text = '' -- reset command
+  if string.match(cmd, '^direct[0-9]+') then
+    -- same for direct select buttons
+    directSelect(cmd)
+  elseif string.match(cmd, '[0-9]') then
+    -- all digit buttons handled by same function
+    addDigitToPreset(cmd)
+  else
+    -- call other handlers if present
+    for c, h in pairs(handlers) do
+      if c == cmd then
+        logDebug('Command: ' .. c)
+        h(cmd)
+      end
+    end
+  end
+end
+
+-- === CALLBACK HELPER FUNCTIONS ===
+
 function blinkControls(val)
   if state.blinking <= 0 then return end
   for k, v in pairs(state.blinkControls) do
@@ -281,13 +297,6 @@ function blinkTextControls(val)
       v.ctrl.properties.textColor.a = val
     end
   end
-end
-
-function update()
-  local now = getMillis()
-  updateFast(now)
-  updateSlow(now)
-  updateFade(now)
 end
 
 function updateFast(now)
@@ -342,30 +351,6 @@ function updateBlinking()
         v.ctrl.textColor.a = v.at
       end
       state.blinkControls[id] = nil
-    end
-  end
-end
-
---[[
-Main event handler loop. Nearly all LUA functionality is triggered from here.
-Almost all controls send their name (os some a special tag value) here for
-further processing.]] --
-function onValueChanged()
-  local cmd = self.values.text
-  self.values.text = '' -- reset command
-  if string.match(cmd, '^direct[0-9]+') then
-    -- same for direct select buttons
-    directSelect(cmd)
-  elseif string.match(cmd, '[0-9]') then
-    -- all digit buttons handled by same function
-    addDigitToPreset(cmd)
-  else
-    -- call other handlers if present
-    for c, h in pairs(handlers) do
-      if c == cmd then
-        logDebug('Command: ' .. c)
-        h(cmd)
-      end
     end
   end
 end
@@ -484,34 +469,6 @@ function addDisplaysToBlink()
   state.blinking = BLINKDISPLAYS
 end
 
-function showEditor()
-  shiva.groupDirectLoadButtonsMain.visible = false
-  shiva.lblDirectHeading.visible = true
-  shiva.borderGroupBottom.visible = true
-  shiva.grpManagerMain.visible = true
-  shiva.btnDirectToggleEdit.values.x = 1
-end
-
-function showDirectLoad()
-  shiva.borderGroupBottom.visible = false
-  shiva.grpManagerMain.visible = false
-  shiva.lblDirectHeading.visible = false
-  shiva.groupDirectLoadButtonsMain.visible = true
-  shiva.btnDirectToggleEdit.values.x = 0
-end
-
-function showCollapsed()
-  shiva.borderGroupBottom.visible = false
-  shiva.grpManagerMain.visible = false
-  shiva.groupDirectLoadButtonsMain.visible = false
-  shiva.lblDirectHeading.visible = true
-  shiva.btnDirectToggleEdit.values.x = 0
-end
-
-function collapsed()
-  return state.collapsed
-end
-
 function toggleEdit()
   if shiva.menuContext.visible then return end
   -- selectActivePreset()
@@ -617,6 +574,23 @@ function bankSwitchDirect(up)
   updateDirectLoadButtons(presetNo)
 end
 
+function toggleCollapse()
+  if shiva.menuContext.visible then return end
+  if state.collapsed and not shiva.grpManagerMain.visible then
+    shiva.grpManagerMain.visible = true
+    shiva.groupDirectLoadButtonsMain.visible = false
+    shiva.borderGroupBottom.visible = true
+    shiva.btnDirectToggleEdit.values.x = 1
+    state.collapsed = false
+  else
+    shiva.grpManagerMain.visible = false
+    shiva.groupDirectLoadButtonsMain.visible = false
+    shiva.borderGroupBottom.visible = false
+    shiva.btnDirectToggleEdit.values.x = 0
+    state.collapsed = true
+  end
+end
+
 function clipBoardCut()
   log('clipboard cut')
   if state.presetModified then
@@ -663,6 +637,60 @@ function deletePreset()
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('delete\npreset ' .. getSelectedPreset())
+end
+
+-- === GUI HANDLERS ===
+
+function showEditor()
+  shiva.groupDirectLoadButtonsMain.visible = false
+  shiva.lblDirectHeading.visible = true
+  shiva.borderGroupBottom.visible = true
+  shiva.grpManagerMain.visible = true
+  shiva.btnDirectToggleEdit.values.x = 1
+end
+
+function showDirectLoad()
+  shiva.borderGroupBottom.visible = false
+  shiva.grpManagerMain.visible = false
+  shiva.lblDirectHeading.visible = false
+  shiva.groupDirectLoadButtonsMain.visible = true
+  shiva.btnDirectToggleEdit.values.x = 0
+end
+
+function showCollapsed()
+  shiva.borderGroupBottom.visible = false
+  shiva.grpManagerMain.visible = false
+  shiva.groupDirectLoadButtonsMain.visible = false
+  shiva.lblDirectHeading.visible = true
+  shiva.btnDirectToggleEdit.values.x = 0
+end
+
+function collapsed()
+  return state.collapsed
+end
+
+function showingCollapsed()
+  return not (shiva.grpManagerMain.visible or shiva.groupDirectLoadButtonsMain.visible)
+end
+
+function showingEditor()
+  return shiva.grpManagerMain.visible and not shiva.groupDirectLoadButtonsMain.visible
+end
+
+function showingDirectLoad()
+  return shiva.groupDirectLoadButtonsMain.visible and not shiva.grpManagerMain.visible
+end
+
+function showingUndefined()
+  return not (showingCollapsed() or showingDirectLoad() or showingEditor())
+end
+
+function showKeyboard(s, target)
+  shiva.lcdKbdDisplay.values.text = s
+  shiva.lcdKbdDisplay.tag = target
+  shiva.groupKeyboardMain.properties.visible = true
+  shiva.btnDirectToggleEdit.properties.interactive = false
+  shiva.lblDirectEdit.properties.interactive = false
 end
 
 -- === PRESET VALUES HANDLING, LOADING AND SAVING ===
@@ -1320,22 +1348,6 @@ end
 
 -- == READABILITY ==
 
-function showingCollapsed()
-  return not (shiva.grpManagerMain.visible or shiva.groupDirectLoadButtonsMain.visible)
-end
-
-function showingEditor()
-  return shiva.grpManagerMain.visible and not shiva.groupDirectLoadButtonsMain.visible
-end
-
-function showingDirectLoad()
-  return shiva.groupDirectLoadButtonsMain.visible and not shiva.grpManagerMain.visible
-end
-
-function showingUndefined()
-  return not (showingCollapsed() or showingDirectLoad() or showingEditor())
-end
-
 function weShouldFade()
   return state.fadeMode == FADEIN
 end
@@ -1474,14 +1486,6 @@ function valuesChanged(current, preset)
     if current[k] ~= preset[k] then return true end
   end
   return false
-end
-
-function showKeyboard(s, target)
-  shiva.lcdKbdDisplay.values.text = s
-  shiva.lcdKbdDisplay.tag = target
-  shiva.groupKeyboardMain.properties.visible = true
-  shiva.btnDirectToggleEdit.properties.interactive = false
-  shiva.lblDirectEdit.properties.interactive = false
 end
 
 function saveKeyboardValue()
