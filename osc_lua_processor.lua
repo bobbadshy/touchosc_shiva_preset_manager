@@ -104,7 +104,7 @@ local state = {
   msgLcdSent = 0,
   msgLcd = '',
   -- crossfade update
-  fadeDelay = 5.0,
+  fadeDelay = 20,
   fadeLast = 0,
   -- slow update
   relaxDelay = 2000,
