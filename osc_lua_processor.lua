@@ -1602,3 +1602,10 @@ function updateDirectLoadButtons(p)
     shiva.groupDirectLoadButtons[i].values.x = (p + i -1) == s and 1 or 0
   end
 end
+
+function getSelectModeStr()
+  if shiva.cfgModeSelect.values.x == MODEMIDI then return 'MIDI'
+  elseif shiva.cfgModeSelect.values.x == MODEOSC then return 'OSC'
+  elseif shiva.cfgModeSelect.values.x == MODEPREFIX then return 'shiva'
+  end
+end
