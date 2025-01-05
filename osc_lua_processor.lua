@@ -956,14 +956,6 @@ function getAllCurrentValues(verbose)
   -- only used by restore work
   state.currValues[RESERVED][PRESETIDID] = getActivePreset()
   if verbose then log('Controls found: ' .. count) end
-  if verbose then
-    for k, v in pairs(state.currValues) do
-      if k ~= RESERVED then
-        logDebug(state.presetRootCtrl:findByID(k, true).parent.name ..
-        '.' .. state.presetRootCtrl:findByID(k, true).name)
-      end
-    end
-  end
 end
 
 function writeToControls(values)
