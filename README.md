@@ -1,6 +1,6 @@
 # Shiva Preset Manager
 
-- ["Shiva" Preset Manager](#shiva-preset-manager)
+- [Shiva Preset Manager](#shiva-preset-manager)
   - [Supported features:](#supported-features)
   - [Demo video](#demo-video)
   - [Screenshots](#screenshots)

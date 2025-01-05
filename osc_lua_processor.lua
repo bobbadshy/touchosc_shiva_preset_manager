@@ -302,17 +302,6 @@ function updateSlow(now)
   end
 end
 
-function showMsgLcdDelayed(now)
-  if (
-    state.msgLcdSent > 0 and
-    (now - state.msgLcdSent > state.msgLcdDelay)
-  ) then
-    lcdMessage(state.msgLcd)
-    state.msgLcd = ''
-    state.msgLcdSent = 0
-  end
-end
-
 function updateFade(now)
   if itIsTimeTo('fade', now) then
     if (
@@ -535,6 +524,7 @@ function directBackToActivePreset()
 end
 
 function directSelect(cmd)
+  print('##########################')
   if userReleasedDirectLoadButttons() then
     -- If the whole parent control does not register any touch anmyore,
     -- we can be sure the user has released, either outside the parent,
@@ -543,6 +533,8 @@ function directSelect(cmd)
     selectPreset(presetNo)
     directLoad()
   end
+  
+  updateDirectLoadButtons()
 end
 
 function directLoad()
@@ -1400,6 +1392,17 @@ function lcdMessageDelayed(s, blink)
   state.msgLcd = s
 end
 
+function showMsgLcdDelayed(now)
+  if (
+    state.msgLcdSent > 0 and
+    (now - state.msgLcdSent > state.msgLcdDelay)
+  ) then
+    lcdMessage(state.msgLcd)
+    state.msgLcd = ''
+    state.msgLcdSent = 0
+  end
+end
+
 function showContextMenu()
   shiva.grpBlock.visible = true
   shiva.menuContext.children[1].values.text = 'Preset ' .. getSelectedPreset()
@@ -1583,6 +1586,6 @@ function updateDirectLoadButtons(p)
     -- buttons are 1..10, labels are 11..10
     shiva.groupDirectLoadButtons[i + 10].values.text = getNameFromPreset(p + i - 1)
     shiva.groupDirectLoadButtons[i].tag = 'direct' .. p + i - 1
-    shiva.groupDirectLoadButtons[i].values.x = (p + i - 1) == s and 1 or 0
+    shiva.groupDirectLoadButtons[i].values.x = (p + i) == s and 1 or 0
   end
 end
