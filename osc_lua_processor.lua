@@ -316,13 +316,7 @@ end
 
 function updateFade(now)
   if itIsTimeTo('fade', now) then
-    if (
-          state.fadeMode ~= FADEIN or
-          state.fadeStep < 0 or
-          not state.fadeActive
-        ) then
-      return
-    end
+    if state.fadeMode ~= FADEIN or state.fadeStep < 0 then return end
     if state.fadeStep == 0 then
       disableFade()
       applySelectedPreset()
@@ -1376,6 +1370,7 @@ end
 function itIsTimeTo(what, now)
   if (now - state[what .. 'Last'] > state[what .. 'Delay']) then
     state[what .. 'Last'] = now
+    if state.fadeActive and not what == 'fade' then return false end
     return true
   end
   return false
