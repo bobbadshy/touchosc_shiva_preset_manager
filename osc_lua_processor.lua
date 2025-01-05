@@ -147,7 +147,8 @@ end
 function initConfig()
   state.rootName = shiva.cfgPresetRoot.values.text
   state.presetRootCtrl = state.rootName == '' and root or root:findByName(state.rootName, true)
-  state.fadeMode = FADEIN
+  state.fadeMode = FADEM
+  toggleFadeMode()
 end
 
 function initGui()
