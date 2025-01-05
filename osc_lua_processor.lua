@@ -194,13 +194,13 @@ function initConfig()
 end
 
 function initGui()
-  if shiva.grpManagerMain.properties.visible == true then
-    shiva.btnDirectToggleEdit.values.x = 1
-  else
-    shiva.btnDirectToggleEdit.values.x = 0
-  end
+  -- ensure all controls show in the right state
   updateDirectLoadButtons()
   updateLabelFade()
+  if showingUndefined() then showEditor()
+  elseif showingCollapsed() then showCollapsed()
+  elseif showingDirectLoad then showDirectLoad()
+  else showEditor() end
   lcdMessage('   Welcome to\n    "Shiva"\n  Preset Module')
   lcdMessageDelayed('\n  Control Select\n    Mode: ' .. getSelectModeStr())
   log('Init finished.')
@@ -474,47 +474,42 @@ function addDisplaysToBlink()
   state.blinking = BLINKDISPLAYS
 end
 
+function showEditor()
+  shiva.groupDirectLoadButtonsMain.visible = false
+  shiva.lblDirectHeading.visible = true
+  shiva.borderGroupBottom.visible = true
+  shiva.grpManagerMain.visible = true
+  shiva.btnDirectToggleEdit.values.x = 1
+end
+
+function showDirectLoad()
+  shiva.borderGroupBottom.visible = false
+  shiva.grpManagerMain.visible = false
+  shiva.lblDirectHeading.visible = false
+  shiva.groupDirectLoadButtonsMain.visible = true
+  shiva.btnDirectToggleEdit.values.x = 0
+end
+
+function showCollapsed()
+  shiva.borderGroupBottom.visible = false
+  shiva.grpManagerMain.visible = false
+  shiva.groupDirectLoadButtonsMain.visible = false
+  shiva.lblDirectHeading.visible = true
+  shiva.btnDirectToggleEdit.values.x = 0
+end
+
+function collapsed()
+  return state.collapsed
+end
+
 function toggleEdit()
   if shiva.menuContext.visible then return end
-  selectActivePreset()
-  updateDirectLoadButtons()
-  if state.collapsed then
-    if (
-      shiva.btnDirectToggleEdit.values.x == 0 and
-      not shiva.groupDirectLoadButtonsMain.visible
-    ) then
-      shiva.grpManagerMain.visible = true
-      shiva.lblDirectHeading.visible = true
-      shiva.groupDirectLoadButtonsMain.visible = false
-      shiva.borderGroupBottom.visible = true
-      shiva.btnDirectToggleEdit.values.x = 1
-    elseif shiva.groupDirectLoadButtonsMain.visible then
-      shiva.grpManagerMain.visible = false
-      shiva.lblDirectHeading.visible = true
-      shiva.groupDirectLoadButtonsMain.visible = false
-      shiva.borderGroupBottom.visible = false
-      shiva.btnDirectToggleEdit.values.x = 0
-    else
-      shiva.grpManagerMain.visible = false
-      shiva.lblDirectHeading.visible = false
-      shiva.groupDirectLoadButtonsMain.visible = true
-      shiva.borderGroupBottom.visible = true
-      shiva.btnDirectToggleEdit.values.x = 0
-    end
+  -- selectActivePreset()
+  if collapsed() and showingDirectLoad() then showCollapsed()
+  elseif showingDirectLoad() then showEditor()
   else
-    if shiva.btnDirectToggleEdit.values.x == 1 then
-      shiva.grpManagerMain.visible = false
-      shiva.lblDirectHeading.visible = false
-      shiva.groupDirectLoadButtonsMain.visible = true
-      shiva.borderGroupBottom.visible = true
-      shiva.btnDirectToggleEdit.values.x = 0
-    else
-      shiva.groupDirectLoadButtonsMain.visible = false
-      shiva.grpManagerMain.visible = true
-      shiva.lblDirectHeading.visible = true
-      shiva.borderGroupBottom.visible = true
-      shiva.btnDirectToggleEdit.values.x = 1
-    end
+    showDirectLoad()
+    updateDirectLoadButtons()
   end
 end
 
@@ -530,7 +525,9 @@ function directSelect(cmd)
     -- or on the final button choice. So, we can select.
     local presetNo = string.sub(cmd, 7)
     selectPreset(presetNo)
-    directLoad()
+    if directLoad() then updateDirectLoadButtons() end
+  else
+    updateDirectLoadButtons()
   end
 end
 
@@ -549,10 +546,9 @@ function directLoad()
   shiva.btnFnLoad.values.x = 0
   if not applySelectedPreset() then
     disableFade()
-    selectActivePreset()
-  else
-    updateDirectLoadButtons()
+    return false
   end
+  return true
 end
 
 function addChangedControlsToBlink()
@@ -1309,7 +1305,23 @@ function applyLayout()
   applySkinSingle(shiva.lblDirectHeading, shiva.skinSettings.templateHeading)
 end
 
--- === UTILS ===
+-- == READABILITY ==
+
+function showingCollapsed()
+  return not (shiva.grpManagerMain.visible or shiva.groupDirectLoadButtonsMain.visible)
+end
+
+function showingEditor()
+  return shiva.grpManagerMain.visible and not shiva.groupDirectLoadButtonsMain.visible
+end
+
+function showingDirectLoad()
+  return shiva.groupDirectLoadButtonsMain.visible and not shiva.grpManagerMain.visible
+end
+
+function showingUndefined()
+  return not (showingCollapsed() or showingDirectLoad() or showingEditor())
+end
 
 function weShouldFade()
   return state.fadeMode == FADEIN
@@ -1339,10 +1351,6 @@ function userWantsToSave()
   return shiva.btnFnSave.values.x == 1
 end
 
-function showingEditor()
-  return shiva.grpManagerMain.visible == true
-end
-
 function userReleasedDirectLoadButttons()
   return not shiva.groupDirectLoadButtonsMain.values.touch
 end
@@ -1354,6 +1362,8 @@ function itIsTimeTo(what, now)
   end
   return false
 end
+
+-- === UTILS ===
 
 function log(s)
   print(s)
@@ -1583,6 +1593,6 @@ function updateDirectLoadButtons(p)
     -- buttons are 1..10, labels are 11..10
     shiva.groupDirectLoadButtons[i + 10].values.text = getNameFromPreset(p + i - 1)
     shiva.groupDirectLoadButtons[i].tag = 'direct' .. p + i - 1
-    shiva.groupDirectLoadButtons[i].values.x = (p + i) == s and 1 or 0
+    shiva.groupDirectLoadButtons[i].values.x = (p + i -1) == s and 1 or 0
   end
 end
