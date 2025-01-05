@@ -1,6 +1,11 @@
 # Shiva Preset Manager
 
+*Shiva Preset Manager* is a sophisticated preset module that can be added to TouchOSC control surfaces.
+
+## Contents
+
 - [Shiva Preset Manager](#shiva-preset-manager)
+  - [Contents](#contents)
   - [Supported features:](#supported-features)
   - [Demo video](#demo-video)
   - [Screenshots](#screenshots)
@@ -9,8 +14,6 @@
   - [Bug reports, Feature Suggestions or Contributing](#bug-reports-feature-suggestions-or-contributing)
   - [Planned features wishlist](#planned-features-wishlist)
   - [Donations](#donations)
-
-*Shiva Preset Manager* is a sophisticated preset module that can be added to TouchOSC control surfaces.
 
 ## Supported features:
 - Select controls by:
