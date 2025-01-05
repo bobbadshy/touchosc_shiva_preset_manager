@@ -91,6 +91,7 @@ local state = {
   -- keep track of working state stack
   lastWork = 0,
   -- crossfade states
+  fadeStartTime = 0,
   fadeMode = FADEIN,
   fadeActive = false,
   fadeStartValue = 0.0,
@@ -386,6 +387,7 @@ function fadeStart()
   if shiva.btnFnLoad.values.x ~= 1 then
     lcdMessage('enable load!')
   elseif state.fadeStep > 0 then
+    state.fadeStartTime = getMillis()
     shiva.btnFnLoad.values.x = 0
     -- cacheWork()
     initCrossfade()
@@ -1084,7 +1086,10 @@ function applyFadeValues()
   if state.fadeStep == 0 and state.fadeMode == FADEM then
     lcdMessage('  ..FADING..\n' .. '  release!', false)
   else
-    lcdMessage('  ..FADING..\n' .. ' [' .. s1 .. s2 .. ']', false)
+    lcdMessage(
+    '..FADING.. ' ..
+    string.format("%.1f", (getMillis() - state.fadeStartTime) / 1000) ..
+    '\n' .. ' [' .. s1 .. s2 .. ']', false)
   end
 end
 
