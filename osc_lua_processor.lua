@@ -1379,8 +1379,8 @@ end
 
 function itIsTimeTo(what, now)
   if (now - state[what .. 'Last'] > state[what .. 'Delay']) then
+    if not state.fadeActive and what == 'fade' then return false end
     state[what .. 'Last'] = now
-    if state.fadeActive and not what == 'fade' then return false end
     return true
   end
   return false
