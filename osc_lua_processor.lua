@@ -224,7 +224,7 @@ function registerHandlers()
     lcdMessage = lcdTap,
     -- btnToggleEdit = toggleEdit,
     btnFnDirectBackActive = directBackToActivePreset,
-    btnKbdClose = saveKeyboardValue,
+    btnFnKbdClose = saveKeyboardValue,
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
     btnClearWork = clearWork,
@@ -1191,6 +1191,7 @@ function applySkinGeneric()
     'TEXT',
   }
   local ctrls
+  local c
   for i = 1, #types do
     ctrls = self.parent:findAllByType(ControlType[types[i]], true)
     logDebug('Applying buttons')
@@ -1278,6 +1279,23 @@ function applySkinGeneric()
       if string.match(ctrl.name, '^[0-9]+$') then
         logDebug('Digits: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateDigits.properties.color -- default was 66D1FFD9
+        ctrl.properties.textColor = shiva.skinSettings.templateDigits.properties.textColor -- default was FFFFFFD0
+        ctrl.properties.background = shiva.skinSettings.templateDigits.properties.background
+        ctrl.properties.outline = shiva.skinSettings.templateDigits.properties.outline
+        ctrl.properties.outlineStyle = shiva.skinSettings.templateDigits.properties.outlineStyle
+        ctrl.properties.cornerRadius = shiva.skinSettings.templateDigits.properties.cornerRadius
+        ctrl.properties.textSize = shiva.skinSettings.templateDigits.properties.textSize
+        ctrl.properties.font = shiva.skinSettings.templateDigits.properties.font
+      end
+      if string.match(ctrl.name, '^[0-9]+filler$') then
+        logDebug('Digits: ' .. ctrl.name)
+        c = Color(
+          shiva.skinSettings.templateDigits.properties.color.r,
+          shiva.skinSettings.templateDigits.properties.color.g,
+          shiva.skinSettings.templateDigits.properties.color.b,
+          shiva.skinSettings.templateDigits.properties.color.a / 2.0
+        )
+        ctrl.properties.color = c -- default was 66D1FFD9
         ctrl.properties.textColor = shiva.skinSettings.templateDigits.properties.textColor -- default was FFFFFFD0
         ctrl.properties.background = shiva.skinSettings.templateDigits.properties.background
         ctrl.properties.outline = shiva.skinSettings.templateDigits.properties.outline
