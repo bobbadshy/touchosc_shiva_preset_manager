@@ -33,8 +33,6 @@
 A short demonstration is available on YouTube:
 - https://www.youtube.com/watch?v=QXi5oVgauT8
 
-[![IDemo](https://img.youtube.com/vi/QXi5oVgauT8/0.jpg)](https://www.youtube.com/watch?v=QXi5oVgauT8)
-
 ## Screenshots
 
 | Screenhots | |
