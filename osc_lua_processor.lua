@@ -167,13 +167,6 @@ function initGui()
   log('== Welcome to "Shiva" Preset Module! Happy Jammin\' :-) ==')
 end
 
-function getSelectModeStr()
-  if shiva.cfgModeSelect.values.x == MODEMIDI then return 'MIDI'
-  elseif shiva.cfgModeSelect.values.x == MODEOSC then return 'OSC'
-  elseif shiva.cfgModeSelect.values.x == MODEPREFIX then return 'shiva'
-  end
-end
-
 function initPreset()
   if getSelectedPreset() == nil then selectPreset(0) end
   local presetNo = getActivePreset()
