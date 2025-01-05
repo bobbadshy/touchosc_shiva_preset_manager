@@ -158,6 +158,7 @@ function initGui()
   updateDirectLoadButtons()
   updateLabelFade()
   if showingUndefined() then showEditor()
+  elseif showingEditor() then showEditor()
   elseif showingCollapsed() then showCollapsed()
   elseif showingDirectLoad then showDirectLoad()
   else showEditor() end
