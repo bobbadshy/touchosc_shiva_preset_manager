@@ -524,7 +524,6 @@ function directBackToActivePreset()
 end
 
 function directSelect(cmd)
-  print('##########################')
   if userReleasedDirectLoadButttons() then
     -- If the whole parent control does not register any touch anmyore,
     -- we can be sure the user has released, either outside the parent,
@@ -533,8 +532,6 @@ function directSelect(cmd)
     selectPreset(presetNo)
     directLoad()
   end
-  
-  updateDirectLoadButtons()
 end
 
 function directLoad()
