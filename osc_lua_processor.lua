@@ -418,11 +418,10 @@ function fadeUpdate()
     local v = makeCrossfaderCurvy()
     if v > 0 then
       v = math.max(5, v)
-      lcdMessage('fade ' .. string.format("%.2f", 1.5 * v * state.fadeDelay / 1000) .. ' s')
+      lcdMessage('fade ' .. string.format("%.2f", 1.7 * v * state.fadeDelay / 1000) .. ' s')
       state.fadeStep = v
       state.fadeMax = v
     else
-      print('## ', shiva.fdrCrossfade.values.touch)
       lcdMessage('fade abort')
       state.fadeStep = 0
       state.fadeMax = 100
@@ -1359,7 +1358,7 @@ function alreadyFading()
 end
 
 function makeCrossfaderCurvy()
-  return math.floor((shiva.fdrCrossfade.values.x ^ 2) * 267)
+  return math.floor((shiva.fdrCrossfade.values.x ^ 2) * 750)
 end
 
 function userWantsToLoad()
