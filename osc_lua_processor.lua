@@ -195,6 +195,13 @@ end
 
 function initGui()
   -- ensure all controls show in the right state
+  -- TODO: Currently not used ..way!! too complicated with dynamic text colors!!
+  -- maybe this can still be done as local msg between label and button,
+  -- have to think ..
+  for i = 11, 20 do
+    -- save button colors to tag .. :(
+    shiva.groupDirectLoadButtons[i].tag = Color.toHexString(shiva.groupDirectLoadButtons[i].properties.textColor)
+  end
   updateDirectLoadButtons()
   updateLabelFade()
   if showingUndefined() then showEditor()
@@ -241,6 +248,9 @@ function onReceiveNotify(cmd, val)
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then showContextMenu()
     elseif string.match(val, '^direct[0-9]+$') then
+      -- FIXME: If selected preset is empty, we can't load it, so we can ONLY
+      -- paste, and only when clipBoard is filled. So, diesable all other options
+      -- in context menu in thi case!!
       local p = string.sub(val, 7)
       selectPreset(p)
       loadSelectedPreset()
