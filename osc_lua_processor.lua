@@ -468,9 +468,9 @@ function lcdTap()
 end
 
 function addDisplaysToBlink()
-  addControlToBlink(shiva.dspSelected, shiva.dspSelected.ID)
-  addControlToBlink(shiva.dspDirectInfo, shiva.dspDirectInfo.ID)
-  addControlToBlink(shiva.dspInfo, shiva.dspInfo.ID)
+  addControlToBlink(shiva.dspSelected)
+  addControlToBlink(shiva.dspDirectInfo)
+  addControlToBlink(shiva.dspInfo)
   state.blinking = BLINKDISPLAYS
 end
 
@@ -557,7 +557,7 @@ end
 function addChangedControlsToBlink()
   logDebug('Add changed controls to blink')
   for id, c in pairs(state.changedControls) do
-    addControlToBlink(c, id)
+    addControlToBlink(c)
   end
   state.blinking = BLINKCONTROLS
 end
@@ -1549,7 +1549,8 @@ function addDigitToPreset(s)
   loadSelectedPreset()
 end
 
-function addControlToBlink(c, id)
+function addControlToBlink(c)
+  local id = c.ID
   if (
     state.blinkControls[id] == nil and
     state.blinkTextControls[id] == nil
