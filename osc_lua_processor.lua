@@ -305,7 +305,7 @@ function updateSlow(now)
   if itIsTimeTo('relax', now) then
     -- just resets the fader to zero whenever it's safe to do so
     if not state.fadeActive and crossfaderNotTouched() then
-      if state.fadeMode == FADEM then
+      if userFades() then
         shiva.fdrCrossfade.values.x = 1.0
       else
         shiva.fdrCrossfade.values.x = 0.0
@@ -388,6 +388,7 @@ function fadeStart()
   if shiva.btnFnLoad.values.x ~= 1 then
     lcdMessage('enable load!')
   elseif state.fadeStep > 0 then
+    print('##########################')
     state.fadeStartTime = getMillis()
     shiva.btnFnLoad.values.x = 0
     -- cacheWork()
@@ -912,10 +913,10 @@ function getAllCurrentValues(verbose)
   verbose = verbose == nil and true or verbose
   if verbose then
     if state.rootName == '' then
-      logDebug('Preset root empty. Using whole ccntrol surface')
+      log('Preset root empty. Using whole ccntrol surface')
     else
-      logDebug('Preset root object name: ' .. state.rootName)
-      logDebug('Preset root has tag: ' .. state.presetRootCtrl.tag)
+      log('Preset root object name: ' .. state.rootName)
+      log('Preset root has tag: ' .. state.presetRootCtrl.tag)
     end
     if shiva.cfgModeSelect.values.x == MODEMIDI then
       log('Searching all controls with MIDI messages.')
@@ -1083,13 +1084,12 @@ function applyFadeValues()
   i = state.fadeMax / 10
   s1 = string.rep('=', math.ceil((state.fadeMax - state.fadeStep) / i))
   s2 = string.rep(' ', (state.fadeMax / i) - #s1)
-  if state.fadeStep == 0 and state.fadeMode == FADEM then
+  if state.fadeStep == 0 and userFades() then
     lcdMessage('  ..FADING..\n' .. '  release!', false)
   else
-    lcdMessage(
-    '..FADING.. ' ..
-    string.format("%.1f", (getMillis() - state.fadeStartTime) / 1000) ..
-    '\n' .. ' [' .. s1 .. s2 .. ']', false)
+    local d = ''
+    if not userFades() then d = string.format("%.1f", (getMillis() - state.fadeStartTime) / 1000) end
+    lcdMessage('..FADING.. ' .. d .. '\n' .. ' [' .. s1 .. s2 .. ']', false)
   end
 end
 
@@ -1524,7 +1524,7 @@ end
 function toggleFadeMode()
   state.fadeMode = not state.fadeMode
   updateLabelFade()
-  if state.fadeMode == FADEM then
+  if userFades() then
     initCrossfade()
     shiva.fdrCrossfade.properties.cursor = true
     shiva.fdrCrossfade:setValueField('x', ValueField.CURRENT, 1.0)
@@ -1552,7 +1552,7 @@ end
 
 function disableFade()
   logDebug('Disable fader..')
-  shiva.fdrCrossfade.values.x = state.fadeMode == FADEM and 1.0 or 0.0
+  shiva.fdrCrossfade.values.x = userFades() and 1.0 or 0.0
   state.fadeActive = false
   state.fadeStep = 0
   -- labelDisable.properties.interactive = false
