@@ -323,6 +323,7 @@ function updateFade(now)
     end
     applyFadeValues()
     updateFadeValues()
+    shiva.grpManager.fdrLoad.values.x = (getMillis() - now) / state.fadeDelay
   end
 end
 
