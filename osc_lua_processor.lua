@@ -3,6 +3,7 @@
 local MODEMIDI = 0
 local MODEOSC = 1
 local MODEPREFIX = 2
+local COLOR_TEXTDEFAULT = 'FFFFFFC3'
 local FADEIN = true
 local FADEM = false
 local DEBUG = false
@@ -12,6 +13,8 @@ local BLINKDISPLAYS = 7
 local PRESETNAMEID = 'preset_name'
 local PRESETIDID = 'preset_id'
 local RESERVED = 'shivaReserved'
+local CB_ALL = 0
+local CB_ONLYPASTE = 1
 -- keyboard targets
 local KBDTARGETACTIVEPRESET = 'activePresetName'
 local KBDTARGETNEWSAVE = 'newSave'
@@ -104,7 +107,7 @@ local state = {
   msgLcdSent = 0,
   msgLcd = '',
   -- crossfade update
-  fadeDelay = 5.0,
+  fadeDelay = 20,
   fadeLast = 0,
   -- slow update
   relaxDelay = 2000,
@@ -158,6 +161,7 @@ function initGui()
   updateDirectLoadButtons()
   updateLabelFade()
   if showingUndefined() then showEditor()
+  elseif showingEditor() then showEditor()
   elseif showingCollapsed() then showCollapsed()
   elseif showingDirectLoad then showDirectLoad()
   else showEditor() end
@@ -165,13 +169,6 @@ function initGui()
   lcdMessageDelayed('\n  Control Select\n    Mode: ' .. getSelectModeStr())
   log('Init finished.')
   log('== Welcome to "Shiva" Preset Module! Happy Jammin\' :-) ==')
-end
-
-function getSelectModeStr()
-  if shiva.cfgModeSelect.values.x == MODEMIDI then return 'MIDI'
-  elseif shiva.cfgModeSelect.values.x == MODEOSC then return 'OSC'
-  elseif shiva.cfgModeSelect.values.x == MODEPREFIX then return 'shiva'
-  end
 end
 
 function initPreset()
@@ -201,13 +198,9 @@ function onReceiveNotify(cmd, val)
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then showContextMenu()
     elseif string.match(val, '^direct[0-9]+$') then
-      -- FIXME: If selected preset is empty, we can't load it, so we can ONLY
-      -- paste, and only when clipBoard is filled. So, diesable all other options
-      -- in context menu in thi case!!
       local p = string.sub(val, 7)
       selectPreset(p)
-      loadSelectedPreset()
-      showContextMenu()
+      if loadSelectedPreset() then showContextMenu() else showContextMenu(CB_ONLYPASTE) end
     end
   end
 end
@@ -323,13 +316,7 @@ end
 
 function updateFade(now)
   if itIsTimeTo('fade', now) then
-    if (
-          state.fadeMode ~= FADEIN or
-          state.fadeStep < 0 or
-          not state.fadeActive
-        ) then
-      return
-    end
+    if state.fadeMode ~= FADEIN or state.fadeStep < 0 then return end
     if state.fadeStep == 0 then
       disableFade()
       applySelectedPreset()
@@ -513,9 +500,6 @@ function directLoad()
   shiva.btnFnLoad.values.x = 0
   if not applySelectedPreset() then
     disableFade()
-    -- blink to also indicate in DirectLoad that empty preset was NOT LOADED.
-    addControlToBlink(shiva.groupDirectLoadButtons[math.fmod(getSelectedPreset(),   10) + 1])
-    state.blinking = 3
     return false
   end
   return true
@@ -592,13 +576,15 @@ function toggleCollapse()
 end
 
 function clipBoardCut()
-  log('clipboard cut')
+  -- TODO: workaround ..not realy sure why I still get a msg even though its disable..?
+  if not shiva.menuContext.children.entryCut.properties.interactive then return end
+  logDebug('clipboard cut')
   if state.presetModified then
     hideContextMenu()
     lcdMessage('cannot cut\npreset modified')
     return
   end
-  state.clipBoard = json.fromTable(state.currValues)
+  state.clipBoard = json.fromTable(state.presetValues)
   deletePreset()
   updateDirectLoadButtons()
   hideContextMenu()
@@ -606,20 +592,24 @@ function clipBoardCut()
 end
 
 function clipBoardCopy()
-  log('clipboard copy')
+  -- TODO: workaround ..not realy sure why I still get a msg even though its disable..?
+  if not shiva.menuContext.children.entryCopy.properties.interactive then return end
+  logDebug('clipboard copy')
   if state.presetModified then
     hideContextMenu()
     lcdMessage('cannot copy\npreset modified')
     return
   end
-  state.clipBoard = json.fromTable(state.currValues)
+  state.clipBoard = json.fromTable(state.presetValues)
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('copied to clipboard\npreset ' .. getSelectedPreset())
 end
 
 function clipBoardPaste()
-  log('clipboard paste')
+  -- TODO: workaround ..not realy sure why I still get a msg even though its disable..?
+  if not shiva.menuContext.children.entryPaste.properties.interactive then return end
+  logDebug('clipboard paste')
   if state.clipBoard == nil then
     hideContextMenu()
     lcdMessage('cannot paste\nno clipboard')
@@ -632,7 +622,9 @@ function clipBoardPaste()
 end
 
 function deletePreset()
-  log('clipboard delete')
+  -- TODO: workaround ..not realy sure why I still get a msg even though its disable..?
+  if not shiva.menuContext.children.entryDelete.properties.interactive then return end
+  logDebug('clipboard delete')
   shiva.presetStore[getSelectedPreset() + 1].values.text = ''
   updateDirectLoadButtons()
   hideContextMenu()
@@ -1383,6 +1375,7 @@ end
 function itIsTimeTo(what, now)
   if (now - state[what .. 'Last'] > state[what .. 'Delay']) then
     state[what .. 'Last'] = now
+    if state.fadeActive and not what == 'fade' then return false end
     return true
   end
   return false
@@ -1435,7 +1428,27 @@ function showMsgLcdDelayed(now)
   end
 end
 
-function showContextMenu()
+function showContextMenu(mode)
+  mode = mode == nil and CB_ALL or mode
+  if mode == CB_ONLYPASTE then
+    shiva.menuContext.children.entryCut.properties.interactive = false
+    shiva.menuContext.children.entryCut.properties.textColor = 0
+    shiva.menuContext.children.entryCopy.properties.interactive = false
+    shiva.menuContext.children.entryCopy.properties.textColor = 0
+    shiva.menuContext.children.entryPaste.properties.interactive = true
+    shiva.menuContext.children.entryPaste.properties.textColor = COLOR_TEXTDEFAULT
+    shiva.menuContext.children.entryDelete.properties.interactive = false
+    shiva.menuContext.children.entryDelete.properties.textColor = 0
+  else
+    shiva.menuContext.children.entryCut.properties.interactive = true
+    shiva.menuContext.children.entryCut.properties.textColor = COLOR_TEXTDEFAULT
+    shiva.menuContext.children.entryCopy.properties.interactive = true
+    shiva.menuContext.children.entryCopy.properties.textColor = COLOR_TEXTDEFAULT
+    shiva.menuContext.children.entryPaste.properties.interactive = true
+    shiva.menuContext.children.entryPaste.properties.textColor = COLOR_TEXTDEFAULT
+    shiva.menuContext.children.entryDelete.properties.interactive = true
+    shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
+  end
   shiva.grpBlock.visible = true
   shiva.menuContext.children[1].values.text = 'Preset ' .. getSelectedPreset()
   shiva.menuContext.properties.visible = true
@@ -1612,5 +1625,12 @@ function updateDirectLoadButtons(p)
     shiva.groupDirectLoadButtons[i + 10].values.text = getNameFromPreset(p + i - 1)
     shiva.groupDirectLoadButtons[i].tag = 'direct' .. p + i - 1
     shiva.groupDirectLoadButtons[i].values.x = (p + i -1) == s and 1 or 0
+  end
+end
+
+function getSelectModeStr()
+  if shiva.cfgModeSelect.values.x == MODEMIDI then return 'MIDI'
+  elseif shiva.cfgModeSelect.values.x == MODEOSC then return 'OSC'
+  elseif shiva.cfgModeSelect.values.x == MODEPREFIX then return 'shiva'
   end
 end
