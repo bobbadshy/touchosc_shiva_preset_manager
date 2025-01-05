@@ -869,8 +869,8 @@ function controlEligible(c)
     -- Search all with MIDI msg attached
     return #c.messages.MIDI > 0
   elseif shiva.cfgModeSelect.values.x == MODEOSC then
-    -- Search all with MIDI msg attached
-    return #c.messages.MIDI > 0
+    -- Search all with OSC msg attached
+    return #c.messages.OSC > 0
   end
   -- Else, search all with tag (prefix) "shiva"
   smatch = '^shiva.*'
