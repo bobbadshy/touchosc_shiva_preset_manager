@@ -9,10 +9,7 @@
   - All controls whose tag field starts with the string **"shiva"**
 - Regardless of the above mode, controls can always be manually excluded by adding the string **"noshiva"** to the start of the tag field! 
 - Optionally limit preset to a certain base group, so multiple preset modules can be added to a surface, e.g. one on every pager page.
-- Support saving the following TouchOSC values:
-  - `x` (buttons, faders etc.)
-  - `text` (labels, multi-line text controls)
-  - `xy`(XY panels)
+- Saves the controls's `x`, `y`, and `text` values into the preset.
 - Preset name editor.
   - Tap on the multi-line name display to edit the currenttly active preset name.
 - Direct access load mode
