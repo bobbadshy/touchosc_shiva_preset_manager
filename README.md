@@ -95,6 +95,11 @@ If you have any ideas or want to contribute to the project yourself, feel free t
 - ...none at the moment, but who knows what tomorrow morning's coffee will bring ;) ...
 - ...
 
+## Links
+
+- [Hexler TouchOSC](https://hexler.net/touchosc)
+- [TouchOSC Scripting API](https://hexler.net/touchosc/manual/script)
+
 ## Donations
 
 This is an Open Source software and free to use for everyone in any which way possible! :)
