@@ -1215,7 +1215,11 @@ function applySkinGeneric()
       if string.match(ctrl.name, '^btnFn.+') then
         logDebug('btn: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateFunctions.properties.color -- default was 66D1FFD9
-        ctrl.properties.background = shiva.skinSettings.templateFunctions.properties.background
+        if ctrl.type == ControlType.LABEL then
+          ctrl.properties.background = shiva.skinSettings.templateFunctions.properties.background
+        else
+          ctrl.properties.background = false
+        end
         ctrl.properties.outline = shiva.skinSettings.templateFunctions.properties.outline
         ctrl.properties.outlineStyle = shiva.skinSettings.templateFunctions.properties.outlineStyle
         ctrl.properties.cornerRadius = shiva.skinSettings.templateFunctions.properties.cornerRadius
@@ -1287,6 +1291,17 @@ function applySkinGeneric()
         ctrl.properties.color = shiva.skinSettings.templateDigits.properties.color -- default was 66D1FFD9
         ctrl.properties.textColor = shiva.skinSettings.templateDigits.properties.textColor -- default was FFFFFFD0
         ctrl.properties.background = shiva.skinSettings.templateDigits.properties.background
+        ctrl.properties.outline = shiva.skinSettings.templateDigits.properties.outline
+        ctrl.properties.outlineStyle = shiva.skinSettings.templateDigits.properties.outlineStyle
+        ctrl.properties.cornerRadius = shiva.skinSettings.templateDigits.properties.cornerRadius
+        ctrl.properties.textSize = shiva.skinSettings.templateDigits.properties.textSize
+        ctrl.properties.font = shiva.skinSettings.templateDigits.properties.font
+      end
+      if string.match(ctrl.name, '^button[0-9]+$') then
+        logDebug('Digits: ' .. ctrl.name)
+        ctrl.properties.color = shiva.skinSettings.templateDigits.properties.color -- default was 66D1FFD9
+        ctrl.properties.textColor = shiva.skinSettings.templateDigits.properties.textColor -- default was FFFFFFD0
+        ctrl.properties.background = false
         ctrl.properties.outline = shiva.skinSettings.templateDigits.properties.outline
         ctrl.properties.outlineStyle = shiva.skinSettings.templateDigits.properties.outlineStyle
         ctrl.properties.cornerRadius = shiva.skinSettings.templateDigits.properties.cornerRadius
