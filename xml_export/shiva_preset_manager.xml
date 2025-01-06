@@ -3550,7 +3550,6 @@ AMT
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='s'><key>
 <![CDATA[script]]></key><value>
 <![CDATA[---@diagnostic disable: lowercase-global, undefined-global
--- luaCtrl luaProcessor
 -- CONSTANTS
 local MODEMIDI = 0
 local MODEOSC = 1
@@ -3749,6 +3748,8 @@ function onReceiveNotify(cmd, val)
     blinkControls(val)
   elseif cmd == 'blinkText' then
     blinkTextControls(val)
+  elseif cmd == 'kbdClose' then
+    saveKeyboardValue()
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then showContextMenu()
     elseif string.match(val, '^direct[0-9]+$') then
@@ -3776,7 +3777,7 @@ function registerHandlers()
     lcdMessage = lcdTap,
     -- btnToggleEdit = toggleEdit,
     btnFnDirectBackActive = directBackToActivePreset,
-    btnFnKbdClose = saveKeyboardValue,
+    -- btnFnKbdClose = saveKeyboardValue,
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
     btnClearWork = clearWork,
@@ -4239,7 +4240,7 @@ function showingUndefined()
 end
 
 function showKeyboard(s, target)
-  shiva.lcdKbdDisplay.values.text = s
+  shiva.lcdKbdDisplay.values.text = s .. '_'
   shiva.lcdKbdDisplay.tag = target
   shiva.groupKeyboardMain.properties.visible = true
   shiva.btnDirectToggleEdit.properties.interactive = false
@@ -5082,10 +5083,10 @@ end
 
 function saveKeyboardValue()
   if shiva.lcdKbdDisplay.tag == KBDTARGETNEWSAVE then
-    setSelectedPresetName(shiva.lcdKbdDisplay.values.text)
+    setSelectedPresetName(shiva.lcdKbdDisplay.values.text:sub(1,-2))
     lcdMessage(getSelectedPresetName())
   elseif shiva.lcdKbdDisplay.tag == KBDTARGETACTIVEPRESET then
-    setActivePresetName(shiva.lcdKbdDisplay.values.text)
+    setActivePresetName(shiva.lcdKbdDisplay.values.text:sub(1,-2))
     lcdMessage(getActivePresetName())
   end
 end
@@ -5925,7 +5926,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -6001,7 +6002,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -6069,7 +6070,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -6109,7 +6110,7 @@ function onPointer()
 end]]></value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='s'><key>
 <![CDATA[tag]]></key><value>
-<![CDATA[SYNTHPAD NICE*]]></value></property><property type='i'><key>
+<![CDATA[SYNTHPAD NO.12]]></value></property><property type='i'><key>
 <![CDATA[textAlignH]]></key><value>2</value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
@@ -6319,7 +6320,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='s'><key>
 <![CDATA[tag]]></key><value>
-<![CDATA[SYNTHPAD NICE*]]></value></property><property type='i'><key>
+<![CDATA[SYNTHPAD NO.12]]></value></property><property type='i'><key>
 <![CDATA[textAlignH]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
@@ -6395,7 +6396,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>0.3</r><g>0.3</g><b>0.3</b><a>1</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -6467,7 +6468,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>0.3</r><g>0.3</g><b>0.3</b><a>1</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -7464,7 +7465,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='b'><key>
-<![CDATA[visible]]></key><value>1</value></property></properties><values>
+<![CDATA[visible]]></key><value>0</value></property></properties><values>
 <value><key>
 <![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
@@ -7554,16 +7555,24 @@ end]]></value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='s'><key>
 <![CDATA[script]]></key><value>
 <![CDATA[-- luaCtrl procStack
+-- NOTE: We are assuming that EVERY text that was sent to us ALWAYS
+-- has had the cursor char '_' added at the end!!
 function onValueChanged(k)
-  t = self.parent.children.lcdKbdDisplay
   v = self.values.text
+  if v == 'kbdClose' then
+    self.parent.parent.children.luaProcessor:notify(v)
+    return
+  end
+  t = self.parent.children.lcdKbdDisplay
+  -- remove cursor
+  t.values.text = t.values.text:sub(1,-2)
   if v == '<<' then
-    t.values.text = string.sub(t.values.text, 0, #t.values.text -1)
-  --elseif v == '_' then
-  --  t.values.text = t.values.text .. ' '
+    t.values.text = string.sub(t.values.text, 1, -2)
   else
     t.values.text = t.values.text .. self.values.text
   end
+  -- re-add cursor
+  t.values.text = t.values.text .. '_'
   self.values.text = ''
 end]]></value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='i'><key>
@@ -7621,8 +7630,8 @@ end]]></value></property><property type='i'><key>
 <![CDATA[1]]></value><scaleMin>0</scaleMin><scaleMax>1</scaleMax><dstType>PROPERTY</dstType><dstVar><![CDATA[interactive]]></dstVar><dstID><![CDATA[34e728e6-c8fc-11ef-a755-2cf05d7a7c68]]></dstID></local><local>
 <enabled>1</enabled><triggers>
 <trigger><var>
-<![CDATA[touch]]></var><condition>FALL</condition></trigger></triggers><type>PROPERTY</type><conversion>STRING</conversion><value>
-<![CDATA[name]]></value><scaleMin>0</scaleMin><scaleMax>1</scaleMax><dstType>VALUE</dstType><dstVar><![CDATA[text]]></dstVar><dstID><![CDATA[0d596ade-ca30-11ef-a94b-2cf05d7a7c68]]></dstID></local><local>
+<![CDATA[touch]]></var><condition>FALL</condition></trigger></triggers><type>CONSTANT</type><conversion>STRING</conversion><value>
+<![CDATA[kbdClose]]></value><scaleMin>0</scaleMin><scaleMax>1</scaleMax><dstType>VALUE</dstType><dstVar><![CDATA[text]]></dstVar><dstID><![CDATA[34e76004-c8fc-11ef-930a-2cf05d7a7c68]]></dstID></local><local>
 <enabled>1</enabled><triggers>
 <trigger><var>
 <![CDATA[touch]]></var><condition>RISE</condition></trigger></triggers><type>CONSTANT</type><conversion>FLOAT</conversion><value>
@@ -7775,7 +7784,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[SYNTHPAD NICE XML WORKS]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[SYNTHPAD NO.12_]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e793bc-c8fc-11ef-9dcd-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -13534,7 +13543,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD NICE*"}}]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD NO.12"}}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1d134-ca30-11ef-a614-2cf05d7a7c68' type='TEXT'><properties>
 <property type='b'><key>
@@ -16694,7 +16703,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD NICE*"}}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1cd10-ca30-11ef-b3bc-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -16725,7 +16734,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD"}}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1cd88-ca30-11ef-8749-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -16756,7 +16765,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD NO.1  "}}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1ce0a-ca30-11ef-88dd-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -16787,7 +16796,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD NO.1"}}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1ce6e-ca30-11ef-a8a2-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -16818,7 +16827,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.5024509429931641},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":1},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.3270088732242584},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.512389063835144,"y":0},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"SYNTHPAD NO.12"}}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1ced2-ca30-11ef-a7b2-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>

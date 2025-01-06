@@ -197,6 +197,8 @@ function onReceiveNotify(cmd, val)
     blinkControls(val)
   elseif cmd == 'blinkText' then
     blinkTextControls(val)
+  elseif cmd == 'kbdClose' then
+    saveKeyboardValue()
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then showContextMenu()
     elseif string.match(val, '^direct[0-9]+$') then
@@ -224,7 +226,7 @@ function registerHandlers()
     lcdMessage = lcdTap,
     -- btnToggleEdit = toggleEdit,
     btnFnDirectBackActive = directBackToActivePreset,
-    btnFnKbdClose = saveKeyboardValue,
+    -- btnFnKbdClose = saveKeyboardValue,
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
     btnClearWork = clearWork,
@@ -687,7 +689,7 @@ function showingUndefined()
 end
 
 function showKeyboard(s, target)
-  shiva.lcdKbdDisplay.values.text = s
+  shiva.lcdKbdDisplay.values.text = s .. '_'
   shiva.lcdKbdDisplay.tag = target
   shiva.groupKeyboardMain.properties.visible = true
   shiva.btnDirectToggleEdit.properties.interactive = false
@@ -1530,10 +1532,10 @@ end
 
 function saveKeyboardValue()
   if shiva.lcdKbdDisplay.tag == KBDTARGETNEWSAVE then
-    setSelectedPresetName(shiva.lcdKbdDisplay.values.text)
+    setSelectedPresetName(shiva.lcdKbdDisplay.values.text:sub(1,-2))
     lcdMessage(getSelectedPresetName())
   elseif shiva.lcdKbdDisplay.tag == KBDTARGETACTIVEPRESET then
-    setActivePresetName(shiva.lcdKbdDisplay.values.text)
+    setActivePresetName(shiva.lcdKbdDisplay.values.text:sub(1,-2))
     lcdMessage(getActivePresetName())
   end
 end
