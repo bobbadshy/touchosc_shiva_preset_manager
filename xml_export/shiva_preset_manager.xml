@@ -3551,7 +3551,6 @@ AMT
 <![CDATA[script]]></key><value>
 <![CDATA[---@diagnostic disable: lowercase-global, undefined-global
 -- luaCtrl luaProcessor
--- testing git detect
 -- CONSTANTS
 local MODEMIDI = 0
 local MODEOSC = 1
