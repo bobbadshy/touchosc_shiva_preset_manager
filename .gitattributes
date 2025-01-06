@@ -1,1 +1,2 @@
 *.xml filter=lfs diff=lfs merge=lfs -text
+*.tosc filter=lfs diff=lfs merge=lfs -text
