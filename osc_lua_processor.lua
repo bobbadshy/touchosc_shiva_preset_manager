@@ -104,7 +104,7 @@ local state = {
   textBlinkg = 0,
   changedControls = {},
   -- = periodic updates =
-  msgLcdDelay = 3000,
+  msgLcdDelay = 2000,
   msgLcdSent = 0,
   msgLcd = '',
   -- crossfade update
@@ -167,8 +167,8 @@ function initGui()
   elseif showingCollapsed() then showCollapsed()
   elseif showingDirectLoad then showDirectLoad()
   else showEditor() end
-  lcdMessage('   Welcome to\n    "Shiva"\n  Preset Module')
-  lcdMessageDelayed('\n  Control Select\n    Mode: ' .. getSelectModeStr())
+  lcdMessage('\n  Control Select\n    Mode: ' .. getSelectModeStr())
+  lcdMessageDelayed('   Welcome to\n    "Shiva"\n  Preset Module')
   log('Init finished.')
   log('== Welcome to "Shiva" Preset Module! Happy Jammin\' :-) ==')
 end
