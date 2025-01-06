@@ -46,6 +46,9 @@
 A short demonstration is available on YouTube:
 - https://www.youtube.com/watch?v=QXi5oVgauT8
 
+Performance test with 200 controls:
+- https://youtu.be/Wb50rBoNh3M?si=iKGUKJHeitzpiVim
+
 ## Screenshots
 
 | Screenhots | |
