@@ -93,7 +93,7 @@ If you have any ideas or want to contribute to the project yourself, feel free t
 
 ## Planned features wishlist
 
-- Support send/receive presets over MIDI SysEx, for persistent storage e.g. in a MIDI Librarian, or for ***live sharing over MIDI with other users that use the same OSC template for their gear :).*** See [discussion](https://github.com/bobbadshy/touchosc_shiva_preset_manager/discussions/8)
+- Support send/receive presets over MIDI SysEx, for persistent storage e.g. in a MIDI Librarian, or for ***live sharing over MIDI with other users that use the same OSC template for their gear :).*** See [discussion](https://github.com/bobbadshy/touchosc_shiva_preset_manager/discussions/8) and [MidiHax repo](https://github.com/MidiHax/touchosc-confirm-button) with the code snippets for handling MIDI SysEx nToucPSC templates.
 - ...no others at the moment, but who knows what tomorrow morning's coffee will bring ;) ...
 - ...
 
