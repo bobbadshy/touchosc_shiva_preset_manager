@@ -1214,12 +1214,15 @@ function applySkinGeneric()
       end
       if string.match(ctrl.name, '^btnFn.+') then
         logDebug('btn: ' .. ctrl.name)
-        ctrl.properties.color = shiva.skinSettings.templateFunctions.properties.color -- default was 66D1FFD9
-        if ctrl.type == ControlType.LABEL then
-          ctrl.properties.background = shiva.skinSettings.templateFunctions.properties.background
-        else
+        if (
+          ctrl.parent.name == "groupKeyboard" and
+          ctrl.type == ControlType.BUTTON
+        ) then
           ctrl.properties.background = false
+        else
+          ctrl.properties.background = shiva.skinSettings.templateFunctions.properties.background
         end
+        ctrl.properties.color = shiva.skinSettings.templateFunctions.properties.color -- default was 66D1FFD9
         ctrl.properties.outline = shiva.skinSettings.templateFunctions.properties.outline
         ctrl.properties.outlineStyle = shiva.skinSettings.templateFunctions.properties.outlineStyle
         ctrl.properties.cornerRadius = shiva.skinSettings.templateFunctions.properties.cornerRadius
