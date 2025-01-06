@@ -29,6 +29,8 @@ local shiva = {
   groupKeyboard = presetModule.groupKeyboard.children,
   grpManagerMain = presetModule.grpManager,
   grpManager = presetModule.grpManager.children,
+  groupRunSettingsMain = presetModule.groupRunSettings,
+  groupRunSettings = presetModule.groupRunSettings.children,
   grpBlock = presetModule.grpBlock,
   borderGroupBottom = presetModule.borderGroupBottom,
   -- settings
@@ -89,6 +91,7 @@ local state = {
   maxPreset = #shiva.presetStore - 1,
   selectedIsEmpty = false,
   collapsed = false,
+  ignoreToggle = false,
   -- keep track of working state stack
   lastWork = 0,
   -- crossfade states
@@ -203,6 +206,9 @@ function onReceiveNotify(cmd, val)
     saveKeyboardValue()
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then showContextMenu()
+    elseif val == 'lblDirectEdit' then
+      state.ignoreToggle = true
+      showRunSettings()
     elseif string.match(val, '^direct[0-9]+$') then
       local p = string.sub(val, 7)
       selectPreset(p)
@@ -245,6 +251,8 @@ function registerHandlers()
     entryCopy = clipBoardCopy,
     entryPaste = clipBoardPaste,
     entryDelete = deletePreset,
+    -- Run Settings
+    stBtnRandomize = randomizeNow,
   }
 end
 
@@ -470,6 +478,10 @@ function addDisplaysToBlink()
 end
 
 function toggleEdit()
+  if state.ignoreToggle then
+    state.ignoreToggle = false
+    return
+  end
   if shiva.menuContext.visible then return end
   -- selectActivePreset()
   if collapsed() and showingDirectLoad() then showCollapsed()
@@ -648,6 +660,7 @@ end
 
 function showEditor()
   shiva.groupDirectLoadButtonsMain.visible = false
+  shiva.groupRunSettingsMain.visible = false
   shiva.lblDirectHeading.visible = true
   shiva.borderGroupBottom.visible = true
   shiva.grpManagerMain.visible = true
@@ -656,6 +669,7 @@ end
 
 function showDirectLoad()
   shiva.borderGroupBottom.visible = false
+  shiva.groupRunSettingsMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.lblDirectHeading.visible = false
   shiva.groupDirectLoadButtonsMain.visible = true
@@ -664,10 +678,20 @@ end
 
 function showCollapsed()
   shiva.borderGroupBottom.visible = false
+  shiva.groupRunSettingsMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.lblDirectHeading.visible = true
   shiva.btnDirectToggleEdit.values.x = 0
+end
+
+function showRunSettings()
+  shiva.lblDirectHeading.visible = true
+  shiva.borderGroupBottom.visible = false
+  shiva.grpManagerMain.visible = false
+  shiva.groupDirectLoadButtonsMain.visible = false
+  shiva.groupRunSettingsMain.visible = true
+  shiva.btnDirectToggleEdit.values.x = 1
 end
 
 function collapsed()
@@ -1206,6 +1230,17 @@ function randomizeControls()
     end
     -- shiva.randomizeControls.values.x = 0
     shiva.randomizeControls.values.x = 0
+  end
+end
+
+function randomizeNow()
+  logDebug('Randomizing all control values!')
+  showEditor()
+  getAllCurrentValues()
+  for k,c in pairs(state.allControls) do
+    logDebug('Randomizing ' .. c.name)
+    if c.values.x ~= nil then c.values.x = math.random() end
+    if c.values.y ~= nil then c.values.x = math.random() end
   end
 end
 
