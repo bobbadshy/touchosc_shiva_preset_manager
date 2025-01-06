@@ -13,6 +13,7 @@
   - [Download](#download)
   - [Bug reports, Feature Suggestions or Contributing](#bug-reports-feature-suggestions-or-contributing)
   - [Planned features wishlist](#planned-features-wishlist)
+  - [Links](#links)
   - [Donations](#donations)
 
 ## Supported features:
