@@ -1121,6 +1121,7 @@ end
 function cacheWork()
   log('Saving current work in progress..')
   getAllCurrentValues()
+  if not state.presetModified and getSelectedPreset() == getActivePreset() then return end
   state.lastWork = math.fmod(state.lastWork + 1, 10)
   shiva.workStore[state.lastWork + 1].values.text = json.fromTable(state.currValues)
   updateRestoreBtn()
