@@ -37,6 +37,7 @@ local shiva = {
   cfgPresetRoot = presetModule.settings.children.cfgPresetRoot,
   cfgModeSelect = presetModule.settings.children.cfgModeSelect,
   cfgFadeOnDirect = presetModule.settings.children.cfgFadeOnDirect,
+  randomizeControls = presetModule.settings.children.randomizeControls,
   enableDebug = presetModule.settings.children.enableDebug,
   excludeShiva = presetModule.settings.children.excludeShiva,
   clearPresets = presetModule.settings.children.clearPresets,
@@ -76,7 +77,7 @@ local state = {
   rootName = nil,
   presetRootCtrl = '',
   -- some collections
-  allControls = {},
+  allControls = nil,
   currValues = {},
   presetValues = {},
   fadeValues = {},
@@ -133,6 +134,7 @@ function init()
   disableFade()
   initCrossfade()
   initGui()
+  randomizeControls()
 end
 
 function initDebug()
@@ -933,9 +935,11 @@ function getAllCurrentValues(verbose)
       log('Searching all controls with prefix "shiva".')
     end
   end
-  state.allControls = {}
   local id = state.rootName == '' and root.ID or root:findByName(state.rootName, true).ID
-  getAllControls(id)
+  if state.allControls == nil then
+    state.allControls = {}
+    getAllControls(id)
+  end
   state.currValues = {}
   local count = 0
   local valueName = ''
@@ -1188,6 +1192,20 @@ function purgeWorkStore()
       shiva.presetStore[i].values.text = ''
     end
     shiva.clearPresets.values.x = 0
+  end
+end
+
+function randomizeControls()
+  if shiva.randomizeControls.values.x == 1 then
+    log('Randomizing all control values!')
+    getAllCurrentValues()
+    for k,c in pairs(state.allControls) do
+      logDebug('Randomizing ' .. c.name)
+      if c.values.x ~= nil then c.values.x = math.random() end
+      if c.values.y ~= nil then c.values.x = math.random() end
+    end
+    -- shiva.randomizeControls.values.x = 0
+    shiva.randomizeControls.values.x = 0
   end
 end
 
