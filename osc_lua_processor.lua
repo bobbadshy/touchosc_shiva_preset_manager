@@ -325,7 +325,13 @@ function updateFade(now)
     end
     applyFadeValues()
     updateFadeValues()
-    shiva.grpManager.fdrLoad.values.x = (getMillis() - now) / state.fadeDelay
+    if math.fmod(state.fadeStep, 10) == 0 then
+      local s = (getMillis() - now) / state.fadeDelay
+      shiva.grpManager.fdrLoad.values.x = 0.5 * (shiva.grpManager.fdrLoad.values.x + s)
+      if s > 0.9 then shiva.grpManager.fdrLoad.color.r = 1
+      elseif s > 0.8 then shiva.grpManager.fdrLoad.color.r = 0.5
+      else shiva.grpManager.fdrLoad.color.r = 0 end
+    end
   end
 end
 
