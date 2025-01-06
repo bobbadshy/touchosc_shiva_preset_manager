@@ -47,7 +47,11 @@ A short demonstration is available on YouTube:
 - https://www.youtube.com/watch?v=QXi5oVgauT8
 
 Performance test with 200 controls:
-- https://youtu.be/Wb50rBoNh3M?si=iKGUKJHeitzpiVim
+
+- Fast PC, good performance:
+  - https://youtu.be/Wb50rBoNh3M?si=iKGUKJHeitzpiVim
+- Cheap, 4 year old tablet ..well, it doesn't crash ;)
+  - https://www.youtube.com/watch?v=x4XvbOiDYHM 
 
 ## Screenshots
 
