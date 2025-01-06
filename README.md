@@ -68,7 +68,7 @@ Performance test with 200 controls:
 | **Fader**, selecting duration: | **Fader active:* |
 | ![image](https://github.com/user-attachments/assets/fa5bebf2-22f7-4537-a2d1-9d11fc7cbf9c) | ![image](https://github.com/user-attachments/assets/dd4e2095-f94a-4803-bbaa-2f4e35eacf4a) |
 | **Preset name entry:** |  |
-| ![image](https://github.com/user-attachments/assets/cb431ade-b14f-4a39-9889-2c8506e89358) |  |
+| ![image](https://github.com/user-attachments/assets/1d6ddd91-de4e-4533-bf96-54db664f0215) |  |
 
 ## Usage
 
