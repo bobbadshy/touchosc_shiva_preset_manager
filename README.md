@@ -1,6 +1,6 @@
 # Shiva Preset Manager
 
-*Shiva Preset Manager* is a sophisticated preset module (OSC template) that can be added to your existing TouchOSC control surface to save, load and manage presets of your control settings.
+*Shiva Preset Manager* is a sophisticated preset module (OSC template) that can be added to your existing [TouchOSC](https://hexler.net/touchosc) control surface to save, load and manage presets of your control settings.
 
 ## Contents
 
