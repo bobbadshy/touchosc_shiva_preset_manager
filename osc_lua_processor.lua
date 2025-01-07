@@ -38,14 +38,13 @@ local shiva = {
   workStore = presetModule.workStore.children,
   cfgPresetRoot = presetModule.settings.children.cfgPresetRoot,
   cfgModeSelect = presetModule.settings.children.cfgModeSelect,
-  cfgFadeOnDirect = presetModule.settings.children.cfgFadeOnDirect,
-  randomizeControls = presetModule.settings.children.randomizeControls,
   enableDebug = presetModule.settings.children.enableDebug,
   excludeShiva = presetModule.settings.children.excludeShiva,
   clearPresets = presetModule.settings.children.clearPresets,
   skinSettings = presetModule.skinSettings.children,
   blinkFader = presetModule.blinkFader,
   blinkText = presetModule.blinkText,
+  stBtnGrpFadeOnDirectLoad = presetModule.groupRunSettings.children.stBtnGrpFadeOnDirectLoad.children.labelDisplay,
   -- Manager buttons and displays
   dspInfo = presetModule.grpManager.children.dspInfo,
   lcdMessage = presetModule.grpManager.children.lcdMessage,
@@ -132,12 +131,10 @@ function init()
   applyLayout()
   initConfig()
   clearWork()
-  purgeWorkStore()
   initPreset()
   disableFade()
   initCrossfade()
   initGui()
-  randomizeControls()
 end
 
 function initDebug()
@@ -252,7 +249,8 @@ function registerHandlers()
     entryPaste = clipBoardPaste,
     entryDelete = deletePreset,
     -- Run Settings
-    stBtnRandomize = randomizeNow,
+    stBtnRandomize = executeRandomize,
+    stBtnClearPreset = purgePresetStore,
   }
 end
 
@@ -266,7 +264,7 @@ function onValueChanged()
   if string.match(cmd, '^direct[0-9]+') then
     -- same for direct select buttons
     directSelect(cmd)
-  elseif string.match(cmd, '[0-9]') then
+  elseif string.match(cmd, '^[0-9]+$') then
     -- all digit buttons handled by same function
     addDigitToPreset(cmd)
   else
@@ -512,7 +510,7 @@ end
 
 function directLoad()
   -- set optional fade for direct load
-  local i = tonumber(shiva.cfgFadeOnDirect.values.text)
+  local i = tonumber(shiva.stBtnGrpFadeOnDirectLoad.values.text)
   if i == nil then i = 0 end
   i = math.floor(i)
   if i > 0 then
@@ -648,6 +646,10 @@ function deletePreset()
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('delete\npreset ' .. getSelectedPreset())
+end
+
+function executeRandomize()
+  randomizeControlsNow()
 end
 
 -- === GUI HANDLERS ===
@@ -1203,38 +1205,24 @@ function updateRestoreBtn()
   end
 end
 
-function purgeWorkStore()
-  if shiva.clearPresets.values.x == 1 then
-    log('Clear all presets enabled! CLEARING ALL PRESETS NOW!')
-    for i = 1, #shiva.presetStore do
-      shiva.presetStore[i].values.text = ''
-    end
-    shiva.clearPresets.values.x = 0
+function purgePresetStore()
+  log('Clear all presets enabled! CLEARING ALL PRESETS NOW!')
+  for i = 1, #shiva.presetStore do
+    shiva.presetStore[i].values.text = ''
   end
 end
 
-function randomizeControls()
-  if shiva.randomizeControls.values.x == 1 then
-    log('Randomizing all control values!')
-    getAllCurrentValues()
-    for k,c in pairs(state.allControls) do
-      logDebug('Randomizing ' .. c.name)
-      if c.values.x ~= nil then c.values.x = math.random() end
-      if c.values.y ~= nil then c.values.x = math.random() end
-    end
-    -- shiva.randomizeControls.values.x = 0
-    shiva.randomizeControls.values.x = 0
-  end
-end
-
-function randomizeNow()
+function randomizeControlsNow()
   logDebug('Randomizing all control values!')
-  showEditor()
   getAllCurrentValues()
   for k,c in pairs(state.allControls) do
     logDebug('Randomizing ' .. c.name)
-    if c.values.x ~= nil then c.values.x = math.random() end
-    if c.values.y ~= nil then c.values.x = math.random() end
+    if c.type == ControlType.BUTTON then
+      c.values.x = math.random(0,1)
+    else
+      if c.values.x ~= nil then c.values.x = math.random() end
+      if c.values.y ~= nil then c.values.y = math.random() end
+    end
   end
 end
 
