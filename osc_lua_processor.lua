@@ -1,9 +1,12 @@
 ---@diagnostic disable: lowercase-global, undefined-global
 -- CONSTANTS
-local MODEMIDI = 0
-local MODEOSC = 1
-local MODEPREFIX = 2
-local COLOR_TEXTDEFAULT = 'FFFFFFC3'
+local COLOR_TEXTDEFAULT = 'FFFFFFD0'
+local COLOR_DIGIT_BUTTONS = '2BA3D5C7'
+local COLOR_FN_BUTTONS = 'FFAC0098'
+local COLOR_MSG_DISPLAY = '2B84D5D7'
+local COLOR_MSG_DISPLAY_TXT = 'FFFFFFD0'
+local COLOR_INFO_DISPLAY = '53ED26A6'
+local COLOR_INFO_DISPLAY_TxT = '86F17DD2'
 local FADEIN = true
 local FADEM = false
 local DEBUG = false
@@ -36,14 +39,11 @@ local shiva = {
   -- settings
   presetStore = presetModule.presetStore.children,
   workStore = presetModule.workStore.children,
-  cfgPresetRoot = presetModule.settings.children.cfgPresetRoot,
-  cfgModeSelect = presetModule.settings.children.cfgModeSelect,
-  enableDebug = presetModule.settings.children.enableDebug,
-  excludeShiva = presetModule.settings.children.excludeShiva,
   clearPresets = presetModule.settings.children.clearPresets,
   skinSettings = presetModule.skinSettings.children,
   blinkFader = presetModule.blinkFader,
   blinkText = presetModule.blinkText,
+  stBtnEnableDebug = presetModule.groupRunSettings.children.stBtnEnableDebug,
   stBtnGrpFadeOnDirectLoad = presetModule.groupRunSettings.children.stBtnGrpFadeOnDirectLoad.children.labelDisplay,
   -- Manager buttons and displays
   dspInfo = presetModule.grpManager.children.dspInfo,
@@ -62,8 +62,6 @@ local shiva = {
   btnDirectToggleEdit = presetModule.groupDirectLoad.children.btnDirectToggleEdit,
   lblDirectEdit = presetModule.groupDirectLoad.children.lblDirectEdit,
   btnFnDirectBackActive = presetModule.groupDirectLoad.children.btnFnDirectBackActive,
-  -- Keyboard
-  lcdKbdDisplay = presetModule.groupKeyboard.children.lcdKbdDisplay,
   -- Menus
   menuContext = presetModule.menuContext,
 }
@@ -140,7 +138,7 @@ function init()
 end
 
 function initDebug()
-  if shiva.enableDebug.values.x == 0 then
+  if shiva.stBtnEnableDebug.values.x == 0 then
     DEBUG = false
   else
     DEBUG = true
@@ -149,10 +147,14 @@ function initDebug()
 end
 
 function initConfig()
-  state.rootName = shiva.cfgPresetRoot.values.text
+  log('Initializing config')
+  initDebug()
+  state.rootName = shiva.groupRunSettings.stLblPresetRoot.values.text
   state.presetRootCtrl = state.rootName == '' and root or root:findByName(state.rootName, true)
+  state.allControls = nil
   state.autoFade = false
   toggleFadeMode()
+  lcdMessage('\n Controls Select:\n  ' .. getSelectModeStr())
 end
 
 function initGui()
@@ -166,15 +168,28 @@ function initGui()
   end
   updateDirectLoadButtons()
   updateLabelFade()
+  state.ignoreToggle = false
   if showingUndefined() then showEditor()
   elseif showingEditor() then showEditor()
   elseif showingCollapsed() then showCollapsed()
   elseif showingDirectLoad then showDirectLoad()
   else showEditor() end
-  lcdMessage('\n  Control Select\n    Mode: ' .. getSelectModeStr())
+  lcdMessage('\n Controls Select:\n  ' .. getSelectModeStr())
   lcdMessageDelayed('   Welcome to\n    "Shiva"\n  Preset Module')
   log('Init finished.')
   log('== Welcome to "Shiva" Preset Module! Happy Jammin\' :-) ==')
+end
+
+function cycleView()
+  if state.collapsed then
+    if showingCollapsed() then showDirectLoad()
+    else showCollapsed() end
+  else
+    if showingRunSettings() then initConfig() showEditor()
+    elseif showingEditor() then showDirectLoad()
+    elseif showingDirectLoad then showEditor()
+    else showEditor() end
+  end
 end
 
 function initPreset()
@@ -204,7 +219,8 @@ function onReceiveNotify(cmd, val)
   elseif cmd == 'kbdClose' then
     saveKeyboardValue(val)
   elseif cmd == 'longTap' then
-    if val == shiva.dspSelected.name then showContextMenu()
+    if val == shiva.dspSelected.name then
+      showContextMenu()
     elseif val == 'lblDirectEdit' then
       state.ignoreToggle = true
       showRunSettings()
@@ -486,12 +502,14 @@ function toggleEdit()
   end
   if shiva.menuContext.visible then return end
   -- selectActivePreset()
-  if collapsed() and showingDirectLoad() then showCollapsed()
-  elseif showingDirectLoad() then showEditor()
-  else
-    showDirectLoad()
-    updateDirectLoadButtons()
-  end
+  cycleView()
+  updateDirectLoadButtons()
+  -- if collapsed() and showingDirectLoad() then showCollapsed()
+  -- elseif showingDirectLoad() then showEditor()
+  -- else
+  --   showDirectLoad()
+  --   updateDirectLoadButtons()
+  -- end
 end
 
 function directBackToActivePreset()
@@ -659,47 +677,54 @@ end
 -- === GUI HANDLERS ===
 
 function showEditor()
+  log('Show Editor')
+  shiva.lblDirectHeading.visible = true
+  shiva.btnDirectToggleEdit.values.x = 1
+  shiva.borderGroupBottom.visible = true
+  
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.groupRunSettingsMain.visible = false
   shiva.groupKeyboardMain.visible = false
-  shiva.lblDirectHeading.visible = true
-  shiva.borderGroupBottom.visible = true
+  
   shiva.grpManagerMain.visible = true
-  shiva.btnDirectToggleEdit.values.x = 1
-  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function showDirectLoad()
+  log('Show Direct Load')
+  shiva.lblDirectHeading.visible = true
+  shiva.btnDirectToggleEdit.values.x = 1
   shiva.borderGroupBottom.visible = true
-  shiva.groupKeyboardMain.visible = false
+  
   shiva.groupRunSettingsMain.visible = false
+  shiva.groupKeyboardMain.visible = false
   shiva.grpManagerMain.visible = false
-  shiva.lblDirectHeading.visible = false
+  
   shiva.groupDirectLoadButtonsMain.visible = true
-  shiva.btnDirectToggleEdit.values.x = 0
-  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function showCollapsed()
+  log('Show Collapsed')
+  shiva.lblDirectHeading.visible = true
+  shiva.btnDirectToggleEdit.values.x = 0
   shiva.borderGroupBottom.visible = false
+  
   shiva.groupRunSettingsMain.visible = false
   shiva.groupKeyboardMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.groupDirectLoadButtonsMain.visible = false
-  shiva.lblDirectHeading.visible = true
-  shiva.btnDirectToggleEdit.values.x = 0
-  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function showRunSettings()
+  log('Show Run Settings')
   shiva.lblDirectHeading.visible = true
-  shiva.borderGroupBottom.visible = true
-  shiva.grpManagerMain.visible = false
-  shiva.groupKeyboardMain.visible = false
-  shiva.groupDirectLoadButtonsMain.visible = false
-  shiva.groupRunSettingsMain.visible = true
   shiva.btnDirectToggleEdit.values.x = 1
-  shiva.btnDirectToggleEdit.properties.interactive = true
+  shiva.borderGroupBottom.visible = true
+
+  shiva.groupKeyboardMain.visible = false
+  shiva.grpManagerMain.visible = false
+  shiva.groupDirectLoadButtonsMain.visible = false
+
+  shiva.groupRunSettingsMain.visible = true
 end
 
 function collapsed()
@@ -707,15 +732,23 @@ function collapsed()
 end
 
 function showingCollapsed()
-  return not (shiva.grpManagerMain.visible or shiva.groupDirectLoadButtonsMain.visible)
+  return not (
+  shiva.grpManagerMain.visible or
+  shiva.groupDirectLoadButtonsMain.visible or
+  shiva.groupRunSettingsMain.visible
+  )
 end
 
 function showingEditor()
-  return shiva.grpManagerMain.visible and not shiva.groupDirectLoadButtonsMain.visible
+  return shiva.grpManagerMain.visible
+end
+
+function showingRunSettings()
+  return shiva.groupRunSettingsMain.visible
 end
 
 function showingDirectLoad()
-  return shiva.groupDirectLoadButtonsMain.visible and not shiva.grpManagerMain.visible
+  return shiva.groupDirectLoadButtonsMain.visible
 end
 
 function showingUndefined()
@@ -723,11 +756,7 @@ function showingUndefined()
 end
 
 function showKeyboard(target, text)
-  shiva.btnDirectToggleEdit.properties.interactive  = false
   shiva.groupKeyboardMain:notify(target, text)
-  shiva.groupKeyboardMain.properties.visible = true
-  shiva.btnDirectToggleEdit.properties.interactive = false
-  shiva.lblDirectEdit.properties.interactive = false
 end
 
 -- === PRESET VALUES HANDLING, LOADING AND SAVING ===
@@ -899,26 +928,24 @@ function controlEligible(c)
     RESERVED
   }
   for i = 1, #special do
-    if c.ID == special[i] then
-      return true
-    end
+    if c.ID == special[i] then return true end
   end
+  -- always ignore manually excluded controls!
+  if string.match(c.tag, '^noshiva.*') then
+     return false
+  end
+  -- Check if MIDI msg attached
   if (
-    shiva.excludeShiva.values.x and
-    string.match(c.tag, '^noshiva.*')
-  ) then
-    -- always ignore manually excluded controls!
-    return false
-  elseif shiva.cfgModeSelect.values.x == MODEMIDI then
-    -- Search all with MIDI msg attached
-    return #c.messages.MIDI > 0
-  elseif shiva.cfgModeSelect.values.x == MODEOSC then
-    -- Search all with OSC msg attached
-    return #c.messages.OSC > 0
-  end
-  -- Else, search all with tag (prefix) "shiva"
-  smatch = '^shiva.*'
-  return string.match(c.tag, smatch)
+    shiva.groupRunSettings.stBtnSelectMidi.values.x == 1 and
+    #c.messages.MIDI > 0
+  ) then return true end
+  -- Check if OSC msg attached
+  if (
+    shiva.groupRunSettings.stBtnSelectOsc.values.x == 1 and
+    #c.messages.OSC > 0
+  ) then return true end
+  -- Check if special tag prefix "shiva"
+  if string.match(c.tag, '^shiva.*') then return true end
 end
 
 function getAllControls(pid)
@@ -960,13 +987,7 @@ function getAllCurrentValues(verbose)
       log('Preset root object name: ' .. state.rootName)
       log('Preset root has tag: ' .. state.presetRootCtrl.tag)
     end
-    if shiva.cfgModeSelect.values.x == MODEMIDI then
-      log('Searching all controls with MIDI messages.')
-    elseif shiva.cfgModeSelect.values.x == MODEOSC then
-      log('Searching all controls with OSC messages.')
-    else
-      log('Searching all controls with prefix "shiva".')
-    end
+    log('Searching controls..')
   end
   local id = state.rootName == '' and root.ID or root:findByName(state.rootName, true).ID
   if state.allControls == nil then
@@ -1083,6 +1104,10 @@ function updateFadeValues()
 end
 
 function updateSingleFadeValue(k)
+  if state.fadeValues[k] == nil then
+    log('Warning! Control to fade was nil!')
+    return
+  end
   for n,v in pairs(state.fadeValues[k]) do
     if (
       state.presetValues[k][n] == nil or
@@ -1613,9 +1638,6 @@ end
 
 function startFading()
   state.fading = true
-  -- labelDisable.properties.interactive = true
-  shiva.btnDirectToggleEdit.properties.interactive = false
-  shiva.lblDirectEdit.properties.interactive = false
   for i = 1, #shiva.grpManager do
     if shiva.grpManager[i].tag ~= 'ignore' then
       shiva.grpManager[i].properties.interactive = false
@@ -1628,9 +1650,6 @@ function disableFade()
   shiva.fdrCrossfade.values.x = not state.autoFade and 1.0 or 0.0
   state.fading = false
   state.fadeStep = 0
-  -- labelDisable.properties.interactive = false
-  shiva.btnDirectToggleEdit.properties.interactive = true
-  shiva.lblDirectEdit.properties.interactive = true
   for i = 1, #shiva.grpManager do
     if shiva.grpManager[i].tag ~= 'ignore' then
       shiva.grpManager[i].properties.interactive = true
@@ -1708,8 +1727,9 @@ function updateDirectLoadButtons(p)
 end
 
 function getSelectModeStr()
-  if shiva.cfgModeSelect.values.x == MODEMIDI then return 'MIDI'
-  elseif shiva.cfgModeSelect.values.x == MODEOSC then return 'OSC'
-  elseif shiva.cfgModeSelect.values.x == MODEPREFIX then return 'shiva'
-  end
+  local t = {}
+  if shiva.groupRunSettings.stBtnSelectMidi.values.x == 1 then table.insert(t, 'MIDI') end
+  if shiva.groupRunSettings.stBtnSelectOsc.values.x == 1 then table.insert(t, 'OSC') end
+  if #t == 0 then table.insert(t, '"shiva"') end
+  return table.concat(t, ' + ')
 end
