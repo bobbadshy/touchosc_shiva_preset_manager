@@ -91,6 +91,8 @@ local state = {
   selectedIsEmpty = false,
   collapsed = false,
   ignoreToggle = false,
+  -- Target where to put the text from keyboard after edit
+  kbdTarget = '',
   -- keep track of working state stack
   lastWork = 0,
   -- crossfade states
@@ -200,7 +202,7 @@ function onReceiveNotify(cmd, val)
   elseif cmd == 'blinkText' then
     blinkTextControls(val)
   elseif cmd == 'kbdClose' then
-    saveKeyboardValue()
+    saveKeyboardValue(val)
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then showContextMenu()
     elseif val == 'lblDirectEdit' then
@@ -448,7 +450,8 @@ end
 
 function lcdTap()
   if userWantsToSave() and state.selectedIsEmpty then
-    showKeyboard(getSelectedPresetName(), KBDTARGETNEWSAVE)
+    state.kbdTarget = KBDTARGETNEWSAVE
+    showKeyboard(self.ID, getSelectedPresetName())
   elseif userWantsToLoad() then
     -- when load is active, sync back to showing selected preset
     lcdMessage(getSelectedPresetName())
@@ -464,7 +467,8 @@ function lcdTap()
   else
     lcdMessage(getActivePreset())
     -- finally, when showing active preset, provide acctive preset name entry
-    showKeyboard(getActivePresetName(), KBDTARGETACTIVEPRESET)
+    state.kbdTarget = KBDTARGETNEWSAVE
+    showKeyboard(self.ID, getActivePresetName())
   end
 end
 
@@ -657,37 +661,45 @@ end
 function showEditor()
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.groupRunSettingsMain.visible = false
+  shiva.groupKeyboardMain.visible = false
   shiva.lblDirectHeading.visible = true
   shiva.borderGroupBottom.visible = true
   shiva.grpManagerMain.visible = true
   shiva.btnDirectToggleEdit.values.x = 1
+  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function showDirectLoad()
   shiva.borderGroupBottom.visible = true
+  shiva.groupKeyboardMain.visible = false
   shiva.groupRunSettingsMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.lblDirectHeading.visible = false
   shiva.groupDirectLoadButtonsMain.visible = true
   shiva.btnDirectToggleEdit.values.x = 0
+  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function showCollapsed()
   shiva.borderGroupBottom.visible = false
   shiva.groupRunSettingsMain.visible = false
+  shiva.groupKeyboardMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.lblDirectHeading.visible = true
   shiva.btnDirectToggleEdit.values.x = 0
+  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function showRunSettings()
   shiva.lblDirectHeading.visible = true
   shiva.borderGroupBottom.visible = true
   shiva.grpManagerMain.visible = false
+  shiva.groupKeyboardMain.visible = false
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.groupRunSettingsMain.visible = true
   shiva.btnDirectToggleEdit.values.x = 1
+  shiva.btnDirectToggleEdit.properties.interactive = true
 end
 
 function collapsed()
@@ -710,9 +722,9 @@ function showingUndefined()
   return not (showingCollapsed() or showingDirectLoad() or showingEditor())
 end
 
-function showKeyboard(s, target)
-  shiva.lcdKbdDisplay.values.text = s .. '_'
-  shiva.lcdKbdDisplay.tag = target
+function showKeyboard(target, text)
+  shiva.btnDirectToggleEdit.properties.interactive  = false
+  shiva.groupKeyboardMain:notify(target, text)
   shiva.groupKeyboardMain.properties.visible = true
   shiva.btnDirectToggleEdit.properties.interactive = false
   shiva.lblDirectEdit.properties.interactive = false
@@ -749,7 +761,7 @@ function loadSelectedPreset()
   local jsonValues = getJsonFromPresetStore(presetNo)
   if not jsonValues then
     lcdMessage('  load error\n preset empty')
-    setSelectedPresetName('empty ' .. presetNo)
+    setSelectedPresetName('preset ' .. presetNo .. ' [empty]')
     state.selectedIsEmpty = true
     return false
   end
@@ -1270,7 +1282,6 @@ function applySkinGeneric()
       end
       if string.match(ctrl.name, '^btnDirect.+') then
         logDebug('btnDirect: ' .. ctrl.name)
-        print(ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateButtonDirect.properties.color -- default was 66D1FFD9
         ctrl.properties.background = shiva.skinSettings.templateButtonDirect.properties.background
         ctrl.properties.outline = shiva.skinSettings.templateButtonDirect.properties.outline
@@ -1567,12 +1578,14 @@ function valuesChanged(current, preset)
   return false
 end
 
-function saveKeyboardValue()
-  if shiva.lcdKbdDisplay.tag == KBDTARGETNEWSAVE then
-    setSelectedPresetName(shiva.lcdKbdDisplay.values.text:sub(1,-2))
+function saveKeyboardValue(text)
+  if state.kbdTarget == KBDTARGETNEWSAVE then
+    showEditor()
+    setSelectedPresetName(text)
     lcdMessage(getSelectedPresetName())
-  elseif shiva.lcdKbdDisplay.tag == KBDTARGETACTIVEPRESET then
-    setActivePresetName(shiva.lcdKbdDisplay.values.text:sub(1,-2))
+  elseif state.kbdTarget == KBDTARGETACTIVEPRESET then
+    showEditor()
+    setActivePresetName(text)
     lcdMessage(getActivePresetName())
   end
 end
