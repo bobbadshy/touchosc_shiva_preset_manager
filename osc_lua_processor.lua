@@ -407,7 +407,11 @@ end
 function toggleSave()
   showSelectMessage()
   if shiva.btnFnSave.values.x == 0 then
-    lcdMessage(getSelectedPresetName())
+    if getSelectedPreset() == getActivePreset() then
+      lcdMessage(getActivePresetName())
+    else
+      lcdMessage(getSelectedPresetName())
+    end
   else
     if state.selectedIsEmpty then
       lcdMessage('   ENTER NAME:\n    tap here')
@@ -480,10 +484,12 @@ function lcdTap()
     setActivePresetName(s)
     lcdMessage(getActivePresetName())
     addDisplaysToBlink()
+  elseif shiva.lcdMessage.values.text ~= getActivePresetName() then
+    lcdMessage(getActivePresetName())
   else
     lcdMessage(getActivePreset())
     -- finally, when showing active preset, provide acctive preset name entry
-    state.kbdTarget = KBDTARGETNEWSAVE
+    state.kbdTarget = KBDTARGETACTIVEPRESET
     showKeyboard(self.ID, getActivePresetName())
   end
 end
@@ -1019,6 +1025,7 @@ function getAllCurrentValues(verbose)
   end
   state.currValues[RESERVED] = {}
   state.currValues[RESERVED][PRESETNAMEID] = getActivePresetName()
+  logDebug('Name set to: ' .. state.currValues[RESERVED][PRESETNAMEID])
   -- only used by restore work
   state.currValues[RESERVED][PRESETIDID] = getActivePreset()
   if verbose then log('Controls found: ' .. count) end
