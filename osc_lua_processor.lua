@@ -39,7 +39,6 @@ local shiva = {
   -- settings
   presetStore = presetModule.presetStore.children,
   workStore = presetModule.workStore.children,
-  clearPresets = presetModule.settings.children.clearPresets,
   skinSettings = presetModule.skinSettings.children,
   blinkFader = presetModule.blinkFader,
   blinkText = presetModule.blinkText,
