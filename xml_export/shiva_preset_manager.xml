@@ -4215,7 +4215,7 @@ function showEditor()
 end
 
 function showDirectLoad()
-  shiva.borderGroupBottom.visible = false
+  shiva.borderGroupBottom.visible = true
   shiva.groupRunSettingsMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.lblDirectHeading.visible = false
@@ -4234,7 +4234,7 @@ end
 
 function showRunSettings()
   shiva.lblDirectHeading.visible = true
-  shiva.borderGroupBottom.visible = false
+  shiva.borderGroupBottom.visible = true
   shiva.grpManagerMain.visible = false
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.groupRunSettingsMain.visible = true
@@ -4278,6 +4278,7 @@ end
 function saveToSelectedPreset()
   -- Saves current control values to the selected preset
   local presetNo = getSelectedPreset()
+  state.allControls = nil
   getAllCurrentValues()
   if state.selectedIsEmpty then
     state.currValues[RESERVED][PRESETNAMEID] = getSelectedPresetName()
@@ -6836,7 +6837,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -6904,7 +6905,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>

@@ -664,7 +664,7 @@ function showEditor()
 end
 
 function showDirectLoad()
-  shiva.borderGroupBottom.visible = false
+  shiva.borderGroupBottom.visible = true
   shiva.groupRunSettingsMain.visible = false
   shiva.grpManagerMain.visible = false
   shiva.lblDirectHeading.visible = false
@@ -683,7 +683,7 @@ end
 
 function showRunSettings()
   shiva.lblDirectHeading.visible = true
-  shiva.borderGroupBottom.visible = false
+  shiva.borderGroupBottom.visible = true
   shiva.grpManagerMain.visible = false
   shiva.groupDirectLoadButtonsMain.visible = false
   shiva.groupRunSettingsMain.visible = true
@@ -727,6 +727,7 @@ end
 function saveToSelectedPreset()
   -- Saves current control values to the selected preset
   local presetNo = getSelectedPreset()
+  state.allControls = nil
   getAllCurrentValues()
   if state.selectedIsEmpty then
     state.currValues[RESERVED][PRESETNAMEID] = getSelectedPresetName()
