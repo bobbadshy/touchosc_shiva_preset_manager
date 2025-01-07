@@ -585,17 +585,11 @@ end
 
 function toggleCollapse()
   if shiva.menuContext.visible then return end
-  if state.collapsed and not shiva.grpManagerMain.visible then
-    shiva.grpManagerMain.visible = true
-    shiva.groupDirectLoadButtonsMain.visible = false
-    shiva.borderGroupBottom.visible = true
-    shiva.btnDirectToggleEdit.values.x = 1
+  if state.collapsed then
+    showEditor()
     state.collapsed = false
   else
-    shiva.grpManagerMain.visible = false
-    shiva.groupDirectLoadButtonsMain.visible = false
-    shiva.borderGroupBottom.visible = false
-    shiva.btnDirectToggleEdit.values.x = 0
+    showCollapsed()
     state.collapsed = true
   end
 end
