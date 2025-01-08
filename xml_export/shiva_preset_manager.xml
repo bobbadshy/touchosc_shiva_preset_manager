@@ -3575,7 +3575,6 @@ end
 -- === CALLBACK HELPER FUNCTIONS ===
 
 function discoverControls()
-  print('###############################')
   state.allControls = nil
   getAllCurrentValues(true)
   shiva.stLblShowControlCount.values.text = 'found controls: ' .. #state.allControls
@@ -3902,7 +3901,11 @@ function toggleCollapse()
       showCollapsed()
       state.collapsed = true
     else
-      showLastPage()
+      if state.lastPage == showDirectLoad then
+        showEditor()
+      else
+        showLastPage()
+      end
       state.collapsed = false
     end
   else
@@ -5070,7 +5073,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='b'><key>
-<![CDATA[visible]]></key><value>1</value></property></properties><values>
+<![CDATA[visible]]></key><value>0</value></property></properties><values>
 <value><key>
 <![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><children>
@@ -12145,7 +12148,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='b'><key>
-<![CDATA[visible]]></key><value>0</value></property></properties><values>
+<![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><children>

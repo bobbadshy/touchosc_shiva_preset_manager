@@ -658,7 +658,11 @@ function toggleCollapse()
       showCollapsed()
       state.collapsed = true
     else
-      showLastPage()
+      if state.lastPage == showDirectLoad then
+        showEditor()
+      else
+        showLastPage()
+      end
       state.collapsed = false
     end
   else
