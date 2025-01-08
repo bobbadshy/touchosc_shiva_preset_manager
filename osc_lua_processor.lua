@@ -1,5 +1,6 @@
 ---@diagnostic disable: lowercase-global, undefined-global
 -- CONSTANTS
+local COLOR_GRP_BACKGROUND = '000000DB'
 local COLOR_TEXTDEFAULT = 'FFFFFFD0'
 local COLOR_DIGIT_BUTTONS = '2BA3D5C7'
 local COLOR_FN_BUTTONS = 'FFAC0098'
@@ -28,14 +29,15 @@ local shiva = {
   groupDirectLoad = presetModule.groupDirectLoad.children,
   groupDirectLoadButtonsMain = presetModule.groupDirectLoadButtons,
   groupDirectLoadButtons = presetModule.groupDirectLoadButtons.children,
-  groupKeyboardMain = presetModule.groupKeyboard,
-  groupKeyboard = presetModule.groupKeyboard.children,
   grpManagerMain = presetModule.grpManager,
   grpManager = presetModule.grpManager.children,
   groupRunSettingsMain = presetModule.groupRunSettings,
   groupRunSettings = presetModule.groupRunSettings.children,
+  groupKeyboardMain = presetModule.groupKeyboard,
+  groupKeyboard = presetModule.groupKeyboard.children,
   grpBlock = presetModule.grpBlock,
   borderGroupBottom = presetModule.borderGroupBottom,
+  allPages= {},
   -- settings
   presetStore = presetModule.presetStore.children,
   workStore = presetModule.workStore.children,
@@ -58,8 +60,6 @@ local shiva = {
   -- Direct load row on top
   lblDirectHeading = presetModule.groupDirectLoad.children.lblDirectHeading,
   dspDirectInfo = presetModule.groupDirectLoad.children.dspDirectInfo,
-  btnDirectToggleEdit = presetModule.groupDirectLoad.children.btnDirectToggleEdit,
-  lblDirectEdit = presetModule.groupDirectLoad.children.lblDirectEdit,
   btnFnDirectBackActive = presetModule.groupDirectLoad.children.btnFnDirectBackActive,
   -- Menus
   menuContext = presetModule.menuContext,
@@ -88,6 +88,7 @@ local state = {
   selectedIsEmpty = false,
   collapsed = false,
   ignoreToggle = false,
+  lastPage = nil,
   -- Target where to put the text from keyboard after edit
   kbdTarget = '',
   -- keep track of working state stack
@@ -105,6 +106,7 @@ local state = {
   blinkTextControls = {},
   textBlinkg = 0,
   changedControls = {},
+  blinkSrcTextColors = {},
   -- = periodic updates =
   msgLcdDelay = 2000,
   msgLcdSent = 0,
@@ -126,6 +128,7 @@ function init()
   initDebug()
   log('INIT processor..')
   log('Max preset: ' .. state.maxPreset)
+  initShiva()
   registerHandlers()
   applyLayout()
   initConfig()
@@ -133,6 +136,7 @@ function init()
   initPreset()
   disableFade()
   initCrossfade()
+  getAllCurrentValues(true)
   initGui()
 end
 
@@ -145,6 +149,15 @@ function initDebug()
   logDebug('#### Debug logging ENABLED. ####')
 end
 
+function initShiva()
+  shiva.allPages = {
+    shiva.groupDirectLoadButtonsMain,
+    shiva.grpManagerMain,
+    shiva.groupRunSettingsMain,
+    shiva.groupKeyboardMain,
+  }
+end
+
 function initConfig()
   log('Initializing config')
   initDebug()
@@ -153,7 +166,7 @@ function initConfig()
   state.allControls = nil
   state.autoFade = false
   toggleFadeMode()
-  lcdMessage('\n Controls Select:\n  ' .. getSelectModeStr())
+  lcdMessage('Controls Select:\n' .. getSelectModeStr())
 end
 
 function initGui()
@@ -167,27 +180,45 @@ function initGui()
   end
   updateDirectLoadButtons()
   updateLabelFade()
-  state.ignoreToggle = false
-  if showingUndefined() then showEditor()
-  elseif showingEditor() then showEditor()
-  elseif showingCollapsed() then showCollapsed()
-  elseif showingDirectLoad then showDirectLoad()
-  else showEditor() end
-  lcdMessage('\n Controls Select:\n  ' .. getSelectModeStr())
-  lcdMessageDelayed('   Welcome to\n    "Shiva"\n  Preset Module')
+  ignoreToggle = false
+  if showingEditor() then
+    showEditor()
+  elseif showingCollapsed() then
+    state.collapsed = true
+    showCollapsed()
+  elseif showingDirectLoad then
+    showDirectLoad()
+  else
+    showEditor()
+  end
+  lcdMessage('Controls Select:\n' .. getSelectModeStr())
+  lcdMessageDelayed('Welcome to\n"Shiva"\nPreset Module')
   log('Init finished.')
   log('== Welcome to "Shiva" Preset Module! Happy Jammin\' :-) ==')
 end
 
 function cycleView()
-  if state.collapsed then
-    if showingCollapsed() then showDirectLoad()
-    else showCollapsed() end
+  if shiva.menuContext.visible then return end
+  if showingKeyboard() then return end
+  if showingRunSettings() then
+    initConfig()
+    if state.lastPage ~= showRunSettings then
+      showLastPage()
+    elseif state.collapsed then
+      showCollapsed()
+    else
+      showEditor()
+    end
+    return
+  end
+  if showingDirectLoad() then
+    if state.collapsed then showCollapsed() else showEditor() end
+  elseif showingEditor() then
+    showDirectLoad()
+  elseif showingCollapsed() then
+    showDirectLoad()
   else
-    if showingRunSettings() then initConfig() showEditor()
-    elseif showingEditor() then showDirectLoad()
-    elseif showingDirectLoad then showEditor()
-    else showEditor() end
+    showEditor()
   end
 end
 
@@ -369,9 +400,9 @@ function updateBlinking()
   else
     for id, v in pairs(state.blinkControls) do
       logDebug('Resetting control after blink: ' .. v.ctrl.name)
-      v.ctrl.color.a = v.a
-      if v.ctrl.textColor ~= nil then
-        v.ctrl.textColor.a = v.at
+      v.ctrl.properties.color.a = v.a
+      if v.ctrl.properties.textColor ~= nil then
+        v.ctrl.properties.textColor.a = v.at
       end
       state.blinkControls[id] = nil
     end
@@ -413,7 +444,7 @@ function toggleSave()
     end
   else
     if state.selectedIsEmpty then
-      lcdMessage('   ENTER NAME:\n    tap here')
+      lcdMessage('ENTER NAME:\ntap here')
     else
       lcdMessage('enter to save')
     end
@@ -470,7 +501,7 @@ end
 function lcdTap()
   if userWantsToSave() and state.selectedIsEmpty then
     state.kbdTarget = KBDTARGETNEWSAVE
-    showKeyboard(self.ID, getSelectedPresetName())
+    startKeyboard(self.ID, getSelectedPresetName())
   elseif userWantsToLoad() then
     -- when load is active, sync back to showing selected preset
     lcdMessage(getSelectedPresetName())
@@ -489,7 +520,7 @@ function lcdTap()
     lcdMessage(getActivePreset())
     -- finally, when showing active preset, provide acctive preset name entry
     state.kbdTarget = KBDTARGETACTIVEPRESET
-    showKeyboard(self.ID, getActivePresetName())
+    startKeyboard(self.ID, getActivePresetName())
   end
 end
 
@@ -505,7 +536,6 @@ function toggleEdit()
     state.ignoreToggle = false
     return
   end
-  if shiva.menuContext.visible then return end
   -- selectActivePreset()
   cycleView()
   updateDirectLoadButtons()
@@ -609,10 +639,14 @@ function bankSwitchDirect(up)
 end
 
 function toggleCollapse()
-  if shiva.menuContext.visible then return end
   if state.collapsed then
-    showEditor()
-    state.collapsed = false
+    if not showingCollapsed() then
+      showCollapsed()
+      state.collapsed = true
+    else
+      showLastPage()
+      state.collapsed = false
+    end
   else
     showCollapsed()
     state.collapsed = true
@@ -681,55 +715,52 @@ end
 
 -- === GUI HANDLERS ===
 
+function hideAllPages()
+  saveLastPage()
+  for i=1,#shiva.allPages do shiva.allPages[i].properties.visible = false end
+  shiva.lblDirectHeading.properties.visible = true
+  shiva.borderGroupBottom.properties.visible = false
+end
+
 function showEditor()
-  log('Show Editor')
-  shiva.lblDirectHeading.visible = true
-  shiva.btnDirectToggleEdit.values.x = 1
+  hideAllPages()
   shiva.borderGroupBottom.visible = true
-  
-  shiva.groupDirectLoadButtonsMain.visible = false
-  shiva.groupRunSettingsMain.visible = false
-  shiva.groupKeyboardMain.visible = false
-  
   shiva.grpManagerMain.visible = true
 end
 
 function showDirectLoad()
-  log('Show Direct Load')
-  shiva.lblDirectHeading.visible = true
-  shiva.btnDirectToggleEdit.values.x = 1
+  hideAllPages()
+  shiva.lblDirectHeading.visible = false
   shiva.borderGroupBottom.visible = true
-  
-  shiva.groupRunSettingsMain.visible = false
-  shiva.groupKeyboardMain.visible = false
-  shiva.grpManagerMain.visible = false
-  
   shiva.groupDirectLoadButtonsMain.visible = true
 end
 
 function showCollapsed()
-  log('Show Collapsed')
-  shiva.lblDirectHeading.visible = true
-  shiva.btnDirectToggleEdit.values.x = 0
-  shiva.borderGroupBottom.visible = false
-  
-  shiva.groupRunSettingsMain.visible = false
-  shiva.groupKeyboardMain.visible = false
-  shiva.grpManagerMain.visible = false
-  shiva.groupDirectLoadButtonsMain.visible = false
+  hideAllPages()
 end
 
 function showRunSettings()
-  log('Show Run Settings')
-  shiva.lblDirectHeading.visible = true
-  shiva.btnDirectToggleEdit.values.x = 1
+  hideAllPages()
   shiva.borderGroupBottom.visible = true
-
-  shiva.groupKeyboardMain.visible = false
-  shiva.grpManagerMain.visible = false
-  shiva.groupDirectLoadButtonsMain.visible = false
-
   shiva.groupRunSettingsMain.visible = true
+end
+
+function showLastPage()
+  if state.lastPage ~= nil then
+    state.lastPage()
+  else
+    showEditor()
+  end
+end
+
+function saveLastPage()
+  state.lastPage = nil
+  if showingCollapsed() then state.lastPage = nil
+  elseif showingDirectLoad() then state.lastPage = showDirectLoad
+  elseif showingEditor() then state.lastPage = showEditor
+  elseif showingRunSettings() then state.lastPage = showRunSettings
+  elseif showingKeyboard() then state.lastPage = showKeyboard
+  else state.lastPage = showEditor end
 end
 
 function collapsed()
@@ -738,9 +769,10 @@ end
 
 function showingCollapsed()
   return not (
-  shiva.grpManagerMain.visible or
-  shiva.groupDirectLoadButtonsMain.visible or
-  shiva.groupRunSettingsMain.visible
+    showingDirectLoad() or
+    showingEditor() or
+    showingRunSettings() or
+    showingKeyboard()
   )
 end
 
@@ -756,11 +788,18 @@ function showingDirectLoad()
   return shiva.groupDirectLoadButtonsMain.visible
 end
 
-function showingUndefined()
-  return not (showingCollapsed() or showingDirectLoad() or showingEditor())
+function showingKeyboard()
+  return shiva.groupKeyboardMain.visible
 end
 
-function showKeyboard(target, text)
+function showKeyboard()
+  hideAllPages()
+  shiva.borderGroupBottom.visible = true
+  shiva.groupKeyboardMain.visible = true
+end
+
+function startKeyboard(target, text)
+  showKeyboard()
   shiva.groupKeyboardMain:notify(target, text)
 end
 
@@ -774,7 +813,7 @@ function saveToSelectedPreset()
   -- Saves current control values to the selected preset
   local presetNo = getSelectedPreset()
   state.allControls = nil
-  getAllCurrentValues()
+  getAllCurrentValues(true)
   if state.selectedIsEmpty then
     state.currValues[RESERVED][PRESETNAMEID] = getSelectedPresetName()
   end
@@ -794,7 +833,7 @@ function loadSelectedPreset()
   logDebug('Loading preset: ' .. presetNo)
   local jsonValues = getJsonFromPresetStore(presetNo)
   if not jsonValues then
-    lcdMessage('  load error\n preset empty')
+    lcdMessage('load error\npreset empty')
     setSelectedPresetName('preset ' .. presetNo .. ' [empty]')
     state.selectedIsEmpty = true
     return false
@@ -984,7 +1023,7 @@ function getValueType(c)
 end
 
 function getAllCurrentValues(verbose)
-  verbose = verbose == nil and true or verbose
+  if verbose == nil then verbose = false end
   if verbose then
     if state.rootName == '' then
       log('Preset root empty. Using whole ccntrol surface')
@@ -1152,11 +1191,11 @@ function applyFadeValues()
   s1 = string.rep('=', math.ceil((state.fadeMax - state.fadeStep) / i))
   s2 = string.rep(' ', (state.fadeMax / i) - #s1)
   if state.fadeStep == 0 and not state.autoFade then
-    lcdMessage('  ..FADING..\n' .. '  release!', false)
+    lcdMessage('..FADING..\n' .. 'release!', false)
   else
     local d = ''
     if state.autoFade then d = string.format("%.1f", (getMillis() - state.fadeStartTime) / 1000) end
-    lcdMessage('..FADING.. ' .. d .. '\n' .. ' [' .. s1 .. s2 .. ']', false)
+    lcdMessage('..FADING.. ' .. d .. '\n' .. '[' .. s1 .. s2 .. ']', false)
   end
 end
 
@@ -1633,12 +1672,12 @@ function toggleFadeMode()
     shiva.fdrCrossfade.properties.cursor = true
     shiva.fdrCrossfade:setValueField('x', ValueField.CURRENT, 1.0)
     shiva.fdrCrossfade:setValueField('x', ValueField.DEFAULT, 1.0)
-    lcdMessage('  select mode\n  manual fade')
+    lcdMessage('select mode\nmanual fade')
   else
     shiva.fdrCrossfade:setValueField('x', ValueField.CURRENT, 0.0)
     shiva.fdrCrossfade:setValueField('x', ValueField.DEFAULT, 0.0)
     shiva.fdrCrossfade.properties.cursor = false
-    lcdMessage('  select mode\n   auto fade')
+    lcdMessage('select mode\nauto fade')
   end
 end
 
