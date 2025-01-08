@@ -1687,14 +1687,14 @@ function toggleFadeMode()
   updateLabelFade()
   if not state.autoFade then
     initCrossfade()
-    shiva.fdrCrossfade.properties.cursor = true
+    -- shiva.fdrCrossfade.properties.cursor = true
     shiva.fdrCrossfade:setValueField('x', ValueField.CURRENT, 1.0)
     shiva.fdrCrossfade:setValueField('x', ValueField.DEFAULT, 1.0)
     lcdMessage('select mode\nmanual fade')
   else
     shiva.fdrCrossfade:setValueField('x', ValueField.CURRENT, 0.0)
     shiva.fdrCrossfade:setValueField('x', ValueField.DEFAULT, 0.0)
-    shiva.fdrCrossfade.properties.cursor = false
+    -- shiva.fdrCrossfade.properties.cursor = false
     lcdMessage('select mode\nauto fade')
   end
 end
