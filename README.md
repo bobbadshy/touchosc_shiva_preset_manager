@@ -87,6 +87,8 @@ Performance test with 200 controls:
 The on-screen keyboard (control group `groupKeyboard`) used in the preset manager is self-contained and re-useable. 
 If you want to use it separately in your control surfaces, you can copy just the `groupKeyboard` to anywhere in your surface.
 
+The keyboard control will set itself to visible and interactive upone receiving a notify() message, and hide itself again upon closing.
+
 <details>
 
 <summary>LUA script for using the keyboard group with arbitrary controls:  (click to expand)</summary>
