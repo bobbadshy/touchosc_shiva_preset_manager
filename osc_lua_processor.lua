@@ -878,7 +878,6 @@ end
 
 function applySelectedPreset()
   -- loads and applies the currently selected preset
-  local presetNo = getSelectedPreset()
   local result = loadSelectedPreset()
   if not result then return false end
   activateSelectedPreset()
