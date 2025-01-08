@@ -10,6 +10,7 @@
   - [Demo video](#demo-video)
   - [Screenshots](#screenshots)
   - [Usage](#usage)
+    - [Re-using the self-contained on-screen keyboard group for your own surfaces](#re-using-the-self-contained-on-screen-keyboard-group-for-your-own-surfaces)
   - [Download](#download)
   - [Bug reports, Feature Suggestions or Contributing](#bug-reports-feature-suggestions-or-contributing)
   - [Planned features wishlist](#planned-features-wishlist)
