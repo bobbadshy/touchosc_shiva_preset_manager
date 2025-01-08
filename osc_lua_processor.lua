@@ -46,6 +46,7 @@ local shiva = {
   blinkText = presetModule.blinkText,
   stBtnEnableDebug = presetModule.groupRunSettings.children.stBtnEnableDebug,
   stBtnGrpFadeOnDirectLoad = presetModule.groupRunSettings.children.stBtnGrpFadeOnDirectLoad.children.labelDisplay,
+  stLblShowControlCount = presetModule.groupRunSettings.children.stLblShowControlCount,
   -- Manager buttons and displays
   dspInfo = presetModule.grpManager.children.dspInfo,
   lcdMessage = presetModule.grpManager.children.lcdMessage,
@@ -299,6 +300,8 @@ function registerHandlers()
     -- Run Settings
     stBtnRandomize = executeRandomize,
     stBtnClearPreset = purgePresetStore,
+    stBtnSelectMidi = discoverControls,
+    stBtnSelectOsc = discoverControls,
   }
 end
 
@@ -327,6 +330,17 @@ function onValueChanged()
 end
 
 -- === CALLBACK HELPER FUNCTIONS ===
+
+function discoverControls()
+  state.allControls = nil
+  getAllCurrentValues(true)
+  shiva.stLblShowControlCount.values.text = 'found controls: ' .. #state.allControls
+  addControlToTextBlink(shiva.stLblShowControlCount)
+  for id, c in pairs(state.allControls) do
+    addControlToBlink(c)
+  end
+  state.blinking = BLINKCONTROLS
+end
 
 function blinkControls(val)
   if state.blinking <= 0 then return end
@@ -1531,8 +1545,8 @@ function infoMessage(s, blink)
   -- Prints a message to the single line message display
   logDebug('message: ' .. s)
   if blink ~= false then
-    addControlToTextBlink(shiva.dspInfo, shiva.dspInfo.ID)
-    addControlToTextBlink(shiva.dspDirectInfo, shiva.dspDirectInfo.ID)
+    addControlToTextBlink(shiva.dspInfo)
+    addControlToTextBlink(shiva.dspDirectInfo)
   end
   shiva.dspInfo.values.text = s
 end
@@ -1541,7 +1555,7 @@ function lcdMessage(s, blink)
   -- Prints a message to the multiline message "lcd display"
   logDebug('LCD msg: ' .. s)
   if blink ~= false then
-    addControlToTextBlink(shiva.lcdMessage, shiva.lcdMessage.ID)
+    addControlToTextBlink(shiva.lcdMessage)
   end
   shiva.lcdMessage.values.text = s
 end
@@ -1742,7 +1756,8 @@ function addControlToBlink(c)
   end
 end
 
-function addControlToTextBlink(c, id)
+function addControlToTextBlink(c)
+  local id = c.ID
   if state.blinking > 0 then return end
   if state.blinkTextControls[id] == nil then
     logDebug('Adding text: ' .. c.name)

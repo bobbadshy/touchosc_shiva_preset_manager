@@ -71,7 +71,7 @@
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[127]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[121]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e2b658-c8fc-11ef-919f-2cf05d7a7c68' type='BOX'><properties>
 <property type='b'><key>
@@ -3289,6 +3289,7 @@ local shiva = {
   blinkText = presetModule.blinkText,
   stBtnEnableDebug = presetModule.groupRunSettings.children.stBtnEnableDebug,
   stBtnGrpFadeOnDirectLoad = presetModule.groupRunSettings.children.stBtnGrpFadeOnDirectLoad.children.labelDisplay,
+  stLblShowControlCount = presetModule.groupRunSettings.children.stLblShowControlCount,
   -- Manager buttons and displays
   dspInfo = presetModule.grpManager.children.dspInfo,
   lcdMessage = presetModule.grpManager.children.lcdMessage,
@@ -3542,6 +3543,8 @@ function registerHandlers()
     -- Run Settings
     stBtnRandomize = executeRandomize,
     stBtnClearPreset = purgePresetStore,
+    stBtnSelectMidi = discoverControls,
+    stBtnSelectOsc = discoverControls,
   }
 end
 
@@ -3570,6 +3573,18 @@ function onValueChanged()
 end
 
 -- === CALLBACK HELPER FUNCTIONS ===
+
+function discoverControls()
+  print('###############################')
+  state.allControls = nil
+  getAllCurrentValues(true)
+  shiva.stLblShowControlCount.values.text = 'found controls: ' .. #state.allControls
+  addControlToTextBlink(shiva.stLblShowControlCount)
+  for id, c in pairs(state.allControls) do
+    addControlToBlink(c)
+  end
+  state.blinking = BLINKCONTROLS
+end
 
 function blinkControls(val)
   if state.blinking <= 0 then return end
@@ -4774,8 +4789,8 @@ function infoMessage(s, blink)
   -- Prints a message to the single line message display
   logDebug('message: ' .. s)
   if blink ~= false then
-    addControlToTextBlink(shiva.dspInfo, shiva.dspInfo.ID)
-    addControlToTextBlink(shiva.dspDirectInfo, shiva.dspDirectInfo.ID)
+    addControlToTextBlink(shiva.dspInfo)
+    addControlToTextBlink(shiva.dspDirectInfo)
   end
   shiva.dspInfo.values.text = s
 end
@@ -4784,7 +4799,7 @@ function lcdMessage(s, blink)
   -- Prints a message to the multiline message "lcd display"
   logDebug('LCD msg: ' .. s)
   if blink ~= false then
-    addControlToTextBlink(shiva.lcdMessage, shiva.lcdMessage.ID)
+    addControlToTextBlink(shiva.lcdMessage)
   end
   shiva.lcdMessage.values.text = s
 end
@@ -4985,7 +5000,8 @@ function addControlToBlink(c)
   end
 end
 
-function addControlToTextBlink(c, id)
+function addControlToTextBlink(c)
+  local id = c.ID
   if state.blinking > 0 then return end
   if state.blinkTextControls[id] == nil then
     logDebug('Adding text: ' .. c.name)
@@ -5054,7 +5070,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='b'><key>
-<![CDATA[visible]]></key><value>0</value></property></properties><values>
+<![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><children>
@@ -6009,7 +6025,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[x]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[1]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -6077,7 +6093,38 @@ end]]></value></property><property type='i'><key>
 <local><enabled>1</enabled><triggers>
 <trigger><var>
 <![CDATA[touch]]></var><condition>FALL</condition></trigger></triggers><type>PROPERTY</type><conversion>STRING</conversion><value>
-<![CDATA[name]]></value><scaleMin>0</scaleMin><scaleMax>1</scaleMax><dstType>VALUE</dstType><dstVar><![CDATA[text]]></dstVar><dstID><![CDATA[0d596ade-ca30-11ef-a94b-2cf05d7a7c68]]></dstID></local></messages></node></children></node><node ID='34e75fdc-c8fc-11ef-a3ea-2cf05d7a7c68' type='GROUP'><properties>
+<![CDATA[name]]></value><scaleMin>0</scaleMin><scaleMax>1</scaleMax><dstType>VALUE</dstType><dstVar><![CDATA[text]]></dstVar><dstID><![CDATA[0d596ade-ca30-11ef-a94b-2cf05d7a7c68]]></dstID></local></messages></node><node ID='4fd5c130-cd57-11ef-bd69-2cf05d7a7c68' type='LABEL'><properties>
+<property type='b'><key>
+<![CDATA[background]]></key><value>1</value></property><property type='c'><key>
+<![CDATA[color]]></key><value>
+<r>0</r><g>0</g><b>0</b><a>0.491228</a></value></property><property type='f'><key>
+<![CDATA[cornerRadius]]></key><value>0</value></property><property type='i'><key>
+<![CDATA[font]]></key><value>0</value></property><property type='r'><key>
+<![CDATA[frame]]></key><value>
+<x>255</x><y>80</y><w>185</w><h>22</h></value></property><property type='b'><key>
+<![CDATA[grabFocus]]></key><value>1</value></property><property type='b'><key>
+<![CDATA[interactive]]></key><value>0</value></property><property type='b'><key>
+<![CDATA[locked]]></key><value>0</value></property><property type='s'><key>
+<![CDATA[name]]></key><value>
+<![CDATA[stLblShowControlCount]]></value></property><property type='i'><key>
+<![CDATA[orientation]]></key><value>0</value></property><property type='b'><key>
+<![CDATA[outline]]></key><value>0</value></property><property type='i'><key>
+<![CDATA[outlineStyle]]></key><value>0</value></property><property type='i'><key>
+<![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
+<![CDATA[shape]]></key><value>1</value></property><property type='i'><key>
+<![CDATA[textAlignH]]></key><value>1</value></property><property type='i'><key>
+<![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
+<![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
+<![CDATA[textColor]]></key><value>
+<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
+<![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
+<![CDATA[textSize]]></key><value>12</value></property><property type='b'><key>
+<![CDATA[visible]]></key><value>1</value></property></properties><values>
+<value><key>
+<![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
+<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
+<key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
+<![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node></children></node><node ID='34e75fdc-c8fc-11ef-a3ea-2cf05d7a7c68' type='GROUP'><properties>
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
@@ -11041,7 +11088,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[22]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[21]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e7285a-c8fc-11ef-b5af-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -12098,7 +12145,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='b'><key>
-<![CDATA[visible]]></key><value>1</value></property></properties><values>
+<![CDATA[visible]]></key><value>0</value></property></properties><values>
 <value><key>
 <![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><children>
@@ -12704,7 +12751,7 @@ function onPointer()
 end]]></value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='s'><key>
 <![CDATA[tag]]></key><value>
-<![CDATA[preset 22 [empty]]]></value></property><property type='i'><key>
+<![CDATA[TEST ALL UP]]></value></property><property type='i'><key>
 <![CDATA[textAlignH]]></key><value>2</value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
@@ -12715,7 +12762,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[22]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[21]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e75b5e-c8fc-11ef-9ba5-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
