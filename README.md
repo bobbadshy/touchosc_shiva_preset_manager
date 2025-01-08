@@ -81,6 +81,36 @@ Performance test with 200 controls:
 - Go to the "config" group inside the module, and adjust the "Preset root control" setting.
 - Enjoy!
 
+### Re-using the self-contained on-screen keyboard group for your own surfaces
+
+The on-screen keyboard (control group `groupKeyboard`) used in the preset manager is self-contained and re-useable. 
+If you want to use it separately in your control surfaces. You can copy just the `groupKeyboard` to anywhere in your surface.
+
+<details>
+
+<summary>LUA script for using the keyboard group with arbitrary controls:  (click to expand)</summary>
+
+- From your label or text control, use a lua script to send a `notify()` message to the keyboard group:
+
+  ```
+  -- reference to the keyboard control
+  local kbd = self.parent.children.groupKeyboard
+
+  function onValueChanged(k)
+    -- send on toucch relase
+    if k == 'touch' and not self.values.touch then
+      -- it sends its own ID and its text value
+      kbd:notify(self.ID, self.values.text)
+    end
+  end
+
+  function onReceiveNotify(cmd, text)
+  -- receive the updated text back from keyboard control
+    self.values.text = text
+  end
+  ```
+</details>
+
 ## Download
 
 Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
