@@ -1355,7 +1355,7 @@ function applySkinGeneric()
         logDebug('btn: ' .. ctrl.name)
         if (
           ctrl.parent.name == "groupKeyboard" and
-          ctrl.type == ControlType.BUTTON
+          ctrl.type == ControlType.LABEL
         ) then
           ctrl.properties.background = false
         else

@@ -690,7 +690,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>0</value></property></properties><values>
 <value><key>
 <![CDATA[x]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0.9116474]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[0.7450714]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <midi><enabled>1</enabled><send>1</send><receive>1</receive><feedback>0</feedback><noDuplicates>0</noDuplicates><connections>1111111111</connections><triggers>
@@ -924,7 +924,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[15]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[12]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node></children></node><node ID='34e406fc-c8fc-11ef-b7b9-2cf05d7a7c68' type='GROUP'><properties>
 <property type='b'><key>
@@ -1207,7 +1207,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[x]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[1]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[0]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <midi><enabled>1</enabled><send>1</send><receive>1</receive><feedback>0</feedback><noDuplicates>0</noDuplicates><connections>1111111111</connections><triggers>
@@ -1281,7 +1281,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[x]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[1]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <midi><enabled>1</enabled><send>1</send><receive>1</receive><feedback>0</feedback><noDuplicates>0</noDuplicates><connections>1111111111</connections><triggers>
@@ -1491,7 +1491,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[KEEP ALL]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[KEEP FLT]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e5147a-c8fc-11ef-8936-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -1601,7 +1601,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>0</value></property></properties><values>
 <value><key>
 <![CDATA[x]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0.6288709]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[0.79779804]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <midi><enabled>1</enabled><send>1</send><receive>1</receive><feedback>0</feedback><noDuplicates>0</noDuplicates><connections>1111111111</connections><triggers>
@@ -1835,7 +1835,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[20]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[26]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node></children></node><node ID='34e57cbc-c8fc-11ef-9e78-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -4598,7 +4598,7 @@ function applySkinGeneric()
         logDebug('btn: ' .. ctrl.name)
         if (
           ctrl.parent.name == "groupKeyboard" and
-          ctrl.type == ControlType.BUTTON
+          ctrl.type == ControlType.LABEL
         ) then
           ctrl.properties.background = false
         else
@@ -5166,7 +5166,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[buttonType]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
 <x>63</x><y>9</y><w>10</w><h>10</h></value></property><property type='b'><key>
@@ -5819,10 +5819,10 @@ end]]></value></property><property type='i'><key>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='b0ac945a-cc91-11ef-bc1c-2cf05d7a7c68' type='BUTTON'><properties>
 <property type='b'><key>
-<![CDATA[background]]></key><value>1</value></property><property type='i'><key>
+<![CDATA[background]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[buttonType]]></key><value>2</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.658824</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
 <x>215</x><y>295</y><w>22</w><h>22</h></value></property><property type='b'><key>
@@ -5832,7 +5832,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[name]]></key><value>
 <![CDATA[button202]]></value></property><property type='i'><key>
 <![CDATA[orientation]]></key><value>0</value></property><property type='b'><key>
-<![CDATA[outline]]></key><value>1</value></property><property type='i'><key>
+<![CDATA[outline]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='b'><key>
 <![CDATA[press]]></key><value>1</value></property><property type='b'><key>
@@ -6187,13 +6187,13 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815789</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.67451</a></value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[textWrap]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[TEST ALL UP_]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[TEST 01_]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e76004-c8fc-11ef-930a-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -6415,7 +6415,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[buttonType]]></key><value>2</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596491</a></value></property><property type='f'><key>
+<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
 <x>335</x><y>293</y><w>86</w><h>38</h></value></property><property type='b'><key>
@@ -6441,7 +6441,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596491</a></value></property><property type='f'><key>
+<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -6481,7 +6481,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[buttonType]]></key><value>2</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596491</a></value></property><property type='f'><key>
+<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
 <x>405</x><y>125</y><w>38</w><h>38</h></value></property><property type='b'><key>
@@ -6507,7 +6507,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596491</a></value></property><property type='f'><key>
+<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -6572,7 +6572,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[buttonType]]></key><value>2</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596491</a></value></property><property type='f'><key>
+<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
 <x>5</x><y>251</y><w>42</w><h>38</h></value></property><property type='b'><key>
@@ -6580,7 +6580,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[interactive]]></key><value>0</value></property><property type='b'><key>
 <![CDATA[locked]]></key><value>0</value></property><property type='s'><key>
 <![CDATA[name]]></key><value>
-<![CDATA[bshift]]></value></property><property type='i'><key>
+<![CDATA[btnFnshift]]></value></property><property type='i'><key>
 <![CDATA[orientation]]></key><value>0</value></property><property type='b'><key>
 <![CDATA[outline]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>1</value></property><property type='i'><key>
@@ -6607,7 +6607,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[interactive]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[locked]]></key><value>0</value></property><property type='s'><key>
 <![CDATA[name]]></key><value>
-<![CDATA[lshift]]></value></property><property type='i'><key>
+<![CDATA[btFnLblshift]]></value></property><property type='i'><key>
 <![CDATA[orientation]]></key><value>0</value></property><property type='b'><key>
 <![CDATA[outline]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>1</value></property><property type='i'><key>
@@ -6714,7 +6714,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[1]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[!]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -6805,7 +6805,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[2]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[@]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -6896,7 +6896,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[3]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[#]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -6987,7 +6987,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[4]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[$]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7078,7 +7078,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[5]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[%]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7169,7 +7169,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[6]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[^]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7260,7 +7260,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[7]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[&]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7351,7 +7351,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[8]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[*]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7442,7 +7442,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[9]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[(]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7533,7 +7533,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[)]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7624,7 +7624,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[q]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[Q]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7715,7 +7715,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[w]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[W]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7806,7 +7806,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[e]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[E]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7897,7 +7897,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[r]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[R]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -7988,7 +7988,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[t]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[T]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8079,7 +8079,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[y]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[Y]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8170,7 +8170,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[u]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[U]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8261,7 +8261,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[i]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[I]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8352,7 +8352,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[o]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[O]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8443,7 +8443,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[p]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[P]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8534,7 +8534,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[']]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA["]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8625,7 +8625,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[a]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[A]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8716,7 +8716,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[s]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[S]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8807,7 +8807,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[d]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[D]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8898,7 +8898,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[f]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[F]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -8989,7 +8989,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[g]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[G]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9080,7 +9080,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[h]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[H]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9171,7 +9171,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[j]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[J]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9262,7 +9262,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[k]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[K]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9353,7 +9353,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[l]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[L]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9444,7 +9444,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[;]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[:]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9535,7 +9535,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[z]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[Z]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9626,7 +9626,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[x]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[X]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9717,7 +9717,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[c]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[C]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9808,7 +9808,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[v]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[V]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9899,7 +9899,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[b]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[B]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -9990,7 +9990,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[n]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[N]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10081,7 +10081,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[m]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[M]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10263,7 +10263,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[,]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[<]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10354,7 +10354,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[.]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[>]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10445,7 +10445,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[/]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[?]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10536,7 +10536,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[=]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[+]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10627,7 +10627,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[`]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[~]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10718,7 +10718,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[\]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[|]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10811,7 +10811,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[-]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[_]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10902,7 +10902,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[[]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[{]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -10993,7 +10993,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[]]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[}]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values><messages>
 <local><enabled>1</enabled><triggers>
@@ -11085,13 +11085,13 @@ end]]></value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>0.309804</r><g>0.917647</g><b>0.388235</b><a>0.921569</a></value></property><property type='i'><key>
+<r>0.52549</r><g>0.945098</g><b>0.490196</b><a>0.823529</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>3</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>21</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[1]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e7285a-c8fc-11ef-b5af-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -11199,7 +11199,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[buttonType]]></key><value>2</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>1</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
 <x>416</x><y>14</y><w>22</w><h>22</h></value></property><property type='b'><key>
@@ -11207,7 +11207,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[interactive]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[locked]]></key><value>0</value></property><property type='s'><key>
 <![CDATA[name]]></key><value>
-<![CDATA[btnDirectToggleEdit]]></value></property><property type='i'><key>
+<![CDATA[buttonDirectToggleEdit]]></value></property><property type='i'><key>
 <![CDATA[orientation]]></key><value>0</value></property><property type='b'><key>
 <![CDATA[outline]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[outlineStyle]]></key><value>1</value></property><property type='i'><key>
@@ -11225,7 +11225,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -11804,7 +11804,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -11837,7 +11837,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -11870,7 +11870,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -11903,7 +11903,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -11936,7 +11936,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -11969,7 +11969,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12002,7 +12002,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12035,7 +12035,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12068,7 +12068,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12101,7 +12101,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12549,7 +12549,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12625,7 +12625,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12693,7 +12693,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12754,18 +12754,18 @@ function onPointer()
 end]]></value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='s'><key>
 <![CDATA[tag]]></key><value>
-<![CDATA[TEST 00]]></value></property><property type='i'><key>
+<![CDATA[TEST 01]]></value></property><property type='i'><key>
 <![CDATA[textAlignH]]></key><value>2</value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>0.52549</r><g>0.945098</g><b>0.490196</b><a>0.824561</a></value></property><property type='i'><key>
+<r>0.52549</r><g>0.945098</g><b>0.490196</b><a>0.823529</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>3</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>21</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[0]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[1]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='34e75b5e-c8fc-11ef-9ba5-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -12911,7 +12911,7 @@ end]]></value></property><property type='i'><key>
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.32549</r><g>0.929825</g><b>0.149123</b><a>0.649123</a></value></property><property type='f'><key>
+<r>0.32549</r><g>0.929412</g><b>0.14902</b><a>0.65098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -12927,7 +12927,7 @@ end]]></value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='s'><key>
 <![CDATA[tag]]></key><value>
-<![CDATA[0]]></value></property><property type='i'><key>
+<![CDATA[1]]></value></property><property type='i'><key>
 <![CDATA[textAlignH]]></key><value>2</value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
@@ -12964,12 +12964,12 @@ end]]></value></property><property type='i'><key>
 <![CDATA[pointerPriority]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[shape]]></key><value>1</value></property><property type='s'><key>
 <![CDATA[tag]]></key><value>
-<![CDATA[TEST 00]]></value></property><property type='i'><key>
+<![CDATA[TEST 01]]></value></property><property type='i'><key>
 <![CDATA[textAlignH]]></key><value>2</value></property><property type='i'><key>
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.675439</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.67451</a></value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[textWrap]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -13019,7 +13019,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -13040,7 +13040,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
+<r>0.3</r><g>0.3</g><b>0.3</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -13091,7 +13091,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
+<r>0.4</r><g>0.819608</g><b>1</b><a>0.85098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -13112,7 +13112,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>1</a></value></property><property type='i'><key>
+<r>0.3</r><g>0.3</g><b>0.3</b><a>1</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -13191,7 +13191,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815789</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.815686</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>0</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -13712,7 +13712,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0</r><g>0.372549</g><b>0.701961</b><a>0.843137</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.517647</g><b>0.835294</b><a>0.843137</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -13731,7 +13731,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815789</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.67451</a></value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[textWrap]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -13775,7 +13775,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.309804</r><g>0.917647</g><b>0.388235</b><a>0.921569</a></value></property><property type='f'><key>
+<r>0.32549</r><g>0.929412</g><b>0.14902</b><a>0.65098</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -13796,7 +13796,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>0.376471</r><g>1</g><b>0.454902</b><a>0.921569</a></value></property><property type='i'><key>
+<r>0.52549</r><g>0.945098</g><b>0.490196</b><a>0.823529</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>3</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>21</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -13839,7 +13839,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0</r><g>0.372549</g><b>0.701961</b><a>1</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>1</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -13933,7 +13933,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14090,7 +14090,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0</r><g>0.372549</g><b>0.701961</b><a>0.843137</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.517647</g><b>0.835294</b><a>0.843137</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>1</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14109,7 +14109,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>1</r><g>1</g><b>1</b><a>0.815789</a></value></property><property type='i'><key>
+<r>1</r><g>1</g><b>1</b><a>0.67451</a></value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>18</value></property><property type='b'><key>
 <![CDATA[textWrap]]></key><value>1</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -14174,7 +14174,7 @@ Preset Module
 <![CDATA[textAlignV]]></key><value>2</value></property><property type='b'><key>
 <![CDATA[textClip]]></key><value>0</value></property><property type='c'><key>
 <![CDATA[textColor]]></key><value>
-<r>0.309804</r><g>0.917647</g><b>0.388235</b><a>0.921569</a></value></property><property type='i'><key>
+<r>0.52549</r><g>0.945098</g><b>0.490196</b><a>0.823529</a></value></property><property type='i'><key>
 <![CDATA[textLength]]></key><value>3</value></property><property type='i'><key>
 <![CDATA[textSize]]></key><value>21</value></property><property type='b'><key>
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
@@ -14248,7 +14248,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14343,7 +14343,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14405,7 +14405,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.847059</r><g>0.4</g><b>0.0980392</b><a>0.901961</a></value></property><property type='f'><key>
+<r>1</r><g>0.67451</g><b>0</b><a>0.596078</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14460,7 +14460,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14491,7 +14491,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14522,7 +14522,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14553,7 +14553,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14584,7 +14584,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14615,7 +14615,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14646,7 +14646,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14677,7 +14677,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14708,7 +14708,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14739,7 +14739,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14770,7 +14770,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14801,7 +14801,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14832,7 +14832,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14863,7 +14863,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14894,7 +14894,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14925,7 +14925,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14956,7 +14956,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -14987,7 +14987,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15018,7 +15018,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15049,7 +15049,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15080,7 +15080,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15111,7 +15111,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15142,7 +15142,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15173,7 +15173,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15204,7 +15204,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15235,7 +15235,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15266,7 +15266,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15297,7 +15297,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15328,7 +15328,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15359,7 +15359,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15390,7 +15390,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15421,7 +15421,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15452,7 +15452,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15483,7 +15483,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15514,7 +15514,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15545,7 +15545,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15576,7 +15576,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15607,7 +15607,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15638,7 +15638,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15669,7 +15669,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15700,7 +15700,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15731,7 +15731,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15762,7 +15762,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15793,7 +15793,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15824,7 +15824,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15855,7 +15855,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15886,7 +15886,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15917,7 +15917,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15948,7 +15948,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -15979,7 +15979,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16010,7 +16010,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16041,7 +16041,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16072,7 +16072,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16103,7 +16103,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16134,7 +16134,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16165,7 +16165,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16196,7 +16196,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16227,7 +16227,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16258,7 +16258,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16289,7 +16289,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16320,7 +16320,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16351,7 +16351,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16382,7 +16382,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16413,7 +16413,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16444,7 +16444,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16475,7 +16475,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16506,7 +16506,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16537,7 +16537,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16568,7 +16568,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16599,7 +16599,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16630,7 +16630,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16661,7 +16661,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16692,7 +16692,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16723,7 +16723,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16754,7 +16754,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16785,7 +16785,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16816,7 +16816,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16847,7 +16847,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16878,7 +16878,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16909,7 +16909,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16940,7 +16940,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -16971,7 +16971,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17002,7 +17002,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17033,7 +17033,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17064,7 +17064,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17095,7 +17095,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17126,7 +17126,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17157,7 +17157,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17188,7 +17188,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17219,7 +17219,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17250,7 +17250,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17281,7 +17281,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17312,7 +17312,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17343,7 +17343,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17374,7 +17374,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17405,7 +17405,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17436,7 +17436,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17467,7 +17467,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17498,7 +17498,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17529,7 +17529,7 @@ Preset Module
 <property type='b'><key>
 <![CDATA[background]]></key><value>1</value></property><property type='c'><key>
 <![CDATA[color]]></key><value>
-<r>0.388235</r><g>0.701961</g><b>0.835294</b><a>0.85098</a></value></property><property type='f'><key>
+<r>0.168627</r><g>0.639216</g><b>0.835294</b><a>0.780392</a></value></property><property type='f'><key>
 <![CDATA[cornerRadius]]></key><value>1</value></property><property type='i'><key>
 <![CDATA[font]]></key><value>0</value></property><property type='r'><key>
 <![CDATA[frame]]></key><value>
@@ -17645,7 +17645,7 @@ Preset Module
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.3683035373687744},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.9542410969734192},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7377232909202576},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.6651785373687744},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":1},"34e39866-c8fc-11ef-89b3-2cf05d7a7c68":{"x":0},"34e3cff2-c8fc-11ef-95f2-2cf05d7a7c68":{"x":0},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.613839328289032},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":0},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":0},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":1},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":1},"34e5157e-c8fc-11ef-b78b-2cf05d7a7c68":{"x":0},"34e54a1c-c8fc-11ef-9223-2cf05d7a7c68":{"x":0},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.3136160671710968},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.3716517984867096},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.3816964030265808},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.7589281797409058},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":1},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0.4308035373687744},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0.7321428656578064},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0.48325884342193604},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":1,"y":1},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":21,"preset_name":"TEST ALL UP"}}]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1cd10-ca30-11ef-b3bc-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
@@ -17676,7 +17676,7 @@ Preset Module
 <![CDATA[visible]]></key><value>1</value></property></properties><values>
 <value><key>
 <![CDATA[text]]></key><locked>0</locked><lockedDefaultCurrent>1</lockedDefaultCurrent><default>
-<![CDATA[{"34e2b7d4-c8fc-11ef-8e08-2cf05d7a7c68":{"x":0.8401877284049988},"34e2f73a-c8fc-11ef-9f9c-2cf05d7a7c68":{"x":0.39438292384147644},"34e32d9a-c8fc-11ef-9991-2cf05d7a7c68":{"x":0.7830992341041565},"34e362ec-c8fc-11ef-8953-2cf05d7a7c68":{"x":0.7984400391578674},"34e39802-c8fc-11ef-b08e-2cf05d7a7c68":{"x":0.911647379398346},"34e39866-c8fc-11ef-89b3-2cf05d7a7c68":{"x":0},"34e3cff2-c8fc-11ef-95f2-2cf05d7a7c68":{"x":0},"34e4072e-c8fc-11ef-9faf-2cf05d7a7c68":{"x":1},"34e40846-c8fc-11ef-a45f-2cf05d7a7c68":{"x":0.3352227509021759},"34e43e2e-c8fc-11ef-a777-2cf05d7a7c68":{"x":1},"34e473b2-c8fc-11ef-8225-2cf05d7a7c68":{"x":0},"34e4a954-c8fc-11ef-925c-2cf05d7a7c68":{"x":0},"34e4df14-c8fc-11ef-857c-2cf05d7a7c68":{"x":0},"34e5151a-c8fc-11ef-a902-2cf05d7a7c68":{"x":0.6288709044456482},"34e5157e-c8fc-11ef-b78b-2cf05d7a7c68":{"x":0},"34e54a1c-c8fc-11ef-9223-2cf05d7a7c68":{"x":0},"34e57dc0-c8fc-11ef-aaea-2cf05d7a7c68":{"x":0.36478447914123535},"34e5afc0-c8fc-11ef-9978-2cf05d7a7c68":{"x":0.5134009122848511},"34e5dfe0-c8fc-11ef-b4df-2cf05d7a7c68":{"x":0.9522297382354736},"34e60f2e-c8fc-11ef-9d50-2cf05d7a7c68":{"x":1},"34e60f6a-c8fc-11ef-96df-2cf05d7a7c68":{"x":1},"34e60fd8-c8fc-11ef-95a0-2cf05d7a7c68":{"x":1},"34e6103c-c8fc-11ef-87df-2cf05d7a7c68":{"x":0.1416025608778},"34e63df0-c8fc-11ef-842e-2cf05d7a7c68":{"x":1},"34e63e36-c8fc-11ef-a3ca-2cf05d7a7c68":{"x":0.016300572082400322},"34e63e9a-c8fc-11ef-8786-2cf05d7a7c68":{"x":1},"34e63efe-c8fc-11ef-9d13-2cf05d7a7c68":{"x":0.13723157346248627},"34e66c4e-c8fc-11ef-a92a-2cf05d7a7c68":{"x":0.8041767477989197},"34e699bc-c8fc-11ef-86fc-2cf05d7a7c68":{"x":0.15667909383773804},"b0a4b848-cacf-11ef-bbdf-2cf05d7a7c68":{"x":0.12979044020175934,"y":1},"d0ed1394-cad3-11ef-abc8-2cf05d7a7c68":{"text":"button150"},"f0ba1384-cad3-11ef-9bea-2cf05d7a7c68":{"text":"Text restored, yeah!"},"shivaReserved":{"preset_id":0,"preset_name":"TEST 00"}}]]></default><defaultPull>0</defaultPull></value><value>
+<![CDATA[]]></default><defaultPull>0</defaultPull></value><value>
 <key><![CDATA[touch]]></key><locked>0</locked><lockedDefaultCurrent>0</lockedDefaultCurrent><default>
 <![CDATA[false]]></default><defaultPull>0</defaultPull></value></values></node><node ID='d5a1cd88-ca30-11ef-8749-2cf05d7a7c68' type='LABEL'><properties>
 <property type='b'><key>
