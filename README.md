@@ -85,7 +85,7 @@ Performance test with 200 controls:
 ### Re-using the self-contained on-screen keyboard group for your own surfaces
 
 The on-screen keyboard (control group `groupKeyboard`) used in the preset manager is self-contained and re-useable. 
-If you want to use it separately in your control surfaces. You can copy just the `groupKeyboard` to anywhere in your surface.
+If you want to use it separately in your control surfaces, you can copy just the `groupKeyboard` to anywhere in your surface.
 
 <details>
 
