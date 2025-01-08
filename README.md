@@ -49,7 +49,7 @@
 ## Demo video
 
 A short demonstration is available on YouTube:
-- https://www.youtube.com/watch?v=QXi5oVgauT8
+- https://youtu.be/AkwHNaYnw2I
 
 Performance test with 200 controls:
 
