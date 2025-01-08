@@ -47,6 +47,7 @@ local shiva = {
   stBtnEnableDebug = presetModule.groupRunSettings.children.stBtnEnableDebug,
   stBtnGrpFadeOnDirectLoad = presetModule.groupRunSettings.children.stBtnGrpFadeOnDirectLoad.children.labelDisplay,
   stLblShowControlCount = presetModule.groupRunSettings.children.stLblShowControlCount,
+  stLblPresetRoot = presetModule.groupRunSettings.children.stLblPresetRoot,
   -- Manager buttons and displays
   dspInfo = presetModule.grpManager.children.dspInfo,
   lcdMessage = presetModule.grpManager.children.lcdMessage,
@@ -164,6 +165,14 @@ function initConfig()
   initDebug()
   state.rootName = shiva.groupRunSettings.stLblPresetRoot.values.text
   state.presetRootCtrl = state.rootName == '' and root or root:findByName(state.rootName, true)
+  if state.presetRootCtrl == nil then
+    log('WARNING! Control group "' .. state.rootName .. '" not found! Using root!')
+    shiva.groupRunSettings.stLblShowRoot.values.text = 'GROUP NAME ERROR! Using root!'
+    lcdMessageDelayed('WARNING! base group error!')
+    state.presetRootCtrl = root
+  else
+    shiva.groupRunSettings.stLblShowRoot.values.text = 'Group found :)'
+  end
   state.allControls = nil
   state.autoFade = false
   toggleFadeMode()
@@ -302,6 +311,7 @@ function registerHandlers()
     stBtnClearPreset = purgePresetStore,
     stBtnSelectMidi = discoverControls,
     stBtnSelectOsc = discoverControls,
+    stLblPresetRoot = discoverControls,
   }
 end
 
@@ -332,6 +342,7 @@ end
 -- === CALLBACK HELPER FUNCTIONS ===
 
 function discoverControls()
+  initConfig()
   state.allControls = nil
   getAllCurrentValues(true)
   shiva.stLblShowControlCount.values.text = 'found controls: ' .. #state.allControls
@@ -1044,14 +1055,14 @@ function getAllCurrentValues(verbose)
   if verbose == nil then verbose = false end
   if verbose then
     if state.rootName == '' then
-      log('Preset root empty. Using whole ccntrol surface')
+      log('Preset base group. Using whole control surface')
     else
-      log('Preset root object name: ' .. state.rootName)
-      log('Preset root has tag: ' .. state.presetRootCtrl.tag)
+      log('Preset base group name: ' .. state.presetRootCtrl.name)
+      log('Preset base group has tag: ' .. state.presetRootCtrl.tag)
     end
     log('Searching controls..')
   end
-  local id = state.rootName == '' and root.ID or root:findByName(state.rootName, true).ID
+  local id = state.presetRootCtrl.ID
   if state.allControls == nil then
     state.allControls = {}
     getAllControls(id)
