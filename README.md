@@ -19,27 +19,31 @@
 ## Supported features:
 - Select controls by:
   - MIDI message attached
-  - OSC message attached *(**experimental** ..might need further refinement for the selection process!)*
-  - All controls whose tag field starts with the string **"shiva"**
-- Regardless of the above mode, controls can always be manually excluded by adding the string **"noshiva"** to the start of the tag field! 
+  - OSC message attached
+  - Special string prefixes at start of a control's tag field value: In addition to MIDI or OSC message select mode, controls can always be explicitly included or excluded by adding on of the strings **"shiva"** or **"noshiva"** to the start of any contol's tag! 
 - Optionally limit preset to a certain base group, so multiple preset modules can be added to a surface, e.g. one on every pager page.
 - Saves the controls' `x`, `y`, and `text` values into the preset.
+- ***Interactive settings:*** The above settings can be changed on-the-fly in the running TouchOS surface:
+  - Long-tap (hold) the toggle icon on the title bar to open the settings page.
+  - When choosing the control select mode in the settings, the number of recognized controls is indicated, and all selected controls are blinked shortly.
 - Preset name editor.
-  - Tap on the multi-line name display to edit the currently active preset name.
+  - Tap on the bigger multi-line name display to edit the currently active preset name.
 - Direct access load mode
 - Small collapsed mode (tap on heading)
-- Extended manager mode (for saving and loading)
-- Cut, copy and paste, or delete presets between preset slots through context menu.
+- Extended manager mode (for saving and loading):
+  - Switch between modes by tapping the toggle icon on the title bar.
+- Copy, paste, and delete presets between preset slots through context menu.
   - The context menu is invoked when you long-tap (hold) on:
-    - the selected preset no. display, or
+    - the small selected preset no. display in Extended mode, or
     - any of the preset buttons in Direct access mode.
 - Fail-safe load and save
 - Automatic and manual preset crossfading
+- "Randomize all controls now!" option (available in the interactive settings).
 - Last preset is automatically loaded on surface startup.
 - Auto-detect and indicate if controls have been modified since last preset loading.
   - Tap on the single-line preset info display to *blink ;)* all controls that currently differ from preset values.
 - Restore controls working state cache with 10 undo steps, if you accidently loaded a preset and want to revert to a previous working state.
-- A basic skin settings config to allow quick changes to colors, borders, backgrounds, etc. of elements.
+- A basic skin settings config group in TouchOSC Editor view, to allow quick changes to colors, borders, backgrounds, etc. of elements, and apply those changes at startup.
 - ...
 
 ## Demo video
@@ -58,17 +62,17 @@ Performance test with 200 controls:
 
 | Screenhots | |
 | ---- | ---- |
-|  **Preset manager module in TouchOSC editor view:**  |  ![image](https://github.com/user-attachments/assets/e6ed1e3f-08a0-4ea2-be9d-c8e23caabb12) |
-| **Preset manager module with its (hidden) settings and skin options:** | **To change settings, open the "settings" group, and edit its value on the right:** |
-| ![image](https://github.com/user-attachments/assets/feba1030-49fa-4441-8203-5d0c948d1401) | ![image](https://github.com/user-attachments/assets/f31e4e80-4a80-48d9-bc7a-b97bc8a73522) |
+|  **Preset manager module in TouchOSC editor view:**  |  ![image](https://github.com/user-attachments/assets/21c12826-dc05-4bae-8c20-15ed1b7c1f85) |
+| **Preset manager module offers some basic skin setting in editor views:** | **To change colors or borders, open the "skinSettings" group, and edit colors or borders on the right:** |
+| ![image](https://github.com/user-attachments/assets/04318aba-616f-4c5e-ab1f-0722f9881093) | ![image](https://github.com/user-attachments/assets/3e0fa2a8-1790-4d0b-bacf-2f9f0e4c5acb) |
 | **Direct load mode:** | **Copy-and-Paste menu:** |
-| ![image](https://github.com/user-attachments/assets/d37e96c9-ce7a-4597-8817-4fdd95cd2e0b) | ![image](https://github.com/user-attachments/assets/92ec8db9-135b-4b23-a27b-52dad95b0c06) | 
+| ![image](https://github.com/user-attachments/assets/af1d209c-7508-4250-8613-1a5b4013256c) | ![image](https://github.com/user-attachments/assets/3fa811c4-0b31-466d-8155-ce11c1c55d1d) | 
 | **Extended mode** with fail-safe loading and saving by requiring function select before tapping "ENTER": | **Fully collapsed (tap on heading):** |
-| ![image](https://github.com/user-attachments/assets/a908229c-af5a-4d4f-a077-386906a0a5fe) | ![image](https://github.com/user-attachments/assets/86cb105b-9ddb-4303-9d87-4b2fdbfde95d) |
-| **Fader**, selecting duration: | **Fader active:* |
-| ![image](https://github.com/user-attachments/assets/fa5bebf2-22f7-4537-a2d1-9d11fc7cbf9c) | ![image](https://github.com/user-attachments/assets/dd4e2095-f94a-4803-bbaa-2f4e35eacf4a) |
-| **Preset name entry:** |  |
-| ![image](https://github.com/user-attachments/assets/1d6ddd91-de4e-4533-bf96-54db664f0215) |  |
+| ![image](https://github.com/user-attachments/assets/7c8705c4-0ba4-4780-ae1b-fb842e09ebda) | ![image](https://github.com/user-attachments/assets/189b66e7-5263-4a75-85d0-80265de532a6) |
+| **Fader**, selecting duration: | ***Fader active:*** |
+| ![image](https://github.com/user-attachments/assets/bd8ec5a8-4eae-459a-9379-374efd06351a) | ![image](https://github.com/user-attachments/assets/138fb0e7-7627-4802-836d-361058cf6ed8) |
+| **Preset name entry:** | ***Interactive settings** can be changed on-the-fly:*<br>*Long-tap (hold) the toggle icon on the title bar to open settings.* |
+| ![image](https://github.com/user-attachments/assets/7b043cc0-8965-4955-be69-9a7d5e981232) | ![image](https://github.com/user-attachments/assets/1249b96d-54c5-4aaa-b363-8da0b63c1e81) |
 
 ## Usage
 
