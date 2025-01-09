@@ -89,6 +89,9 @@ If you want to use it separately in your control surfaces, you can copy just the
 
 The keyboard control will set itself to visible and interactive upone receiving a notify() message, and hide itself again upon closing.
 
+Short demo video on how to copy and use it in your template:
+- https://youtu.be/qeayBo-21eA
+
 <details>
 
 <summary>LUA script for using the keyboard group with arbitrary controls:  (click to expand)</summary>
