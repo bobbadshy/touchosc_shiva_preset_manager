@@ -91,6 +91,7 @@ local state = {
   collapsed = false,
   ignoreToggle = false,
   lastPage = nil,
+  bankSize = 130,
   -- Target where to put the text from keyboard after edit
   kbdTarget = '',
   -- keep track of working state stack
@@ -299,6 +300,8 @@ function registerHandlers()
     btnPrgPlus = prgSwitch,
     btnDirectBankLoadMinus = bankSwitchDirect,
     btnDirectBankLoadPlus = bankSwitchDirect,
+    btnDirectPrgLoadMinus = prgSwitchDirect,
+    btnDirectPrgLoadPlus = prgSwitchDirect,
     lblDirectHeading = toggleCollapse,
     lblDirectEdit = toggleEdit,
     dspInfo = addChangedControlsToBlink,
@@ -632,8 +635,8 @@ function prgSwitch(up)
   loadSelectedPreset()
 end
 
-function bankSwitch(up)
-  up = up == 'btnBankPlus'
+function prgSwitchDirect(up)
+  up = up == 'btnDirectPrgLoadPlus'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, 10)
   if up then
@@ -645,18 +648,34 @@ function bankSwitch(up)
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
+  updateDirectLoadButtons(presetNo)
+end
+
+function bankSwitch(up)
+  up = up == 'btnBankPlus'
+  local presetNo = getSelectedPreset() or 0
+  presetNo = presetNo - math.fmod(presetNo, state.bankSize)
+  if up then
+    presetNo = presetNo + state.bankSize
+    if presetNo > state.maxPreset then presetNo = 0 end
+  else
+    presetNo = presetNo - state.bankSize
+    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize - 1 end
+  end
+  logDebug('Switching bank: ' .. presetNo)
+  selectPreset(presetNo)
 end
 
 function bankSwitchDirect(up)
   up = up == 'btnDirectBankLoadPlus'
   local presetNo = getSelectedPreset() or 0
-  presetNo = presetNo - math.fmod(presetNo, 10)
+  presetNo = presetNo - math.fmod(presetNo, state.bankSize)
   if up then
-    presetNo = presetNo + 10
+    presetNo = presetNo + state.bankSize
     if presetNo > state.maxPreset then presetNo = 0 end
   else
-    presetNo = presetNo - 10
-    if presetNo < 0 then presetNo = state.maxPreset - 9 end
+    presetNo = presetNo - state.bankSize
+    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize -1 end
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
