@@ -23,6 +23,7 @@ local CB_ONLYPASTE = 1
 local KBDTARGETACTIVEPRESET = 'activePresetName'
 local KBDTARGETNEWSAVE = 'newSave'
 -- CONTROLS
+local presetModuleMain = self.parent
 local presetModule = self.parent.children
 local shiva = {
   -- groups
@@ -1021,10 +1022,9 @@ function controlEligible(c)
   for i = 1, #special do
     if c.ID == special[i] then return true end
   end
+  if c.ID == presetModuleMain.ID then return false end
   -- always ignore manually excluded controls!
-  if string.match(c.tag, '^noshiva.*') then
-     return false
-  end
+  if string.match(c.tag, '^noshiva.*') then return false end
   -- Check if MIDI msg attached
   if (
     shiva.groupRunSettings.stBtnSelectMidi.values.x == 1 and
@@ -1037,17 +1037,22 @@ function controlEligible(c)
   ) then return true end
   -- Check if special tag prefix "shiva"
   if string.match(c.tag, '^shiva.*') then return true end
+  return false
 end
 
 function getAllControls(pid)
   -- Registers all applicable controls in state.allControls
   local c = pid == root.ID and root or root:findByID(pid, true)
+  log('Check control: ' .. c.name)
   if c == nil then
     log('ERROR finding preset root control!')
     return
   end
   for i = 1, #c.children do
-    if not string.match(c.tag, '^noshiva.*') then
+    if not (
+      c.children[i].ID == presetModuleMain.ID or
+      string.match(c.children[i].tag, '^noshiva.*')
+    ) then
       getAllControls(c.children[i].ID)
     end
   end
