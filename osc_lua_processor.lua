@@ -1028,7 +1028,9 @@ function getAllControls(pid)
     return
   end
   for i = 1, #c.children do
-    getAllControls(c.children[i].ID)
+    if not string.match(c.tag, '^noshiva.*') then
+      getAllControls(c.children[i].ID)
+    end
   end
   if controlEligible(c) then table.insert(state.allControls, c) end
 end
