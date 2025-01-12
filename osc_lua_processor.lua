@@ -1022,9 +1022,15 @@ function controlEligible(c)
   for i = 1, #special do
     if c.ID == special[i] then return true end
   end
-  if c.ID == presetModuleMain.ID then return false end
+  if c.ID == presetModuleMain.ID then
+    -- log('Excluded myself: ' .. c.parent.name .. '.' ..c.name)
+    return false
+  end
   -- always ignore manually excluded controls!
-  if string.match(c.tag, '^noshiva.*') then return false end
+  if string.match(c.tag, '^noshiva.*') then
+    -- log('Excluded by "noshiva": ' .. c.parent.name .. '.' ..c.name)
+    return false
+  end
   -- Check if MIDI msg attached
   if (
     shiva.groupRunSettings.stBtnSelectMidi.values.x == 1 and
@@ -1037,13 +1043,15 @@ function controlEligible(c)
   ) then return true end
   -- Check if special tag prefix "shiva"
   if string.match(c.tag, '^shiva.*') then return true end
+  -- logDebug('No msg found on: ' .. c.parent.name .. '.' ..c.name)
   return false
 end
 
-function getAllControls(pid)
+function getAllControls(pid, r)
   -- Registers all applicable controls in state.allControls
+  r = r == nil and 1 or r + 1
   local c = pid == root.ID and root or root:findByID(pid, true)
-  logDebug('Check control: ' .. c.parent.name .. '.' .. c.name)
+  -- logDebug('Level ' .. r .. ' - Check control: ' .. c.parent.name .. '.' .. c.name)
   if c == nil then
     log('ERROR finding preset root control!')
     return
@@ -1053,10 +1061,13 @@ function getAllControls(pid)
       c.children[i].ID == presetModuleMain.ID or
       string.match(c.children[i].tag, '^noshiva.*')
     ) then
-      getAllControls(c.children[i].ID)
+      getAllControls(c.children[i].ID, r)
     end
   end
-  if controlEligible(c) then table.insert(state.allControls, c) end
+  if controlEligible(c) then
+    -- log('Found control: ' .. c.parent.name .. '.' ..c.name)
+    table.insert(state.allControls, c)
+  end
 end
 
 function getValueType(c)
