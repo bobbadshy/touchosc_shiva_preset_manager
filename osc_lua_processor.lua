@@ -1043,7 +1043,7 @@ end
 function getAllControls(pid)
   -- Registers all applicable controls in state.allControls
   local c = pid == root.ID and root or root:findByID(pid, true)
-  log('Check control: ' .. c.name)
+  logDebug('Check control: ' .. c.parent.name .. '.' .. c.name)
   if c == nil then
     log('ERROR finding preset root control!')
     return
