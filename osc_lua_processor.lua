@@ -124,6 +124,9 @@ local state = {
   --fast update
   hurryDelay = 300,
   hurryLast = 0,
+  --slow control setting process
+  slowSetDelay = 20,
+  slowSetLast = 0,
 }
 
 -- === INIT  ===
@@ -1122,6 +1125,7 @@ function getAllCurrentValues(verbose)
         valueName = c.values.keys[i]
         if valueName ~= 'touch' then
           state.currValues[id][valueName] = c.values[valueName]
+          state.currValues[id][valueName .. 'Default'] = c:getValueField(valueName, ValueField.DEFAULT)
         end
       end
     end
@@ -1160,6 +1164,7 @@ function writeToControls(values)
           for i=1, #ctrl.values.keys do
             valueName = ctrl.values.keys[i]
             if valueName ~= 'touch' then
+              ctrl:setValueField(valueName, ValueField.DEFAULT, value[valueName .. 'Default'])
               ctrl.values[valueName] = value[valueName]
             end
           end
@@ -1560,6 +1565,8 @@ function applyLayout()
   log('Applying layout..')
   applySkinGeneric()
   applySkinSingle(shiva.lblDirectHeading, shiva.skinSettings.templateHeading)
+  -- TODO: Workaround, cause the blinking tends to kill the text color...
+  shiva.lcdMessage.properties.textColor = COLOR_MSG_DISPLAY_TXT
 end
 
 -- === GUI STATE HANDLING ===
