@@ -1839,6 +1839,7 @@ function updateDirectLoadButtons(p)
   for i = 1, 10 do
     -- buttons are 1..10, labels are 11..10
     shiva.groupDirectLoadButtons[i + 10].values.text = getNameFromPreset(p + i - 1)
+    addControlToTextBlink(shiva.groupDirectLoadButtons[i + 10])
     shiva.groupDirectLoadButtons[i].tag = 'direct' .. p + i - 1
     shiva.groupDirectLoadButtons[i].values.x = (p + i -1) == s and 1 or 0
   end
