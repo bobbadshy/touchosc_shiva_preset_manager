@@ -63,7 +63,6 @@ local shiva = {
   -- Direct load row on top
   lblDirectHeading = presetModule.groupDirectLoad.children.lblDirectHeading,
   dspDirectInfo = presetModule.groupDirectLoad.children.dspDirectInfo,
-  btnFnDirectBackActive = presetModule.groupDirectLoad.children.btnFnDirectBackActive,
   -- Menus
   menuContext = presetModule.menuContext,
 }
@@ -116,7 +115,7 @@ local state = {
   msgLcdSent = 0,
   msgLcd = '',
   -- crossfade update
-  fadeDelay = 10,
+  fadeDelay = 30,
   fadeLast = 0,
   -- slow update
   relaxDelay = 2000,
@@ -293,7 +292,6 @@ function registerHandlers()
     fadeState = fadeUpdate,
     lcdMessage = lcdTap,
     -- btnToggleEdit = toggleEdit,
-    btnFnDirectBackActive = directBackToActivePreset,
     -- btnFnKbdClose = saveKeyboardValue,
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
@@ -577,11 +575,6 @@ function toggleEdit()
   --   showDirectLoad()
   --   updateDirectLoadButtons()
   -- end
-end
-
-function directBackToActivePreset()
-  selectActivePreset()
-  updateDirectLoadButtons(getActivePreset())
 end
 
 function directSelect(cmd)
