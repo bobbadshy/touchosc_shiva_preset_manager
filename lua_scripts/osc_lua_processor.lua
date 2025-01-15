@@ -1414,6 +1414,10 @@ function applySkinGeneric()
         ctrl.properties.textSize = shiva.skinSettings.templateButton.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateButton.properties.font
       end
+      if string.match(ctrl.name, '^btnMinus.+') or string.match(ctrl.name, '^btnPlus.+') then
+        logDebug('btn: ' .. ctrl.name)
+        ctrl.properties.textSize = shiva.skinSettings.templateButton.properties.textSize - 3
+      end
       if string.match(ctrl.name, '^btnFn.+') then
         logDebug('btn: ' .. ctrl.name)
         if (
@@ -1440,6 +1444,10 @@ function applySkinGeneric()
         ctrl.properties.cornerRadius = shiva.skinSettings.templateButtonDirect.properties.cornerRadius
         ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateButtonDirect.properties.font
+      end
+      if string.match(ctrl.name, '^btnMinusDirect.+') or string.match(ctrl.name, '^btnPlusDirect.+') then
+        logDebug('btn: ' .. ctrl.name)
+        ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textSize - 3
       end
     end
     logDebug('Applying labels..')
