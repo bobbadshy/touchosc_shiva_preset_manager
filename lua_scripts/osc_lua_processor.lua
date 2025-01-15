@@ -314,14 +314,14 @@ function registerHandlers()
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
     btnClearWork = clearWork,
-    btnBankMinus = bankSwitch,
-    btnBankPlus = bankSwitch,
-    btnPrgMinus = prgSwitch,
-    btnPrgPlus = prgSwitch,
-    btnDirectBankLoadMinus = bankSwitchDirect,
-    btnDirectBankLoadPlus = bankSwitchDirect,
-    btnDirectPrgLoadMinus = prgSwitchDirect,
-    btnDirectPrgLoadPlus = prgSwitchDirect,
+    btnMinusBank = bankSwitch,
+    btnPlusBank = bankSwitch,
+    btnMinusPrg = prgSwitch,
+    btnPlusPrg = prgSwitch,
+    btnMinusDirectBankLoad = bankSwitchDirect,
+    btnPlusDirectBankLoad = bankSwitchDirect,
+    btnMinusDirectPrgLoad = prgSwitchDirect,
+    btnPlusDirectPrgLoad = prgSwitchDirect,
     lblDirectHeading = toggleCollapse,
     lblDirectEdit = toggleEdit,
     dspInfo = addChangedControlsToBlink,
@@ -637,7 +637,7 @@ function addChangedControlsToBlink()
 end
 
 function prgSwitch(up)
-  up = up == 'btnPrgPlus'
+  up = up == 'btnPlusPrg'
   local presetNo = getSelectedPreset() or 0
   w = presetNo
   local b
@@ -651,7 +651,7 @@ function prgSwitch(up)
 end
 
 function prgSwitchDirect(up)
-  up = up == 'btnDirectPrgLoadPlus'
+  up = up == 'btnPlusDirectPrgLoad'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, 10)
   if up then
@@ -667,7 +667,7 @@ function prgSwitchDirect(up)
 end
 
 function bankSwitch(up)
-  up = up == 'btnBankPlus'
+  up = up == 'btnPlusBank'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, state.bankSize)
   if up then
@@ -682,7 +682,7 @@ function bankSwitch(up)
 end
 
 function bankSwitchDirect(up)
-  up = up == 'btnDirectBankLoadPlus'
+  up = up == 'btnPlusDirectBankLoad'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, state.bankSize)
   if up then
@@ -1660,15 +1660,22 @@ end
 
 function showContextMenu(mode)
   mode = mode == nil and CB_ALL or mode
+  local s = '= Preset ' .. getSelectedPreset() .. ' ='
+  if not state.presetModified then
+    s = '= Preset ' .. getSelectedPreset() .. ' ='
+  else
+    s = '= *Preset ' .. getSelectedPreset() .. '* ='
+    mode = CB_ONLYPASTE
+  end
   if mode == CB_ONLYPASTE then
     shiva.menuContext.children.entryCut.properties.interactive = false
-    shiva.menuContext.children.entryCut.properties.textColor = 0
+    shiva.menuContext.children.entryCut.properties.textColor = 0.1
     shiva.menuContext.children.entryCopy.properties.interactive = false
-    shiva.menuContext.children.entryCopy.properties.textColor = 0
+    shiva.menuContext.children.entryCopy.properties.textColor = 0.1
     shiva.menuContext.children.entryPaste.properties.interactive = true
     shiva.menuContext.children.entryPaste.properties.textColor = COLOR_TEXTDEFAULT
     shiva.menuContext.children.entryDelete.properties.interactive = false
-    shiva.menuContext.children.entryDelete.properties.textColor = 0
+    shiva.menuContext.children.entryDelete.properties.textColor = 0.1
   else
     shiva.menuContext.children.entryCut.properties.interactive = true
     shiva.menuContext.children.entryCut.properties.textColor = COLOR_TEXTDEFAULT
@@ -1680,7 +1687,7 @@ function showContextMenu(mode)
     shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
   end
   shiva.grpBlock.visible = true
-  shiva.menuContext.children[1].values.text = 'Preset ' .. getSelectedPreset()
+  shiva.menuContext.children[1].values.text = '= Preset ' .. getSelectedPreset() .. ' ='
   shiva.menuContext.properties.visible = true
 end
 
