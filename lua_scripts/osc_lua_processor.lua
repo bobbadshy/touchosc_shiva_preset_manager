@@ -1463,17 +1463,6 @@ function applySkinGeneric()
         ctrl.properties.textSize = shiva.skinSettings.templateLabel.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateLabel.properties.font
       end
-      if string.match(ctrl.name, '^lblDirect.+') then
-        logDebug('lblDirect: ' .. ctrl.name)
-        ctrl.properties.color = shiva.skinSettings.templateLabelDirect.properties.color -- default was 66D1FFD9
-        ctrl.properties.textColor = shiva.skinSettings.templateLabelDirect.properties.textColor -- default was FFFFFFD0
-        ctrl.properties.background = shiva.skinSettings.templateLabelDirect.properties.background
-        ctrl.properties.outline = shiva.skinSettings.templateLabelDirect.properties.outline
-        ctrl.properties.outlineStyle = shiva.skinSettings.templateLabelDirect.properties.outlineStyle
-        ctrl.properties.cornerRadius = shiva.skinSettings.templateLabelDirect.properties.cornerRadius
-        ctrl.properties.textSize = shiva.skinSettings.templateLabelDirect.properties.textSize
-        ctrl.properties.font = shiva.skinSettings.templateLabelDirect.properties.font
-      end
       logDebug('Applying displays..')
       if string.match(ctrl.name, '^dsp.+') then
         logDebug('dsp: ' .. ctrl.name)
@@ -1485,17 +1474,6 @@ function applySkinGeneric()
         ctrl.properties.cornerRadius = shiva.skinSettings.templateDisplay.properties.cornerRadius
         ctrl.properties.textSize = shiva.skinSettings.templateDisplay.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateDisplay.properties.font
-      end
-      if string.match(ctrl.name, '^dspDirect.+') then
-        logDebug('dspDirect: ' .. ctrl.name)
-        ctrl.properties.color = shiva.skinSettings.templatedisplayDirect.properties.color -- default was 66D1FFD9
-        ctrl.properties.textColor = shiva.skinSettings.templatedisplayDirect.properties.textColor -- default was FFFFFFD0
-        ctrl.properties.background = shiva.skinSettings.templatedisplayDirect.properties.background
-        ctrl.properties.outline = shiva.skinSettings.templatedisplayDirect.properties.outline
-        ctrl.properties.outlineStyle = shiva.skinSettings.templatedisplayDirect.properties.outlineStyle
-        ctrl.properties.cornerRadius = shiva.skinSettings.templatedisplayDirect.properties.cornerRadius
-        ctrl.properties.textSize = shiva.skinSettings.templatedisplayDirect.properties.textSize
-        ctrl.properties.font = shiva.skinSettings.templatedisplayDirect.properties.font
       end
       logDebug('Applying digits..')
       if string.match(ctrl.name, '^[0-9]+$') then
@@ -1550,17 +1528,6 @@ function applySkinGeneric()
         ctrl.properties.cornerRadius = shiva.skinSettings.templateLCD.properties.cornerRadius
         ctrl.properties.textSize = shiva.skinSettings.templateLCD.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateLCD.properties.font
-      end
-      if string.match(ctrl.name, '^lcdDirect.+') then
-        logDebug('lcdDirect: ' .. ctrl.name)
-        ctrl.properties.color = shiva.skinSettings.templateLcdDirect.properties.color
-        ctrl.properties.textColor = shiva.skinSettings.templateLcdDirect.properties.textColor
-        ctrl.properties.background = shiva.skinSettings.templateLcdDirect.properties.background
-        ctrl.properties.outline = shiva.skinSettings.templateLcdDirect.properties.outline
-        ctrl.properties.outlineStyle = shiva.skinSettings.templateLcdDirect.properties.outlineStyle
-        ctrl.properties.cornerRadius = shiva.skinSettings.templateLcdDirect.properties.cornerRadius
-        ctrl.properties.textSize = shiva.skinSettings.templateLcdDirect.properties.textSize
-        ctrl.properties.font = shiva.skinSettings.templateLcdDirect.properties.font
       end
     end
   end
