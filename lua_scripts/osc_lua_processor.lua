@@ -49,7 +49,7 @@ local shiva = {
   borderGroupBottom = presetModule.borderGroupBottom,
   allPages= {},
   -- settings
-  presetStore = presetModule.shivaPresetStore.children,
+  presetStore = nil,
   workStore = presetModule.workStore.children,
   skinSettings = presetModule.skinSettings.children,
   blinkFader = presetModule.blinkFader,
@@ -95,7 +95,7 @@ local state = {
   -- misc.
   modifiedText = '',
   presetModified = false,
-  maxPreset = #shiva.presetStore - 1,
+  maxPreset = 0,
   selectedIsEmpty = false,
   collapsed = false,
   ignoreToggle = false,
@@ -171,6 +171,7 @@ function initShiva()
     log('FOUND GLOBAL PRESET STORE TABLE: ' .. s)
     shiva.presetStore = gs.children
   else
+    shiva.presetStore = presetModule.shivaPresetStore.children
     log('Using default internal preset store table: ' .. presetModule.shivaPresetStore.name)
   end
   state.maxPreset = #shiva.presetStore - 1
