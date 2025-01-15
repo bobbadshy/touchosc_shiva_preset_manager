@@ -1,4 +1,13 @@
 ---@diagnostic disable: lowercase-global, undefined-global
+
+-- ##########
+-- # == Configuration ==
+-- #
+-- name for alternative, global preset store table
+globalPresetStoreName = 'shivaPresetStore'
+-- #
+-- ##########
+
 -- CONSTANTS
 local COLOR_GRP_BACKGROUND = '000000DB'
 local COLOR_TEXTDEFAULT = 'FFFFFFD0'
@@ -40,7 +49,7 @@ local shiva = {
   borderGroupBottom = presetModule.borderGroupBottom,
   allPages= {},
   -- settings
-  presetStore = presetModule.presetStore.children,
+  presetStore = presetModule.shivaPresetStore.children,
   workStore = presetModule.workStore.children,
   skinSettings = presetModule.skinSettings.children,
   blinkFader = presetModule.blinkFader,
@@ -133,8 +142,8 @@ local state = {
 function init()
   initDebug()
   log('INIT processor..')
-  log('Max preset: ' .. state.maxPreset)
   initShiva()
+  log('Max preset: ' .. state.maxPreset)
   registerHandlers()
   applyLayout()
   initConfig()
@@ -156,6 +165,15 @@ function initDebug()
 end
 
 function initShiva()
+  local gs = presetModuleMain.parent.parent.children[globalPresetStoreName]
+  if gs ~= nil then
+    local s = gs.parent.name .. '.' .. gs.name
+    log('FOUND GLOBAL PRESET STORE TABLE: ' .. s)
+    shiva.presetStore = gs.children
+  else
+    log('Using default internal preset store table: ' .. presetModule.shivaPresetStore.name)
+  end
+  state.maxPreset = #shiva.presetStore - 1
   shiva.allPages = {
     shiva.groupDirectLoadButtonsMain,
     shiva.grpManagerMain,
@@ -208,7 +226,7 @@ function initGui()
   lcdMessage('Controls Select:\n' .. getSelectModeStr())
   lcdMessageDelayed('Welcome to\n"Shiva"\nPreset Module')
   log('Init finished.')
-  log('== Welcome to "Shiva" Preset Module! Happy Jammin\' :-) ==')
+  log('== Welcome to "Shiva" Preset Module! Happy Jamin\' :-) ==')
 end
 
 function cycleView()
