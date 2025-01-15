@@ -676,7 +676,7 @@ function bankSwitch(up)
     if presetNo > state.maxPreset then presetNo = 0 end
   else
     presetNo = presetNo - state.bankSize
-    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize - 1 end
+    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize + 1 end
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
@@ -691,7 +691,7 @@ function bankSwitchDirect(up)
     if presetNo > state.maxPreset then presetNo = 0 end
   else
     presetNo = presetNo - state.bankSize
-    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize -1 end
+    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize + 1 end
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
