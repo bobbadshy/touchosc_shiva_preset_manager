@@ -281,6 +281,8 @@ function onReceiveNotify(cmd, val)
     blinkTextControls(val)
   elseif cmd == 'kbdClose' then
     saveKeyboardValue(val)
+  elseif cmd == 'pagePlusDirectLoad' or cmd == 'pageMinusDirectLoad' then
+    prgSwitchDirect(cmd)
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then
       showContextMenu()
@@ -653,7 +655,7 @@ function prgSwitch(up)
 end
 
 function prgSwitchDirect(up)
-  up = up == 'btnPlusDirectPrgLoad'
+  up = up == 'btnPlusDirectPrgLoad' or up == 'pagePlusDirectLoad'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, 10)
   if up then
@@ -1447,19 +1449,36 @@ function applySkinGeneric()
         ctrl.properties.textSize = shiva.skinSettings.templateFunctions.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateFunctions.properties.font
       end
-      if string.match(ctrl.name, '^btnDirect.+') then
-        logDebug('btnDirect: ' .. ctrl.name)
-        ctrl.properties.color = shiva.skinSettings.templateButtonDirect.properties.color -- default was 66D1FFD9
-        ctrl.properties.background = shiva.skinSettings.templateButtonDirect.properties.background
-        ctrl.properties.outline = shiva.skinSettings.templateButtonDirect.properties.outline
-        ctrl.properties.outlineStyle = shiva.skinSettings.templateButtonDirect.properties.outlineStyle
-        ctrl.properties.cornerRadius = shiva.skinSettings.templateButtonDirect.properties.cornerRadius
-        ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textSize
-        ctrl.properties.font = shiva.skinSettings.templateButtonDirect.properties.font
+      if ctrl.parent.name == 'groupDirectLoadButtons' and string.match(ctrl.name, '^[0-9]+$') then
+        if string.match(ctrl.name, '^[0-9]+$') then
+          logDebug('btnDirect: ' .. ctrl.name)
+          ctrl.properties.color = shiva.skinSettings.templateButtonDirect.properties.color -- default was 66D1FFD9
+          ctrl.properties.background = shiva.skinSettings.templateButtonDirect.properties.background
+          ctrl.properties.outline = shiva.skinSettings.templateButtonDirect.properties.outline
+          ctrl.properties.outlineStyle = shiva.skinSettings.templateButtonDirect.properties.outlineStyle
+          ctrl.properties.cornerRadius = shiva.skinSettings.templateButtonDirect.properties.cornerRadius
+          ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textSize
+          ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textColor
+          ctrl.properties.font = shiva.skinSettings.templateButtonDirect.properties.font
+        end
+        if string.match(ctrl.name, '^lblDirect[0-9]+$') then
+          logDebug('btnDirect: ' .. ctrl.name)
+          ctrl.properties.cornerRadius = shiva.skinSettings.templateButtonDirect.properties.cornerRadius
+          ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textSize
+          ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textColor
+          ctrl.properties.font = shiva.skinSettings.templateButtonDirect.properties.font
+        end
       end
-      if string.match(ctrl.name, '^btnMinusDirect.+') or string.match(ctrl.name, '^btnPlusDirect.+') then
-        logDebug('btn: ' .. ctrl.name)
-        ctrl.properties.textSize = shiva.skinSettings.templateButtonDirect.properties.textSize - 3
+      if string.match(ctrl.name, '^btnPlusDirect.+') or string.match(ctrl.name, '^btnMinusDirect.+') then
+        logDebug('btnPageDirect: ' .. ctrl.name)
+        ctrl.properties.color = shiva.skinSettings.templatePageButtonDirect.properties.color -- default was 66D1FFD9
+        ctrl.properties.background = shiva.skinSettings.templatePageButtonDirect.properties.background
+        ctrl.properties.outline = shiva.skinSettings.templatePageButtonDirect.properties.outline
+        ctrl.properties.outlineStyle = shiva.skinSettings.templatePageButtonDirect.properties.outlineStyle
+        ctrl.properties.cornerRadius = shiva.skinSettings.templatePageButtonDirect.properties.cornerRadius
+        ctrl.properties.textSize = shiva.skinSettings.templatePageButtonDirect.properties.textSize - 3
+        ctrl.properties.textColor = shiva.skinSettings.templatePageButtonDirect.properties.textColor
+        ctrl.properties.font = shiva.skinSettings.templatePageButtonDirect.properties.font
       end
     end
     logDebug('Applying labels..')

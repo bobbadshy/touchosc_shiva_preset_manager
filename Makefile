@@ -21,3 +21,6 @@ extract:																		## Extract .tosc from repo root intro ./export folder
 overwrite-xml:															## Save the current .tosc as .xml in ./source
 	$(SCRIPTS_DIR)/overwrite.sh
 
+minify-lua:																	## Minify all lua scripts
+	$(SCRIPTS_DIR)//minify_lua.sh
+
