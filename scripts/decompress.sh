@@ -1,12 +1,14 @@
 #!/bin/bash
-
+#
 # Uncompresses the .tosc file into .xml
+#
+# IMPORTANT! Run from repo root with:
+#
+# ./scripts/decompress.sh
+#
 
-s="shiva_preset_manager.tosc"
-t="xml_export/shiva_preset_manager.xml"
+# read config
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/config.sh"
 
-echo "Decompressing $s to $t ..
-also formats the .xml a bit better to allow for better showing a git diff on it"
-
-# pigz -c -d < "$s" | sed -r 's#(<[a-z]+>)<#\1\n<#g' - > "$t"
-pigz -c -d < "$s" > "$t"
+echo "Decompressing $TOSC_FINAL to $XML_EXPORT .."
+pigz -c -d < "$TOSC_FINAL" > "$XML_EXPORT"
