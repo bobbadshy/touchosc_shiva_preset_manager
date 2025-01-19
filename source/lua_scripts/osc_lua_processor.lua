@@ -4,7 +4,7 @@
 -- # == Configuration ==
 -- #
 -- name for alternative, global preset store table
-globalPresetStoreName = 'shivaPresetStore'
+local globalPresetStoreName = 'shivaPresetStore'
 -- #
 -- ##########
 
@@ -323,6 +323,7 @@ function registerHandlers()
     btnPlusDirectBankLoad = bankSwitchDirect,
     btnMinusDirectPrgLoad = prgSwitchDirect,
     btnPlusDirectPrgLoad = prgSwitchDirect,
+    pagerDirectPageLoad = pageSwitchDirect,
     lblDirectHeading = toggleCollapse,
     lblDirectEdit = toggleEdit,
     dspInfo = addChangedControlsToBlink,
@@ -665,6 +666,16 @@ function prgSwitchDirect(up)
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
   updateDirectLoadButtons(presetNo)
+end
+
+function pageSwitchDirect()
+  print('###################')
+  local presetNo = getSelectedPreset() or 0
+  local bankPage = shiva.groupDirectLoadButtons.pagerDirectPageLoad.values.x
+  local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
+  log('Switching bank: ' .. result)
+  selectPreset(result)
+  updateDirectLoadButtons(result)
 end
 
 function bankSwitch(up)
@@ -1827,13 +1838,16 @@ end
 
 function updateDirectLoadButtons(p)
   if p == nil then p = getSelectedPreset() end
+  -- the page in the bank, from 0 ..12
+  bankPage = math.floor(math.fmod(p, state.bankSize)/10)
   local s = getActivePreset()
   m = math.fmod(p, 10)
   p = p - m
+  shiva.groupDirectLoadButtons.pagerDirectPageLoad.values.x = bankPage
   for i = 1, 10 do
     -- buttons are 1..10, labels are 11..10
     shiva.groupDirectLoadButtons[i + 10].values.text = getNameFromPreset(p + i - 1)
-    addControlToTextBlink(shiva.groupDirectLoadButtons[i + 10])
+    -- addControlToTextBlink(shiva.groupDirectLoadButtons[i + 10])
     shiva.groupDirectLoadButtons[i].tag = 'direct' .. p + i - 1
     shiva.groupDirectLoadButtons[i].values.x = (p + i -1) == s and 1 or 0
   end
