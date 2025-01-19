@@ -698,12 +698,14 @@ end
 function bankSwitchDirect(up)
   up = up == 'btnPlusDirectBankLoad'
   local presetNo = getSelectedPreset() or 0
+  local p = presetNo
   presetNo = presetNo - math.fmod(presetNo, state.bankSize)
   if up then
     presetNo = presetNo + state.bankSize
     if presetNo > state.maxPreset then presetNo = 0 end
   else
-    presetNo = presetNo - state.bankSize
+    -- if not on preset zero, stay on start of current bank
+    if p == presetNo then presetNo = presetNo - state.bankSize end
     if presetNo < 0 then presetNo = state.maxPreset - state.bankSize + 1 end
   end
   logDebug('Switching bank: ' .. presetNo)
@@ -1008,7 +1010,10 @@ function selectPreset(presetNo)
   -- Saves the passed value as the currently selected preset number.
   -- The selected preset is eligible for loading and applying.
   shiva.dspSelected.values.text = presetNo
-  shiva.dspDirectInfo.values.text = presetNo
+  -- Show bank and preset in bankk no.
+  shiva.dspDirectInfo.values.text = 'Bank ' ..
+    math.floor(presetNo/state.bankSize) .. ' - P' ..
+    math.fmod(presetNo, state.bankSize)
   showSelectMessage(presetNo)
   logDebug('New selected preset: ' .. getSelectedPreset())
 end
@@ -1282,9 +1287,9 @@ function applyFadeValues()
   if not state.fading then return end
   writeToControls(state.fadeValues)
   infoMessage('fading ' .. getSelectedPreset(), false)
-  i = state.fadeMax / 10
-  s1 = string.rep('=', math.ceil((state.fadeMax - state.fadeStep) / i))
-  s2 = string.rep(' ', (state.fadeMax / i) - #s1)
+  p = state.fadeMax / 10
+  s1 = string.rep('=', math.ceil((state.fadeMax - state.fadeStep) / p))
+  s2 = string.rep(' ', (state.fadeMax / p) - #s1)
   if state.fadeStep == 0 and not state.autoFade then
     lcdMessage('..FADING..\n' .. 'release!', false)
   else
