@@ -995,11 +995,11 @@ function setSelectedPresetName(s)
 end
 
 function getBankString(p)
-  return 'Bank ' .. math.floor(p/state.bankSize) .. ' - P' .. getIndexInBank(p)
+  return 'Bank' .. math.floor(p/state.bankSize) .. ' P' .. getIndexInBank(p)
 end
 
 function getBankStringShort(p)
-  return 'B' .. math.floor(p/state.bankSize) .. ' - P' .. getIndexInBank(p)
+  return 'B' .. math.floor(p/state.bankSize) .. ' P' .. getIndexInBank(p)
 end
 
   function getIndexInBank(p)
@@ -1028,9 +1028,7 @@ function selectPreset(presetNo)
   shiva.dspSelected.values.text = getIndexInBank(presetNo)
   state.selectedPreset = presetNo
   -- Show bank and preset in bankk no.
-  shiva.dspDirectInfo.values.text = 'Bank ' ..
-    math.floor(presetNo/state.bankSize) .. ' - P' ..
-    math.fmod(presetNo, state.bankSize)
+  shiva.dspDirectInfo.values.text = getBankString(presetNo)
   showSelectMessage(presetNo)
   logDebug('New selected preset: ' .. getSelectedPreset())
 end
@@ -1780,9 +1778,7 @@ end
 
 function showDynamicInfoForActivePreset()
   local p = getActivePreset()
-  local s = 'Bank ' ..
-    math.floor(p/state.bankSize) .. ' - P' ..
-    getIndexInBank(p)
+  local s = getBankString(p)
   infoMessage(state.modifiedText .. s .. state.modifiedText, false)
 end
 
