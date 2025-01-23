@@ -20,7 +20,6 @@ local COLOR_INFO_DISPLAY_TxT = '86F17DD2'
 local FADEIN = true
 local FADEM = false
 local DEBUG = false
-local LOADED = 'preset '
 local BLINKCONTROLS = 7
 local BLINKDISPLAYS = 7
 local PRESETNAMEID = 'preset_name'
@@ -94,6 +93,7 @@ local state = {
   clipBoard = {},
   -- misc.
   modifiedText = '',
+  selectedPreset = 0,
   presetModified = false,
   maxPreset = 0,
   selectedIsEmpty = false,
@@ -900,7 +900,7 @@ function saveToSelectedPreset()
   -- grid index starts at 1
   shiva.presetStore[presetNo + 1].values.text = json.fromTable(state.currValues)
   state.presetValues = state.currValues
-  infoMessage('saved ' .. presetNo)
+  infoMessage('saved ' .. getIndexInBank(presetNo))
   logDebug('Saved values: ' .. json.fromTable(state.currValues))
   setActivePreset(presetNo)
   applySelectedPreset()
@@ -913,7 +913,7 @@ function loadSelectedPreset()
   local jsonValues = getJsonFromPresetStore(presetNo)
   if not jsonValues then
     lcdMessage('load error\npreset empty')
-    setSelectedPresetName('preset ' .. presetNo .. ' [empty]')
+    setSelectedPresetName(getBankString(presetNo))
     state.selectedIsEmpty = true
     return false
   end
@@ -994,9 +994,25 @@ function setSelectedPresetName(s)
   shiva.dspSelected.tag = s
 end
 
+function getBankString(p)
+  return 'Bank ' .. math.floor(p/state.bankSize) .. ' - P' .. getIndexInBank(p)
+end
+
+function getBankStringShort(p)
+  return 'B' .. math.floor(p/state.bankSize) .. ' - P' .. getIndexInBank(p)
+end
+
+  function getIndexInBank(p)
+  return math.fmod(p, state.bankSize)
+end
+
+function getBank(p)
+  return math.floor(p/state.bankSize)
+end
+
 function getSelectedPreset()
   -- returns the currently selected preset number.
-  return tonumber(shiva.dspSelected.values.text)
+  return state.selectedPreset
 end
 
 function selectActivePreset()
@@ -1009,7 +1025,8 @@ end
 function selectPreset(presetNo)
   -- Saves the passed value as the currently selected preset number.
   -- The selected preset is eligible for loading and applying.
-  shiva.dspSelected.values.text = presetNo
+  shiva.dspSelected.values.text = getIndexInBank(presetNo)
+  state.selectedPreset = presetNo
   -- Show bank and preset in bankk no.
   shiva.dspDirectInfo.values.text = 'Bank ' ..
     math.floor(presetNo/state.bankSize) .. ' - P' ..
@@ -1036,13 +1053,13 @@ function showSelectMessage(presetNo)
   end
   local s
   if userWantsToLoad() then
-    s = 'load '
+    s = 'load ' .. getBankStringShort(presetNo)
   elseif shiva.btnFnSave.values.x == 1 then
-    s = 'save '
+    s = 'save ' .. getBankStringShort(presetNo)
   else
-    s = 'select '
+    s = 'select ' .. getBankStringShort(presetNo)
   end
-  infoMessage(s .. presetNo)
+  infoMessage(s)
 end
 
 -- === CONTROL VALUE HANDLING ===
@@ -1286,7 +1303,7 @@ function applyFadeValues()
   -- applies the current fader values
   if not state.fading then return end
   writeToControls(state.fadeValues)
-  infoMessage('fading ' .. getSelectedPreset(), false)
+  infoMessage('fading ' .. getIndexInBank(getSelectedPreset()), false)
   p = state.fadeMax / 10
   s1 = string.rep('=', math.ceil((state.fadeMax - state.fadeStep) / p))
   s2 = string.rep(' ', (state.fadeMax / p) - #s1)
@@ -1762,7 +1779,11 @@ function saveKeyboardValue(text)
 end
 
 function showDynamicInfoForActivePreset()
-  infoMessage(state.modifiedText .. LOADED .. getActivePreset() .. state.modifiedText, false)
+  local p = getActivePreset()
+  local s = 'Bank ' ..
+    math.floor(p/state.bankSize) .. ' - P' ..
+    getIndexInBank(p)
+  infoMessage(state.modifiedText .. s .. state.modifiedText, false)
 end
 
 function toggleFadeMode()
