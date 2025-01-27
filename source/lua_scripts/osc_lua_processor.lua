@@ -1,4 +1,4 @@
----@diagnostic disable: lowercase-global, undefined-global
+---@diagnostic disable: lowercase-global, undefined-global, undefined-field
 -- ##########
 -- # == Configuration ==
 -- #
@@ -137,11 +137,11 @@ local state = {
 function init()
   initDebug()
   log('INIT processor..')
+  initConfig()
   initShiva()
   log('Max preset: ' .. state.maxPreset)
   registerHandlers()
   applyLayout()
-  initConfig()
   clearWork()
   initPreset()
   disableFade()
@@ -160,14 +160,14 @@ function initDebug()
 end
 
 function initShiva()
-  local gs = presetModuleMain.parent.parent.children[globalPresetStoreName]
+  local gs = state.presetRootCtrl:findByName(globalPresetStoreName, true)
   if gs ~= nil then
     local s = gs.parent.name .. '.' .. gs.name
     log('FOUND GLOBAL PRESET STORE TABLE: ' .. s)
     shiva.presetStore = gs.children
   else
-    shiva.presetStore = presetModule.shivaPresetStore.children
-    log('Using default internal preset store table: ' .. presetModule.shivaPresetStore.name)
+    shiva.presetStore = presetModule.shivaPresetStoreInternal.children
+    log('Using default internal preset store table: ' .. presetModule.shivaPresetStoreInternal.name)
   end
   state.maxPreset = #shiva.presetStore - 1
   shiva.allPages = {
