@@ -12,7 +12,5 @@
 
 echo -e "\n == Compress .xml to .tosc ==\n"
 
-echo -e "Compressing $XML_EXPORT >> $TOSC_BUILD"
-xmllint --noblanks "$XML_EXPORT" > "$XML_EXPORT.tmp"
-mv "$XML_EXPORT.tmp" "$XML_EXPORT"
-pigz -c -z < "$XML_EXPORT" > "$TOSC_BUILD"
+echo -e "Compressing $XML_SOURCE >> $TOSC_BUILD"
+pigz -c -z < "$XML_SOURCE" > "$TOSC_BUILD"
