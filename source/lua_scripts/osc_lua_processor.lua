@@ -142,7 +142,7 @@ function init()
   initShiva()
   log('Presets total: ' .. #shiva.presetStore)
   log('Banks: ' ..  math.ceil(#shiva.presetStore/state.bankSize))
-  log('Max preset no.: ' .. state.maxPreset)
+  log('Max preset no. in bank: ' .. getIndexInBank(state.maxPreset))
   registerHandlers()
   applyLayout()
   clearWork()
@@ -172,7 +172,7 @@ function initShiva()
     shiva.presetStore = presetModule.shivaPresetStoreInternal.children
     log('Using default internal preset store table: ' .. presetModule.shivaPresetStoreInternal.name)
   end
-  state.maxPreset = getIndexInBank(#shiva.presetStore - 1)
+  state.maxPreset = #shiva.presetStore - 1
   shiva.allPages = {
     shiva.groupDirectLoadButtonsMain,
     shiva.grpManagerMain,
@@ -1815,15 +1815,17 @@ function addDigitToPreset(s)
   -- also handles resetting if new value makes no sense.
   logDebug('Received new digit: ' .. s)
   v = getSelectedPreset()
+  local p = v - getIndexInBank(v)
+  v = getIndexInBank(v)
   if (v == nil or v == 0) then
     v = s
   else
-    v = getSelectedPreset() .. s
+    v = v .. s
   end
-  if tonumber(v) > state.maxPreset then
+  if tonumber(v) >= state.bankSize then
     v = s
   end
-  selectPreset(v)
+  selectPreset(p+v)
   loadSelectedPreset()
 end
 
