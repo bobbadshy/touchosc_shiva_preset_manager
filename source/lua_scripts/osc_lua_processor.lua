@@ -3,7 +3,7 @@
 -- # == Configuration ==
 -- #
 -- name for alternative, global preset store table
-local globalPresetStoreName = 'shivaPresetStore'
+local globalPresetStoreName = 'shivaPresetStoreGlobal'
 -- #
 -- ##########
 
@@ -30,6 +30,7 @@ local CB_ONLYPASTE = 1
 local KBDTARGETACTIVEPRESET = 'activePresetName'
 local KBDTARGETNEWSAVE = 'newSave'
 -- CONTROLS
+local presetManager = self.parent.parent
 local presetModuleMain = self.parent
 local presetModule = self.parent.children
 local shiva = {
@@ -139,7 +140,9 @@ function init()
   log('INIT processor..')
   initConfig()
   initShiva()
-  log('Max preset: ' .. state.maxPreset)
+  log('Presets total: ' .. #shiva.presetStore)
+  log('Banks: ' ..  math.ceil(#shiva.presetStore/state.bankSize))
+  log('Max preset no.: ' .. state.maxPreset)
   registerHandlers()
   applyLayout()
   clearWork()
@@ -160,7 +163,7 @@ function initDebug()
 end
 
 function initShiva()
-  local gs = state.presetRootCtrl:findByName(globalPresetStoreName, true)
+  local gs = presetManager.parent:findByName(globalPresetStoreName, true)
   if gs ~= nil then
     local s = gs.parent.name .. '.' .. gs.name
     log('FOUND GLOBAL PRESET STORE TABLE: ' .. s)
@@ -169,7 +172,7 @@ function initShiva()
     shiva.presetStore = presetModule.shivaPresetStoreInternal.children
     log('Using default internal preset store table: ' .. presetModule.shivaPresetStoreInternal.name)
   end
-  state.maxPreset = #shiva.presetStore - 1
+  state.maxPreset = getIndexInBank(#shiva.presetStore - 1)
   shiva.allPages = {
     shiva.groupDirectLoadButtonsMain,
     shiva.grpManagerMain,
