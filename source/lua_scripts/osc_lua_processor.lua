@@ -1,5 +1,4 @@
 ---@diagnostic disable: lowercase-global, undefined-global
-
 -- ##########
 -- # == Configuration ==
 -- #
@@ -75,10 +74,6 @@ local shiva = {
   menuContext = presetModule.menuContext,
 }
 -- LOCAL
---[[
-This handler table is used in OnValueChanged() to trigger the respective
-functions. Actual handlers are registered here during init(), see
-registerHandlers() below. ..]]
 local handlers = {}
 local state = {
   -- from where to get controls
@@ -270,10 +265,6 @@ end
 
 -- === CALLBACK HANDLERS ===
 
---[[
-onReceiveNotify() is used e.g. for blinking controls. Using hidden faders, with
-their default pull set to some non-zero value, proved to be a very elgant way to
-get a fast moving value ;) ]] --
 function onReceiveNotify(cmd, val)
   if cmd == 'blinkFader' then
     blinkControls(val)
@@ -342,10 +333,6 @@ function registerHandlers()
   }
 end
 
---[[
-Main event handler loop. Nearly all LUA functionality is triggered from here.
-Almost all controls send their name (os some a special tag value) here for
-further processing.]] --
 function onValueChanged()
   local cmd = self.values.text
   self.values.text = '' -- reset command
@@ -671,11 +658,10 @@ function prgSwitchDirect(up)
 end
 
 function pageSwitchDirect()
-  print('###################')
   local presetNo = getSelectedPreset() or 0
   local bankPage = shiva.groupDirectLoadButtons.pagerDirectPageLoad.values.x
   local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
-  log('Switching bank: ' .. result)
+  logDebug('Switching bank: ' .. result)
   selectPreset(result)
   updateDirectLoadButtons(result)
 end
@@ -1435,7 +1421,8 @@ function applySkinGeneric()
   local ctrls
   local c
   for i = 1, #types do
-    ctrls = self.parent:findAllByType(ControlType[types[i]], true)
+    local t = types[i]
+    ctrls = self.parent:findAllByType(ControlType[t], true)
     logDebug('Applying buttons')
     for _,ctrl in pairs(ctrls) do
       if string.match(ctrl.name, '^btn.+') then
