@@ -981,11 +981,11 @@ function setSelectedPresetName(s)
 end
 
 function getBankString(p)
-  return 'Bank' .. math.floor(p/state.bankSize) .. ' P' .. getIndexInBank(p)
+  return string.format("%02d", math.floor(p/state.bankSize)) .. ' – ' .. string.format("%03d", getIndexInBank(p))
 end
 
 function getBankStringShort(p)
-  return 'B' .. math.floor(p/state.bankSize) .. ' P' .. getIndexInBank(p)
+  return string.format("%02d", math.floor(p/state.bankSize)) .. ' – ' .. string.format("%03d", getIndexInBank(p))
 end
 
   function getIndexInBank(p)
