@@ -1,11 +1,13 @@
 ---@diagnostic disable: lowercase-global, undefined-global, need-check-nil, inject-field, undefined-field
-local drag = 5
 local luaProcessor = self.parent.parent.children.luaProcessor
+local drag = 5
 local last_x
 local speed = 0
 local swiping = false
 local rolling = true
 local home = false
+local delay = 25
+local last = 0
 local scrollable
 local parent
 
@@ -15,12 +17,9 @@ function init()
   last_x = parent.w / 2
 end
 
-local delay = 25
-local last = 0
-
 function update()
   now = getMillis()
-  if (now - last < delay) or swiping or (speed == 0 and home) then return end
+  if (now - last < delay) or swiping or home then return end
   last = now
   getHome()
 end
@@ -29,14 +28,7 @@ function getHome()
   local width = parent.w
   local center = width/2
   local accel = math.fmod(math.abs(scrollable.x), parent.w)
-  if accel == 0 and speed == 0 then
-    home = true
-    return
-  end
-  home = false
-  if accel > center then
-    accel = accel-width
-  end
+  if accel > center then accel = accel - width end
   accel = accel/center*20
   if accel > drag/10 then
     if speed < -accel and rolling then
@@ -59,25 +51,16 @@ function getHome()
       speed = math.min(-drag, math.max(accel, speed))
     end
   elseif math.abs(speed) < drag*2 then
-    home = true
-    rolling = true
-    speed = 0
     scrollable.x = -width
+    home = true
+    return
   end
   pan(speed)
-  print('accel: ' .. accel)
-  print('speed: ' .. speed)
 end
 
 function slowDown()
-  if math.abs(speed) == 0 then return end
-  if speed < 0 then
-    speed = speed + drag
-    if speed > -1  then speed = -1 end
-  elseif speed > 0 then
-    speed = speed - drag
-    if speed < 1 then speed = 1 end
-  end
+  if speed == 0 then return end
+  speed = speed < 0 and speed+drag or speed-drag
 end
 
 function pan(x)
