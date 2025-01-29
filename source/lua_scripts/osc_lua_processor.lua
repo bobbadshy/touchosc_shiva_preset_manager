@@ -37,7 +37,8 @@ local shiva = {
   -- groups
   groupDirectLoad = presetModule.groupDirectLoad.children,
   groupDirectLoadButtonsMain = presetModule.groupDirectLoadButtons,
-  groupDirectLoadButtons = presetModule.groupDirectLoadButtons.children,
+  groupDirectLoadButtons = presetModule.groupDirectLoadButtons.children.buttonGroup.children,
+  pagerDirectPageLoad = presetModule.groupDirectLoadButtons.children.pagerDirectPageLoad,
   grpManagerMain = presetModule.grpManager,
   grpManager = presetModule.grpManager.children,
   groupRunSettingsMain = presetModule.groupRunSettings,
@@ -97,6 +98,7 @@ local state = {
   ignoreToggle = false,
   lastPage = nil,
   bankSize = 130,
+  buttonCount = 30,
   -- Target where to put the text from keyboard after edit
   kbdTarget = '',
   -- keep track of working state stack
@@ -205,7 +207,7 @@ function initGui()
   -- TODO: Currently not used ..way!! too complicated with dynamic text colors!!
   -- maybe this can still be done as local msg between label and button,
   -- have to think ..
-  for i = 11, 20 do
+  for i = state.buttonCount+1, 2*state.buttonCount do
     -- save button colors to tag .. :(
     shiva.groupDirectLoadButtons[i].tag = Color.toHexString(shiva.groupDirectLoadButtons[i].properties.textColor)
   end
@@ -277,6 +279,8 @@ function onReceiveNotify(cmd, val)
     saveKeyboardValue(val)
   elseif cmd == 'pagePlusDirectLoad' or cmd == 'pageMinusDirectLoad' then
     prgSwitchDirect(cmd)
+  elseif cmd == 'directSelect' then
+    directSelect(val)
   elseif cmd == 'longTap' then
     if val == shiva.dspSelected.name then
       showContextMenu()
@@ -589,13 +593,12 @@ function toggleEdit()
   -- end
 end
 
-function directSelect(cmd)
+function directSelect(v)
   if userReleasedDirectLoadButttons() then
     -- If the whole parent control does not register any touch anmyore,
     -- we can be sure the user has released, either outside the parent,
     -- or on the final button choice. So, we can select.
-    local presetNo = string.sub(cmd, 7)
-    selectPreset(presetNo)
+    selectPreset(tonumber(string.sub(v, 7)))
     if directLoad() then updateDirectLoadButtons() end
   else
     updateDirectLoadButtons()
@@ -657,16 +660,16 @@ function prgSwitchDirect(up)
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
-  updateDirectLoadButtons(presetNo)
+  updateDirectLoadButtons()
 end
 
 function pageSwitchDirect()
   local presetNo = getSelectedPreset() or 0
-  local bankPage = shiva.groupDirectLoadButtons.pagerDirectPageLoad.values.x
+  local bankPage = shiva.pagerDirectPageLoad.values.x
   local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
   logDebug('Switching bank: ' .. result)
   selectPreset(result)
-  updateDirectLoadButtons(result)
+  updateDirectLoadButtons()
 end
 
 function bankSwitch(up)
@@ -699,7 +702,7 @@ function bankSwitchDirect(up)
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
-  updateDirectLoadButtons(presetNo)
+  updateDirectLoadButtons()
 end
 
 function toggleCollapse()
@@ -991,7 +994,7 @@ function getBankStringShort(p)
   return string.format("%02d", math.floor(p/state.bankSize)) .. ' – ' .. string.format("%03d", getIndexInBank(p))
 end
 
-  function getIndexInBank(p)
+function getIndexInBank(p)
   return math.fmod(p, state.bankSize)
 end
 
@@ -1459,8 +1462,8 @@ function applySkinGeneric()
         ctrl.properties.textSize = shiva.skinSettings.templateFunctions.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateFunctions.properties.font
       end
-      if ctrl.parent.name == 'groupDirectLoadButtons' and string.match(ctrl.name, '^[0-9]+$') then
-        if string.match(ctrl.name, '^[0-9]+$') then
+      if ctrl.parent.parent.name == 'groupDirectLoadButtons' and string.match(ctrl.name, '^button[0-9]+$') then
+        if string.match(ctrl.name, '^button[0-9]+$') then
           logDebug('btnDirect: ' .. ctrl.name)
           ctrl.properties.color = shiva.skinSettings.templateButtonDirect.properties.color -- default was 66D1FFD9
           ctrl.properties.background = shiva.skinSettings.templateButtonDirect.properties.background
@@ -1869,20 +1872,26 @@ function addControlToTextBlink(c)
   end
 end
 
-function updateDirectLoadButtons(p)
-  if p == nil then p = getSelectedPreset() end
-  -- the page in the bank, from 0 ..12
-  bankPage = math.floor(math.fmod(p, state.bankSize)/10)
+function updateDirectLoadButtons()
+  local p = getSelectedPreset()
+  local buttonCount = 10
+  bankPage = math.floor(math.fmod(p, state.bankSize)/buttonCount)
+  p = p - buttonCount
+  if p < 0 then
+    p = state.maxPreset+1 - buttonCount
+  end
   local s = getActivePreset()
-  m = math.fmod(p, 10)
+  m = math.fmod(p, buttonCount)
   p = p - m
-  shiva.groupDirectLoadButtons.pagerDirectPageLoad.values.x = bankPage
-  for i = 1, 10 do
-    -- buttons are 1..10, labels are 11..10
-    shiva.groupDirectLoadButtons[i + 10].values.text = getNameFromPreset(p + i - 1)
-    -- addControlToTextBlink(shiva.groupDirectLoadButtons[i + 10])
-    shiva.groupDirectLoadButtons[i].tag = 'direct' .. p + i - 1
-    shiva.groupDirectLoadButtons[i].values.x = (p + i -1) == s and 1 or 0
+  shiva.pagerDirectPageLoad.values.x = bankPage
+  local pname
+  for i = 1, buttonCount*3 do
+    pname = math.fmod(p+i-1, state.maxPreset+1)
+    -- buttons are 1..buttonCount
+    shiva.groupDirectLoadButtons[i + buttonCount*3].values.text = getNameFromPreset(pname)
+    -- addControlToTextBlink(shiva.groupDirectLoadButtons[i + buttonCount])
+    shiva.groupDirectLoadButtons[i].tag = 'direct' .. pname
+    shiva.groupDirectLoadButtons[i].values.x = (pname) == s and 1 or 0
   end
 end
 

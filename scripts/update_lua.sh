@@ -18,7 +18,7 @@ for each in  $(ls -1); do
 
   lua="$(<"$each")"
   xmlstarlet ed --inplace -u \
-    '//property/value[starts-with(text(), "--[[START osc_lua_processor.lua]]")]' \
+    '//property/value[starts-with(text(), "--[[START '"$each"']]")]' \
     -v "$lua" \
     "$target"
 done
