@@ -1,8 +1,5 @@
 ---@diagnostic disable: lowercase-global, undefined-global, need-check-nil, inject-field, undefined-field
--- #####
--- for slowing down: 0.01 to 0.5
-local drag = 0.1
--- #####
+local drag = 5
 local luaProcessor = self.parent.parent.children.luaProcessor
 local last_x
 local speed = 0
@@ -39,11 +36,9 @@ function getHome()
   home = false
   if accel > center then
     accel = accel-width
-  elseif accel < center then
-    accel = accel
   end
   accel = accel/center*20
-  if accel > 0.1 then
+  if accel > drag/10 then
     if speed < -accel and rolling then
       slowDown()
     elseif math.abs(speed) < accel then
@@ -51,39 +46,37 @@ function getHome()
       rolling = false
     end
     if not rolling and speed > 0 then
-      speed = math.max(2, math.min(accel, speed))
+      speed = math.max(drag, math.min(accel, speed))
     end
-    pan(speed)
-  elseif accel < -0.1 then
+  elseif accel < -drag/10 then
     if speed > -accel and rolling then
       slowDown()
     elseif math.abs(speed) < -accel then
       speed = speed+accel/10
       rolling = false
     end
-    pan(speed)
     if not rolling and speed < 0 then
-      speed = math.min(-2, math.max(accel, speed))
+      speed = math.min(-drag, math.max(accel, speed))
     end
-  elseif math.abs(speed) < 5 then
+  elseif math.abs(speed) < drag*2 then
     home = true
     rolling = true
     speed = 0
-    print('HOME')
+    scrollable.x = -width
   end
+  pan(speed)
   print('accel: ' .. accel)
   print('speed: ' .. speed)
 end
 
 function slowDown()
   if math.abs(speed) == 0 then return end
-  -- print('slow down')
-  local sign = math.abs(speed)/speed
-  speed = speed - sign*drag*math.abs(speed)
-  if speed < 0 and speed > -1  then
-    speed = -1
-  elseif speed > 0 and speed < 1 then
-    speed = 1
+  if speed < 0 then
+    speed = speed + drag
+    if speed > -1  then speed = -1 end
+  elseif speed > 0 then
+    speed = speed - drag
+    if speed < 1 then speed = 1 end
   end
 end
 
