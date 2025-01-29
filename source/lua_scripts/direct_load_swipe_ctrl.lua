@@ -70,7 +70,6 @@ function getHome()
     rolling = true
     speed = 0
     print('HOME')
-    -- scrollable.x = scrollable.x - math.fmod(math.abs(scrollable.x), parent.w)
   end
   print('accel: ' .. accel)
   print('speed: ' .. speed)
