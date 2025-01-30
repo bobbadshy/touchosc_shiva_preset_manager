@@ -37,7 +37,7 @@ local shiva = {
   -- groups
   groupDirectLoad = presetModule.groupDirectLoad.children,
   groupDirectLoadButtonsMain = presetModule.groupDirectLoadButtons,
-  groupDirectLoadButtons = presetModule.groupDirectLoadButtons.children.buttonGroup.children,
+  groupDirectLoadButtons = presetModule.groupDirectLoadButtons.children.swipeable.children,
   pagerDirectPageLoad = presetModule.groupDirectLoadButtons.children.pagerDirectPageLoad,
   grpManagerMain = presetModule.grpManager,
   grpManager = presetModule.grpManager.children,
@@ -277,7 +277,7 @@ function onReceiveNotify(cmd, val)
     blinkTextControls(val)
   elseif cmd == 'kbdClose' then
     saveKeyboardValue(val)
-  elseif cmd == 'pagePlusDirectLoad' or cmd == 'pageMinusDirectLoad' then
+  elseif cmd == 'pagePlus' or cmd == 'pageMinus' then
     prgSwitchDirect(cmd)
   elseif cmd == 'directSelect' then
     directSelect(val)
@@ -648,7 +648,7 @@ function prgSwitch(up)
 end
 
 function prgSwitchDirect(up)
-  up = up == 'btnPlusDirectPrgLoad' or up == 'pagePlusDirectLoad'
+  up = up == 'btnPlusDirectPrgLoad' or up == 'pagePlus'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, 10)
   if up then

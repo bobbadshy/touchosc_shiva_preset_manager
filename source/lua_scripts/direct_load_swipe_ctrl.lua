@@ -1,11 +1,19 @@
 ---@diagnostic disable: lowercase-global, undefined-global, need-check-nil, inject-field, undefined-field
--- #####
+-- ##########
+-- Config
+-- #
+-- Where to send page plus/minus notifications
+local database = self.parent.parent.children.luaProcessor
+-- How fast to slow down (0.01..0.1)
 local drag = 0.05
+-- How fast to snap back into position (1..10)
 local springiness = 5
+-- Pixel speed at which we start snapping into position (5..30)
 local minSpeed = 15
--- #####
+-- #
+-- ##########
+
 local latched = 1
-local luaProcessor = self.parent.parent.children.luaProcessor
 local last_x
 local speed = 0
 local swiping = false
@@ -16,9 +24,17 @@ local scrollable
 local center
 local width
 
+function pagePlus()
+  database:notify('pagePlus')
+end
+
+function pageMinus()
+  database:notify('pageMinus')
+end
+
 function init()
-  scrollable = self.parent.children.buttonGroup.frame
-  width = self.parent.frame.w
+  scrollable = self.parent.children.swipeable.frame
+  width = self.frame.w
   center = width/2
   last_x = center
 end
@@ -60,10 +76,10 @@ function pan(x)
   -- wrap around
   if scrollable.x < -width*1.5 then
     scrollable.x = scrollable.x + width
-    luaProcessor:notify('pagePlusDirectLoad')
+    pagePlus()
   elseif scrollable.x > -width*0.5 then
     scrollable.x = scrollable.x - width
-    luaProcessor:notify('pageMinusDirectLoad')
+    pageMinus()
   end
 end
 
