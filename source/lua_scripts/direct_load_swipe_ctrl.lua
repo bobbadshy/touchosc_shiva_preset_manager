@@ -1,20 +1,26 @@
 ---@diagnostic disable: lowercase-global, undefined-global, need-check-nil, inject-field, undefined-field
+-- #####
+local drag = 0.05
+local springiness = 5
+local minSpeed = 15
+-- #####
+local latched = 1
 local luaProcessor = self.parent.parent.children.luaProcessor
-local drag = 5
 local last_x
 local speed = 0
 local swiping = false
-local rolling = true
 local home = false
 local delay = 25
 local last = 0
 local scrollable
-local parent
+local center
+local width
 
 function init()
   scrollable = self.parent.children.buttonGroup.frame
-  parent = self.parent.frame
-  last_x = parent.w / 2
+  width = self.parent.frame.w
+  center = width/2
+  last_x = center
 end
 
 function update()
@@ -25,33 +31,19 @@ function update()
 end
 
 function getHome()
-  local width = parent.w
-  local center = width/2
-  local accel = math.fmod(math.abs(scrollable.x), parent.w)
+  local accel = math.fmod(math.abs(scrollable.x), width)
   if accel > center then accel = accel - width end
-  accel = accel/center*20
-  if accel > drag/10 then
-    if speed < -accel and rolling then
-      slowDown()
-    elseif math.abs(speed) < accel then
-      speed = speed+accel/10
-      rolling = false
-    end
-    if not rolling and speed > 0 then
-      speed = math.max(drag, math.min(accel, speed))
-    end
-  elseif accel < -drag/10 then
-    if speed > -accel and rolling then
-      slowDown()
-    elseif math.abs(speed) < -accel then
-      speed = speed+accel/10
-      rolling = false
-    end
-    if not rolling and speed < 0 then
-      speed = math.min(-drag, math.max(accel, speed))
-    end
-  elseif math.abs(speed) < drag*2 then
+  accel = accel/center
+  absAccel = math.abs(accel)
+  absSpeed = math.abs(speed)
+  if absSpeed > minSpeed*latched then
+    slowDown()
+  elseif absAccel > drag*latched then
+    latched = 2
+    speed = speed + accel*springiness
+  else
     scrollable.x = -width
+    latched = 1
     home = true
     return
   end
@@ -60,35 +52,35 @@ end
 
 function slowDown()
   if speed == 0 then return end
-  speed = speed < 0 and speed+drag or speed-drag
+  speed = speed - drag*speed
 end
 
 function pan(x)
   scrollable.x = scrollable.x + x
   -- wrap around
-  if scrollable.x < -parent.w*1.5 then
-    scrollable.x = scrollable.x + parent.w*1
+  if scrollable.x < -width*1.5 then
+    scrollable.x = scrollable.x + width
     luaProcessor:notify('pagePlusDirectLoad')
-  elseif scrollable.x > -parent.w*0.5 then
-    scrollable.x = scrollable.x - parent.w*1
+  elseif scrollable.x > -width*0.5 then
+    scrollable.x = scrollable.x - width
     luaProcessor:notify('pageMinusDirectLoad')
   end
 end
 
 function onPointer(pointers)
-  x = pointers[1].x
-  if pointers[1].state == PointerState.BEGIN then
+  local x = pointers[1].x
+  local state = pointers[1].state
+  local delta = math.floor(x-last_x)
+  last_x = x
+  if state == PointerState.BEGIN then
     swiping = true
-    rolling = true
     home = false
+    latched = 1
     speed = 0
-    last_x = x
-  elseif pointers[1].state == PointerState.MOVE then
-    local delta = math.floor(x-last_x)
-    pan(delta)
+  elseif state == PointerState.MOVE then
     speed = delta
-    last_x = x
-  elseif pointers[1].state == PointerState.END then
+    pan(speed)
+  elseif state == PointerState.END then
     swiping = false
   end
 end
