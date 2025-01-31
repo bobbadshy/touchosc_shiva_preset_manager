@@ -315,8 +315,8 @@ function registerHandlers()
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
     btnClearWork = clearWork,
-    btnMinusBank = bankSwitch,
-    btnPlusBank = bankSwitch,
+    btnMinusBank = bankSwitchExtended,
+    btnPlusBank = bankSwitchExtended,
     btnMinusPrg = prgSwitch,
     btnPlusPrg = prgSwitch,
     btnMinusDirectBankLoad = bankSwitchDirect,
@@ -672,23 +672,16 @@ function pageSwitchDirect()
   updateDirectLoadButtons()
 end
 
-function bankSwitch(up)
-  up = up == 'btnPlusBank'
-  local presetNo = getSelectedPreset() or 0
-  presetNo = presetNo - math.fmod(presetNo, state.bankSize)
-  if up then
-    presetNo = presetNo + state.bankSize
-    if presetNo > state.maxPreset then presetNo = 0 end
-  else
-    presetNo = presetNo - state.bankSize
-    if presetNo < 0 then presetNo = state.maxPreset - state.bankSize + 1 end
-  end
-  logDebug('Switching bank: ' .. presetNo)
-  selectPreset(presetNo)
+function bankSwitchExtended(up)
+  _bankSwitch(up == 'btnPlusBank')
 end
 
 function bankSwitchDirect(up)
-  up = up == 'btnPlusDirectBankLoad'
+  _bankSwitch(up == 'btnPlusDirectBankLoad')
+  updateDirectLoadButtons()
+end
+
+function _bankSwitch(up)
   local presetNo = getSelectedPreset() or 0
   local p = presetNo
   presetNo = presetNo - math.fmod(presetNo, state.bankSize)
@@ -702,7 +695,6 @@ function bankSwitchDirect(up)
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
-  updateDirectLoadButtons()
 end
 
 function toggleCollapse()
