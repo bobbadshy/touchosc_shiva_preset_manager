@@ -702,7 +702,7 @@ function _bankSwitch(up)
   -- switch to active preset when active is on this bank
   sameBank = math.floor(presetNo/state.bankSize) == math.floor(getActivePreset()/state.bankSize)
   if sameBank and not up and getSelectedPreset() ~= getActivePreset() then
-    log('Selecting active preset.')
+    logDebug('Selecting active preset.')
     presetNo = getActivePreset()
   end
   logDebug('Switching bank: ' .. presetNo)
@@ -742,7 +742,7 @@ function clipBoardCut()
   deletePreset()
   updateDirectLoadButtons()
   hideContextMenu()
-  lcdMessage('cut to clipboard\npreset ' .. getSelectedPreset())
+  lcdMessage('cut to clipboard\npreset ' .. getIndexInBank(getSelectedPreset()))
 end
 
 function clipBoardCopy()
@@ -757,7 +757,7 @@ function clipBoardCopy()
   state.clipBoard = json.fromTable(state.presetValues)
   updateDirectLoadButtons()
   hideContextMenu()
-  lcdMessage('copied to clipboard\npreset ' .. getSelectedPreset())
+  lcdMessage('copied to clipboard\npreset ' .. getIndexInBank(getSelectedPreset()))
 end
 
 function clipBoardPaste()
@@ -772,7 +772,7 @@ function clipBoardPaste()
   shiva.presetStore[getSelectedPreset() + 1].values.text = state.clipBoard
   updateDirectLoadButtons()
   hideContextMenu()
-  lcdMessage('pasted to\npreset ' .. getSelectedPreset())
+  lcdMessage('pasted to\npreset ' .. getIndexInBank(getSelectedPreset()))
 end
 
 function deletePreset()
@@ -782,7 +782,7 @@ function deletePreset()
   shiva.presetStore[getSelectedPreset() + 1].values.text = ''
   updateDirectLoadButtons()
   hideContextMenu()
-  lcdMessage('delete\npreset ' .. getSelectedPreset())
+  lcdMessage('delete\npreset ' .. getIndexInBank(getSelectedPreset()))
 end
 
 function executeRandomize()
@@ -1682,34 +1682,18 @@ end
 
 function showContextMenu(mode)
   mode = mode == nil and CB_ALL or mode
-  local s = '= Preset ' .. getSelectedPreset() .. ' ='
-  if not state.presetModified then
-    s = '= Preset ' .. getSelectedPreset() .. ' ='
-  else
-    s = '= *Preset ' .. getSelectedPreset() .. '* ='
-    mode = CB_ONLYPASTE
-  end
-  if mode == CB_ONLYPASTE then
-    shiva.menuContext.children.entryCut.properties.interactive = false
-    shiva.menuContext.children.entryCut.properties.textColor = 0.1
-    shiva.menuContext.children.entryCopy.properties.interactive = false
-    shiva.menuContext.children.entryCopy.properties.textColor = 0.1
-    shiva.menuContext.children.entryPaste.properties.interactive = true
-    shiva.menuContext.children.entryPaste.properties.textColor = COLOR_TEXTDEFAULT
-    shiva.menuContext.children.entryDelete.properties.interactive = false
-    shiva.menuContext.children.entryDelete.properties.textColor = 0.1
-  else
-    shiva.menuContext.children.entryCut.properties.interactive = true
-    shiva.menuContext.children.entryCut.properties.textColor = COLOR_TEXTDEFAULT
-    shiva.menuContext.children.entryCopy.properties.interactive = true
-    shiva.menuContext.children.entryCopy.properties.textColor = COLOR_TEXTDEFAULT
-    shiva.menuContext.children.entryPaste.properties.interactive = true
-    shiva.menuContext.children.entryPaste.properties.textColor = COLOR_TEXTDEFAULT
-    shiva.menuContext.children.entryDelete.properties.interactive = true
-    shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
-  end
+  local p = math.fmod(getSelectedPreset(), state.bankSize)
+  local s = '= Preset ' .. p .. ' ='
+  shiva.menuContext.children.entryCut.properties.interactive = true
+  shiva.menuContext.children.entryCut.properties.textColor = COLOR_TEXTDEFAULT
+  shiva.menuContext.children.entryCopy.properties.interactive = true
+  shiva.menuContext.children.entryCopy.properties.textColor = COLOR_TEXTDEFAULT
+  shiva.menuContext.children.entryPaste.properties.interactive = state.clipBoard ~= nil
+  shiva.menuContext.children.entryPaste.properties.textColor = state.clipBoard ~= nil and COLOR_TEXTDEFAULT or 0.1
+  shiva.menuContext.children.entryDelete.properties.interactive = true
+  shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
   shiva.grpBlock.visible = true
-  shiva.menuContext.children[1].values.text = '= Preset ' .. getSelectedPreset() .. ' ='
+  shiva.menuContext.children[1].values.text = s
   shiva.menuContext.properties.visible = true
 end
 
