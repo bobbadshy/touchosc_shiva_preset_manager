@@ -1684,14 +1684,25 @@ function showContextMenu(mode)
   mode = mode == nil and CB_ALL or mode
   local p = math.fmod(getSelectedPreset(), state.bankSize)
   local s = '= Preset ' .. p .. ' ='
-  shiva.menuContext.children.entryCut.properties.interactive = true
-  shiva.menuContext.children.entryCut.properties.textColor = COLOR_TEXTDEFAULT
-  shiva.menuContext.children.entryCopy.properties.interactive = true
-  shiva.menuContext.children.entryCopy.properties.textColor = COLOR_TEXTDEFAULT
-  shiva.menuContext.children.entryPaste.properties.interactive = state.clipBoard ~= nil
-  shiva.menuContext.children.entryPaste.properties.textColor = state.clipBoard ~= nil and COLOR_TEXTDEFAULT or 0.1
-  shiva.menuContext.children.entryDelete.properties.interactive = true
-  shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
+  if mode == CB_ONLYPASTE then
+    shiva.menuContext.children.entryCut.properties.interactive = false
+    shiva.menuContext.children.entryCut.properties.textColor = 0.1
+    shiva.menuContext.children.entryCopy.properties.interactive = false
+    shiva.menuContext.children.entryCopy.properties.textColor = 0.1
+    shiva.menuContext.children.entryPaste.properties.interactive = state.clipBoard ~= nil
+    shiva.menuContext.children.entryPaste.properties.textColor = state.clipBoard ~= nil and COLOR_TEXTDEFAULT or 0.1
+    shiva.menuContext.children.entryDelete.properties.interactive = false
+    shiva.menuContext.children.entryDelete.properties.textColor = 0.1
+  else
+    shiva.menuContext.children.entryCut.properties.interactive = true
+    shiva.menuContext.children.entryCut.properties.textColor = COLOR_TEXTDEFAULT
+    shiva.menuContext.children.entryCopy.properties.interactive = true
+    shiva.menuContext.children.entryCopy.properties.textColor = COLOR_TEXTDEFAULT
+    shiva.menuContext.children.entryPaste.properties.interactive = state.clipBoard ~= nil
+    shiva.menuContext.children.entryPaste.properties.textColor = state.clipBoard ~= nil and COLOR_TEXTDEFAULT or 0.1
+    shiva.menuContext.children.entryDelete.properties.interactive = true
+    shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
+  end
   shiva.grpBlock.visible = true
   shiva.menuContext.children[1].values.text = s
   shiva.menuContext.properties.visible = true
