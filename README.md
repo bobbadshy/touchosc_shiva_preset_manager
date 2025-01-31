@@ -91,14 +91,14 @@ surface to save, load and manage presets of your control settings.
 ## Demo video
 
 A short demonstration is available on YouTube:
-- https://youtu.be/AkwHNaYnw2I
+- [https://youtu.be/AkwHNaYnw2I](https://youtu.be/AkwHNaYnw2I)
 
 Performance test with 200 controls:
 
 - Fast PC, good performance:
-  - https://youtu.be/Wb50rBoNh3M?si=iKGUKJHeitzpiVim
+  - [https://youtu.be/Wb50rBoNh3M?si=iKGUKJHeitzpiVim](https://youtu.be/Wb50rBoNh3M?si=iKGUKJHeitzpiVim)
 - Cheap, 4 year old tablet ..well, it doesn't crash ;)
-  - https://www.youtube.com/watch?v=x4XvbOiDYHM 
+  - [https://www.youtube.com/watch?v=x4XvbOiDYHM](https://www.youtube.com/watch?v=x4XvbOiDYHM)
 
 ## Screenshots
 
