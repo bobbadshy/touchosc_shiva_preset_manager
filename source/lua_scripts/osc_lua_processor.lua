@@ -45,6 +45,8 @@ local shiva = {
   groupRunSettings = presetModule.groupRunSettings.children,
   groupKeyboardMain = presetModule.groupKeyboard,
   groupKeyboard = presetModule.groupKeyboard.children,
+  groupKeyboardLargeMain = presetModuleMain.parent.children.groupKeyboardLarge,
+  groupKeyboardLarge = presetModuleMain.parent.children.groupKeyboardLarge.children,
   grpBlock = presetModule.grpBlock,
   borderGroupBottom = presetModule.borderGroupBottom,
   allPages= {},
@@ -54,6 +56,7 @@ local shiva = {
   skinSettings = presetModule.skinSettings.children,
   blinkFader = presetModule.blinkFader,
   blinkText = presetModule.blinkText,
+  stBtnLargeKeyboard = presetModule.groupRunSettings.children.stBtnLargeKeyboard,
   stBtnEnableDebug = presetModule.groupRunSettings.children.stBtnEnableDebug,
   stBtnGrpFadeOnDirectLoad = presetModule.groupRunSettings.children.stBtnGrpFadeOnDirectLoad.children.labelDisplay,
   stLblShowControlCount = presetModule.groupRunSettings.children.stLblShowControlCount,
@@ -180,6 +183,7 @@ function initShiva()
     shiva.grpManagerMain,
     shiva.groupRunSettingsMain,
     shiva.groupKeyboardMain,
+    shiva.groupKeyboardLargeMain,
   }
 end
 
@@ -871,18 +875,36 @@ function showingDirectLoad()
 end
 
 function showingKeyboard()
-  return shiva.groupKeyboardMain.visible
+  return shiva.groupKeyboardMain.visible or shiva.groupKeyboardLargeMain.visible
 end
 
 function showKeyboard()
   hideAllPages()
   shiva.borderGroupBottom.visible = true
-  shiva.groupKeyboardMain.visible = true
+  if shiva.stBtnLargeKeyboard.values.x == 1 then
+    local kbdFrame = shiva.groupKeyboardLargeMain.frame
+    local mdFrame = presetModuleMain.frame
+    kbdFrame.y = mdFrame.y+70
+    kbdFrame.x = mdFrame.x+10
+    if kbdFrame.x + kbdFrame.w > presetManager.frame.w then
+      kbdFrame.x = presetManager.frame.w - kbdFrame.w - 5
+    end
+    if kbdFrame.y + kbdFrame.h > presetManager.frame.h then
+      kbdFrame.y = presetManager.frame.h - kbdFrame.h - 5
+    end
+    shiva.groupKeyboardLargeMain.visible = true
+  else
+    shiva.groupKeyboardMain.visible = true
+  end
 end
 
 function startKeyboard(target, text)
   showKeyboard()
-  shiva.groupKeyboardMain:notify(target, text)
+  if shiva.stBtnLargeKeyboard.values.x == 1 then
+    shiva.groupKeyboardLargeMain:notify(target, text)
+  else
+    shiva.groupKeyboardMain:notify(target, text)
+  end
 end
 
 -- === PRESET VALUES HANDLING, LOADING AND SAVING ===
