@@ -31,17 +31,19 @@ local shiva = {
   groupDirectLoadButtonsMain = presetModule.groupDirectLoadButtons,
   groupDirectLoadButtons = presetModule.groupDirectLoadButtons.children.swipeable.children,
   pagerDirectPageLoad = presetModule.groupDirectLoadButtons.children.pagerDirectPageLoad,
-  grpManagerMain = presetModule.grpManager,
-  grpManager = presetModule.grpManager.children,
+  groupManagerMain = presetModule.groupManager,
+  groupManager = presetModule.groupManager.children,
   groupRunSettingsMain = presetModule.groupRunSettings,
   groupRunSettings = presetModule.groupRunSettings.children,
   groupKeyboardMain = presetModule.groupKeyboard,
   groupKeyboard = presetModule.groupKeyboard.children,
   groupKeyboardLargeMain = presetModuleMain.parent.children.groupKeyboardLarge,
   groupKeyboardLarge = presetModuleMain.parent.children.groupKeyboardLarge.children,
-  grpBlock = presetModule.grpBlock,
+  groupContextMenu = presetModule.groupContextMenu,
   borderGroupBottom = presetModule.borderGroupBottom,
   allPages= {},
+  -- Menus
+  menuContext = presetModule.groupContextMenu.children.menuContext,
   -- settings
   presetStore = nil,
   workStore = presetModule.workStore.children,
@@ -54,21 +56,19 @@ local shiva = {
   stLblShowControlCount = presetModule.groupRunSettings.children.stLblShowControlCount,
   stLblPresetRoot = presetModule.groupRunSettings.children.stLblPresetRoot,
   -- Manager buttons and displays
-  dspInfo = presetModule.grpManager.children.dspInfo,
-  lcdMessage = presetModule.grpManager.children.lcdMessage,
-  btnFnLoad = presetModule.grpManager.children.btnFnLoad,
-  btnFnEnter = presetModule.grpManager.children.btnFnEnter,
-  btnFnSave = presetModule.grpManager.children.btnFnSave,
-  fdrCrossfade = presetModule.grpManager.children.fdrCrossfade,
-  lblFadeMode = presetModule.grpManager.children.lblFadeMode,
-  dspSelected = presetModule.grpManager.children.dspSelected,
-  lblRestore = presetModule.grpManager.children.lblRestore,
-  lblClearWork = presetModule.grpManager.children.lblClearWork,
+  dspInfo = presetModule.groupManager.children.dspInfo,
+  lcdMessage = presetModule.groupManager.children.lcdMessage,
+  btnFnLoad = presetModule.groupManager.children.btnFnLoad,
+  btnFnEnter = presetModule.groupManager.children.btnFnEnter,
+  btnFnSave = presetModule.groupManager.children.btnFnSave,
+  fdrCrossfade = presetModule.groupManager.children.fdrCrossfade,
+  lblFadeMode = presetModule.groupManager.children.lblFadeMode,
+  dspSelected = presetModule.groupManager.children.dspSelected,
+  lblRestore = presetModule.groupManager.children.lblRestore,
+  lblClearWork = presetModule.groupManager.children.lblClearWork,
   -- Direct load row on top
   lblDirectHeading = presetModule.groupDirectLoad.children.lblDirectHeading,
   dspDirectInfo = presetModule.groupDirectLoad.children.dspDirectInfo,
-  -- Menus
-  menuContext = presetModule.menuContext,
 }
 -- LOCAL
 local handlers = {}
@@ -165,10 +165,11 @@ function initShiva()
   state.maxPreset = #shiva.presetStore - 1
   shiva.allPages = {
     shiva.groupDirectLoadButtonsMain,
-    shiva.grpManagerMain,
+    shiva.groupManagerMain,
     shiva.groupRunSettingsMain,
     shiva.groupKeyboardMain,
     shiva.groupKeyboardLargeMain,
+    shiva.groupContextMenu,
   }
 end
 
@@ -220,7 +221,7 @@ function initGui()
 end
 
 function cycleView()
-  if shiva.menuContext.visible then return end
+  if shiva.groupContextMenu.visible then return end
   if showingKeyboard() then return end
   if showingRunSettings() then
     initConfig()
@@ -419,10 +420,10 @@ function updateFade(now)
     updateFadeValues()
     if math.fmod(state.fadeStep, 10) == 0 then
       local s = (getMillis() - now) / state.fadeDelay
-      shiva.grpManager.fdrLoad.values.x = 0.5 * (shiva.grpManager.fdrLoad.values.x + s)
-      if s > 0.9 then shiva.grpManager.fdrLoad.color.r = 1
-      elseif s > 0.8 then shiva.grpManager.fdrLoad.color.r = 0.5
-      else shiva.grpManager.fdrLoad.color.r = 0 end
+      shiva.groupManager.fdrLoad.values.x = 0.5 * (shiva.groupManager.fdrLoad.values.x + s)
+      if s > 0.9 then shiva.groupManager.fdrLoad.color.r = 1
+      elseif s > 0.8 then shiva.groupManager.fdrLoad.color.r = 0.5
+      else shiva.groupManager.fdrLoad.color.r = 0 end
     end
   end
 end
@@ -796,7 +797,7 @@ end
 function showEditor()
   hideAllPages()
   shiva.borderGroupBottom.visible = true
-  shiva.grpManagerMain.visible = true
+  shiva.groupManagerMain.visible = true
 end
 
 function showDirectLoad()
@@ -848,7 +849,7 @@ function showingCollapsed()
 end
 
 function showingEditor()
-  return shiva.grpManagerMain.visible
+  return shiva.groupManagerMain.visible
 end
 
 function showingRunSettings()
@@ -1716,14 +1717,12 @@ function showContextMenu(mode)
     shiva.menuContext.children.entryDelete.properties.interactive = true
     shiva.menuContext.children.entryDelete.properties.textColor = COLOR_TEXTDEFAULT
   end
-  shiva.grpBlock.visible = true
   shiva.menuContext.children[1].values.text = s
-  shiva.menuContext.properties.visible = true
+  shiva.groupContextMenu.visible = true
 end
 
 function hideContextMenu()
-  shiva.menuContext.properties.visible = false
-  shiva.grpBlock.visible = false
+  shiva.groupContextMenu.visible = false
 end
 
 function checkModified()
@@ -1805,9 +1804,9 @@ end
 
 function startFading()
   state.fading = true
-  for i = 1, #shiva.grpManager do
-    if shiva.grpManager[i].tag ~= 'ignore' then
-      shiva.grpManager[i].properties.interactive = false
+  for i = 1, #shiva.groupManager do
+    if shiva.groupManager[i].tag ~= 'ignore' then
+      shiva.groupManager[i].properties.interactive = false
     end
   end
 end
@@ -1817,9 +1816,9 @@ function disableFade()
   shiva.fdrCrossfade.values.x = not state.autoFade and 1.0 or 0.0
   state.fading = false
   state.fadeStep = 0
-  for i = 1, #shiva.grpManager do
-    if shiva.grpManager[i].tag ~= 'ignore' then
-      shiva.grpManager[i].properties.interactive = true
+  for i = 1, #shiva.groupManager do
+    if shiva.groupManager[i].tag ~= 'ignore' then
+      shiva.groupManager[i].properties.interactive = true
     end
   end
 end
