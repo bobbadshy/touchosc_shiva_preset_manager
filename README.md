@@ -61,19 +61,62 @@ Performance test with 200 controls:
 
 ## Screenshots
 
-| Screenhots | |
-| ---- | ---- |
-|  **Preset manager module in TouchOSC editor view:**  |  ![image](https://github.com/user-attachments/assets/21c12826-dc05-4bae-8c20-15ed1b7c1f85) |
-| **Preset manager module offers some basic skin setting in editor views:** | **To change colors or borders, open the "skinSettings" group, and edit colors or borders on the right:** |
-| ![image](https://github.com/user-attachments/assets/04318aba-616f-4c5e-ab1f-0722f9881093) | ![image](https://github.com/user-attachments/assets/3e0fa2a8-1790-4d0b-bacf-2f9f0e4c5acb) |
-| **Direct load mode:** | **Copy-and-Paste menu:** |
-| ![image](https://github.com/user-attachments/assets/af1d209c-7508-4250-8613-1a5b4013256c) | ![image](https://github.com/user-attachments/assets/3fa811c4-0b31-466d-8155-ce11c1c55d1d) | 
-| **Extended mode** with fail-safe loading and saving by requiring function select before tapping "ENTER": | **Fully collapsed (tap on heading):** |
-| ![image](https://github.com/user-attachments/assets/7c8705c4-0ba4-4780-ae1b-fb842e09ebda) | ![image](https://github.com/user-attachments/assets/189b66e7-5263-4a75-85d0-80265de532a6) |
-| **Fader**, selecting duration: | ***Fader active:*** |
-| ![image](https://github.com/user-attachments/assets/bd8ec5a8-4eae-459a-9379-374efd06351a) | ![image](https://github.com/user-attachments/assets/138fb0e7-7627-4802-836d-361058cf6ed8) |
-| **Preset name entry:** | ***Interactive settings** can be changed on-the-fly:*<br>*Long-tap (hold) the toggle icon on the title bar to open settings.* |
-| ![image](https://github.com/user-attachments/assets/7b043cc0-8965-4955-be69-9a7d5e981232) | ![image](https://github.com/user-attachments/assets/1249b96d-54c5-4aaa-b363-8da0b63c1e81) |
+- **Extended panel**
+
+  Fail-safe loading and saving requires function select before tapping "ENTER".
+
+![image](./docs/images/extended.png?raw=true)
+
+- **Direct Access panel**
+
+![image](./docs/images/direct.png?raw=true)
+
+- **Fully collapsed** (tap on heading)
+
+![image](./docs/images/collapsed.png?raw=true)
+
+- **Fader**
+
+Selecting a duration.
+
+![image](./docs/images/fader-select.png?raw=true)
+
+- **Fader active**
+
+![image](./docs/images/fader-fading.png?raw=true)
+
+- **Copy-and-Paste menu**
+
+![image](./docs/images/context.png?raw=true)
+
+- **Interactive settings**
+
+  Settings can be changed on-the-fly. \
+  *Long-tap (hold) the toggle icon on the title bar to open settings.*
+
+![image](./docs/images/settings.png?raw=true)
+
+- **Preset name entry**
+
+![image](./docs/images/keyboard.png?raw=true)
+
+- **Large keyboard**
+
+  Large keyboard can be selected in interactive settings.
+
+![image](./docs/images/keyboard-large.png?raw=true)
+
+- Preset manager module in TouchOSC editor view:
+
+![image](./docs/images/editor-main.png?raw=true)
+
+- Preset manager module offers some basic skin setting in editor views:
+
+![image](./docs/images/editor-skin.png?raw=true)
+
+- To change colors or borders, open the "skinSettings" group, and edit colors or borders on the right:
+
+![image](./docs/images/editor-skin-edit.png?raw=true)
 
 ## Usage
 
