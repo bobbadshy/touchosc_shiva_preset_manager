@@ -214,11 +214,6 @@ section.
 
 ## Bug reports, Feature Suggestions or Contributing
 
-*As the version tags suggest, this is currently a brand new project. The first
-public release was Jan 2025. So, while it seems to work really well already,
-please keep in mind that it is **currently in testing and not ready for
-production**. Thank you!*
-
 Please file an issue in the
 [Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues)
 section.
