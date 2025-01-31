@@ -26,8 +26,8 @@ surface to save, load and manage presets of your control settings.
   - Special string prefixes at start of a control's tag field value:
 
     *To explicitly include or exclude single controls or a whole group, add
-    either the string **"shiva"** or **"noshiva"** to the start of the contol or
-    group tag!*
+    either the string **"shiva"** or **"noshiva"** to the start of the control
+    or group tag!*
 
 - Optionally limit preset to a certain base group, so multiple preset modules
   can be added to a surface, e.g. one on every pager page.
@@ -155,7 +155,8 @@ Selecting a duration.
 
 ![image](./docs/images/editor-skin.png?raw=true)
 
-- To change colors or borders, open the "skinSettings" group, and edit colors or borders on the right:
+- To change colors or borders, open the "skinSettings" group, and edit colors or
+  borders on the right:
 
 ![image](./docs/images/editor-skin-edit.png?raw=true)
 
@@ -163,18 +164,22 @@ Selecting a duration.
 
 - Download and open the preset module `.tosc` file in the TouchOSC editor.
 - Copy and paste the control into your surface.
-- Go to the "config" group inside the module, and adjust the "Preset root control" setting.
+- Go to the "config" group inside the module, and adjust the "Preset root
+  control" setting.
 - Enjoy!
 
 ### Re-using the self-contained on-screen keyboard group for your own surfaces
 
-The on-screen keyboard (control group `groupKeyboard`) used in the preset manager is self-contained and re-useable. 
-If you want to use it separately in your control surfaces, you can copy just the `groupKeyboard` to anywhere in your surface.
+The on-screen keyboard (control group `groupKeyboard`) used in the preset
+manager is self-contained and re-useable. If you want to use it separately in
+your control surfaces, you can copy just the `groupKeyboard` to anywhere in your
+surface.
 
-The keyboard control will set itself to visible and interactive upone receiving a notify() message, and hide itself again upon closing.
+The keyboard control will set itself to visible and interactive upon receiving a
+notify() message, and hide itself again upon closing.
 
 Short demo video on how to copy and use it in your template:
-- https://youtu.be/qeayBo-21eA
+- [https://youtu.be/qeayBo-21eA](https://youtu.be/qeayBo-21eA)
 
 <details>
 
@@ -203,23 +208,40 @@ Short demo video on how to copy and use it in your template:
 
 ## Download
 
-Check the [Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases) section.
+Check the
+[Releases](https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases)
+section.
 
 ## Bug reports, Feature Suggestions or Contributing
 
-*As the version  tags suggest, this is currently a brand new project. The first public release was Jan 2025. So, while it seems to work really well already, please keep in mind that it is **currently in testing and not ready for production**. Thank you!*
+*As the version tags suggest, this is currently a brand new project. The first
+public release was Jan 2025. So, while it seems to work really well already,
+please keep in mind that it is **currently in testing and not ready for
+production**. Thank you!*
 
-Please file an issue in the [Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues) section.
+Please file an issue in the
+[Issues](https://github.com/bobbadshy/touchosc_shiva_preset_manager/issues)
+section.
 
-As this is just a hobby project in my freetime, I cannot promise I will get to any of them, but nevertheless, suggestions and bug reports are welcome! 🙂
+As this is just a hobby project in my freetime, I cannot promise I will get to
+any of them, but nevertheless, suggestions and bug reports are welcome! 🙂
 
-If you have any ideas or want to contribute to the project yourself, feel free to fork it and submit the changes back to me.
+If you have any ideas or want to contribute to the project yourself, feel free
+to fork it and submit the changes back to me.
 
 ## Planned features wishlist
 
-- Support send/receive presets over MIDI SysEx, for persistent storage e.g. in a MIDI Librarian, or for ***live sharing over MIDI with other users that use the same OSC template for their gear :).*** See [discussion](https://github.com/bobbadshy/touchosc_shiva_preset_manager/discussions/8) and [MidiHax repo](https://github.com/MidiHax/touchosc-confirm-button) with the code snippets for handling MIDI SysEx encoding/decoding in TouchOSC templates.
-- Place the presets table globally, as a sibling to the preset module. This will allow upgrading the preset manager module without losing your presets :)
-- ...no others at the moment, but who knows what tomorrow morning's coffee will bring ;) ...
+- Support send/receive presets over MIDI SysEx, for persistent storage e.g. in a
+  MIDI Librarian, or for ***live sharing over MIDI with other users that use the
+  same OSC template for their gear :).*** See
+  [discussion](https://github.com/bobbadshy/touchosc_shiva_preset_manager/discussions/8)
+  and [MidiHax repo](https://github.com/MidiHax/touchosc-confirm-button) with
+  the code snippets for handling MIDI SysEx encoding/decoding in TouchOSC
+  templates.
+- Place the presets table globally, as a sibling to the preset module. This will
+  allow upgrading the preset manager module without losing your presets :)
+- Add a "Save" option to context menu in Direct Access mode, to allow saving the
+  current modified state to a new preset slot.
 - ...
 
 ## Links
@@ -229,13 +251,11 @@ If you have any ideas or want to contribute to the project yourself, feel free t
 
 ## Donations
 
-This is an Open Source software and free to use for everyone in any which way possible! :)
+This is an Open Source software and free to use for everyone in any which way
+possible! :)
 
-|    |  PayPal  |
+|  | PayPal |
 | -- | -------- |
-|  If you feel this template made your life a lot easier, and that it is exacly the thing you were looking for, then you can buy me a beer 🍺 (..or beers 🍻..) and I will merrily put out a toast to you for saving yet another evening! 😃<br><br>*(I currently only have a PayPal button, but I may check out getting a Patreon or some "Buy me a coffee" in the future.)* |  [![image](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=CGDJVVGG5V8LU&)  |
-
+| If you feel this template made your life a lot easier, and that it is exacly the thing you were looking for, then you can buy me a beer 🍺 (..or beers 🍻..) and I will merrily put out a toast to you for saving yet another evening! 😃<br><br>*(I currently only have a PayPal button, but I may check out getting a Patreon or some "Buy me a coffee" in the future.)* | [![image](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=CGDJVVGG5V8LU&) |
 
 Many Thanx and Enjoy!
-
-
