@@ -277,7 +277,7 @@ function onReceiveNotify(cmd, val)
     blinkTextControls(val)
   elseif cmd == 'kbdClose' then
     saveKeyboardValue(val)
-  elseif cmd == 'pagePlus' or cmd == 'pageMinus' then
+  elseif cmd == 'pagePlusDirectLoad' or cmd == 'pageMinusDirectLoad' then
     prgSwitchDirect(cmd)
   elseif cmd == 'directSelect' then
     directSelect(val)
@@ -648,7 +648,7 @@ function prgSwitch(up)
 end
 
 function prgSwitchDirect(up)
-  up = up == 'btnPlusDirectPrgLoad' or up == 'pagePlus'
+  up = up == 'btnPlusDirectPrgLoad' or up == 'pagePlusDirectLoad'
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, 10)
   if up then
@@ -1068,7 +1068,7 @@ function controlEligible(c)
   end
   -- always ignore manually excluded controls!
   if string.match(c.tag, '^noshiva.*') then
-    -- log('Excluded by "noshiva": ' .. c.parent.name .. '.' ..c.name)
+    logDebug('Excluded by "noshiva": ' .. c.parent.name .. '.' ..c.name)
     return false
   end
   -- Check if MIDI msg attached
