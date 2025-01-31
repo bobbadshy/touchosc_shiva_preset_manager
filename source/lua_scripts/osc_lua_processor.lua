@@ -270,38 +270,6 @@ end
 
 -- === CALLBACK HANDLERS ===
 
-function onReceiveNotify(cmd, val)
-  if cmd == 'blinkFader' then
-    blinkControls(val)
-  elseif cmd == 'blinkText' then
-    blinkTextControls(val)
-  elseif cmd == 'kbdClose' then
-    saveKeyboardValue(val)
-  elseif cmd == 'pagePlusDirectLoad' or cmd == 'pageMinusDirectLoad' then
-    prgSwitchDirect(cmd)
-  elseif cmd == 'directSelect' then
-    directSelect(val)
-  elseif cmd == 'longTap' then
-    if val == shiva.dspSelected.name then
-      showContextMenu()
-    elseif val == 'lblDirectEdit' then
-      state.ignoreToggle = true
-      showRunSettings()
-    elseif string.match(val, '^direct[0-9]+$') then
-      local p = string.sub(val, 7)
-      selectPreset(p)
-      if loadSelectedPreset() then showContextMenu() else showContextMenu(CB_ONLYPASTE) end
-    end
-  end
-end
-
-function update()
-  local now = getMillis()
-  updateFast(now)
-  updateSlow(now)
-  updateFade(now)
-end
-
 function registerHandlers()
   handlers = {
     btnFnEnter = loadOrSave,
@@ -310,20 +278,22 @@ function registerHandlers()
     fdrCrossfade = fadeStart,
     fadeState = fadeUpdate,
     lcdMessage = lcdTap,
-    -- btnToggleEdit = toggleEdit,
-    -- btnFnKbdClose = saveKeyboardValue,
+    kbdClose = saveKeyboardValue,
     lblFadeMode = toggleFadeMode,
     btnRestore = restoreWork,
     btnClearWork = clearWork,
-    btnMinusBank = bankSwitchExtended,
-    btnPlusBank = bankSwitchExtended,
+    btnMinusBank = bankSwitchManager,
+    btnPlusBank = bankSwitchManager,
+    btnMinusPage = pageSwitchManager,
+    btnPlusPage = pageSwitchManager,
     btnMinusPrg = prgSwitch,
     btnPlusPrg = prgSwitch,
     btnMinusDirectBankLoad = bankSwitchDirect,
     btnPlusDirectBankLoad = bankSwitchDirect,
-    btnMinusDirectPrgLoad = prgSwitchDirect,
-    btnPlusDirectPrgLoad = prgSwitchDirect,
-    pagerDirectPageLoad = pageSwitchDirect,
+    pagePlusDirectLoad = pageSwitchDirect,
+    pageMinusDirectLoad = pageSwitchDirect,
+    pagerDirectPageLoad = pagerDirect,
+    directSelect = directSelect,
     lblDirectHeading = toggleCollapse,
     lblDirectEdit = toggleEdit,
     dspInfo = addChangedControlsToBlink,
@@ -337,16 +307,25 @@ function registerHandlers()
     stBtnSelectMidi = discoverControls,
     stBtnSelectOsc = discoverControls,
     stLblPresetRoot = discoverControls,
+    blinkFader = blinkControls,
+    blinkText = blinkTextControls,
+    longTap = longTap,
   }
+end
+
+function onReceiveNotify(cmd, val)
+  for c, h in pairs(handlers) do
+    if c == cmd then
+      logDebug('Command: ' .. c)
+      h(cmd, val)
+    end
+  end
 end
 
 function onValueChanged()
   local cmd = self.values.text
   self.values.text = '' -- reset command
-  if string.match(cmd, '^direct[0-9]+') then
-    -- same for direct select buttons
-    directSelect(cmd)
-  elseif string.match(cmd, '^[0-9]+$') then
+  if string.match(cmd, '^[0-9]+$') then
     -- all digit buttons handled by same function
     addDigitToPreset(cmd)
   else
@@ -358,6 +337,26 @@ function onValueChanged()
       end
     end
   end
+end
+
+function longTap(cmd, val)
+  if val == shiva.dspSelected.name then
+    showContextMenu()
+  elseif val == 'lblDirectEdit' then
+    state.ignoreToggle = true
+    showRunSettings()
+  elseif string.match(val, '^direct[0-9]+$') then
+    local p = string.sub(val, 7)
+    selectPreset(p)
+    if loadSelectedPreset() then showContextMenu() else showContextMenu(CB_ONLYPASTE) end
+  end
+end
+
+function update()
+  local now = getMillis()
+  updateFast(now)
+  updateSlow(now)
+  updateFade(now)
 end
 
 -- === CALLBACK HELPER FUNCTIONS ===
@@ -374,7 +373,7 @@ function discoverControls()
   state.blinking = BLINKCONTROLS
 end
 
-function blinkControls(val)
+function blinkControls(cmd, val)
   if state.blinking <= 0 then return end
   for k, v in pairs(state.blinkControls) do
     v.ctrl.properties.color.a = val
@@ -384,7 +383,7 @@ function blinkControls(val)
   end
 end
 
-function blinkTextControls(val)
+function blinkTextControls(cmd, val)
   if val == 1 then
     for id, v in pairs(state.blinkTextControls) do
       logDebug('Remove text blink: ' .. v.ctrl.name)
@@ -589,7 +588,7 @@ function toggleEdit()
   -- end
 end
 
-function directSelect(v)
+function directSelect(c,v)
   if userReleasedDirectLoadButttons() then
     -- If the whole parent control does not register any touch anmyore,
     -- we can be sure the user has released, either outside the parent,
@@ -629,6 +628,16 @@ function addChangedControlsToBlink()
   state.blinking = BLINKCONTROLS
 end
 
+function pagerDirect(cmd, val)
+  local presetNo = getSelectedPreset() or 0
+  local bankPage = shiva.pagerDirectPageLoad.values.x
+  local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
+  logDebug('Switching bank: ' .. result)
+  selectPreset(result)
+  loadSelectedPreset()
+  updateDirectLoadButtons()
+end
+
 function prgSwitch(up)
   up = up == 'btnPlusPrg'
   local presetNo = getSelectedPreset() or 0
@@ -643,8 +652,16 @@ function prgSwitch(up)
   loadSelectedPreset()
 end
 
-function prgSwitchDirect(up)
-  up = up == 'btnPlusDirectPrgLoad' or up == 'pagePlusDirectLoad'
+function pageSwitchManager(up)
+  _pageSwitch(up == 'btnPlusPage')
+end
+
+function pageSwitchDirect(up)
+  _pageSwitch(up == 'pagePlusDirectLoad')
+  updateDirectLoadButtons()
+end
+
+function _pageSwitch(up)
   local presetNo = getSelectedPreset() or 0
   presetNo = presetNo - math.fmod(presetNo, 10)
   if up then
@@ -657,20 +674,9 @@ function prgSwitchDirect(up)
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
   loadSelectedPreset()
-  updateDirectLoadButtons()
 end
 
-function pageSwitchDirect()
-  local presetNo = getSelectedPreset() or 0
-  local bankPage = shiva.pagerDirectPageLoad.values.x
-  local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
-  logDebug('Switching bank: ' .. result)
-  selectPreset(result)
-  loadSelectedPreset()
-  updateDirectLoadButtons()
-end
-
-function bankSwitchExtended(up)
+function bankSwitchManager(up)
   _bankSwitch(up == 'btnPlusBank')
 end
 
@@ -1052,7 +1058,7 @@ function showSelectMessage(presetNo)
   else
     s = 'select ' .. getBankStringShort(presetNo)
   end
-  infoMessage(s)
+  infoMessage(s, false)
 end
 
 -- === CONTROL VALUE HANDLING ===
@@ -1755,7 +1761,7 @@ function valuesChanged(current, preset)
   return false
 end
 
-function saveKeyboardValue(text)
+function saveKeyboardValue(cmd, text)
   if state.kbdTarget == KBDTARGETNEWSAVE then
     showEditor()
     setSelectedPresetName(text)
