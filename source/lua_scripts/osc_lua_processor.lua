@@ -685,13 +685,27 @@ function _bankSwitch(up)
   local presetNo = getSelectedPreset() or 0
   local p = presetNo
   presetNo = presetNo - math.fmod(presetNo, state.bankSize)
+  local sameBank = math.floor(presetNo/state.bankSize) == math.floor(getActivePreset()/state.bankSize)
   if up then
-    presetNo = presetNo + state.bankSize
+    if (
+      sameBank and math.fmod(p, state.bankSize) == 0 and
+      presetNo ~= getActivePreset()
+    ) then
+      presetNo = getActivePreset()
+    else
+      presetNo = presetNo + state.bankSize
+    end
     if presetNo > state.maxPreset then presetNo = 0 end
   else
     -- if not on preset zero, stay on start of current bank
     if p == presetNo then presetNo = presetNo - state.bankSize end
     if presetNo < 0 then presetNo = state.maxPreset - state.bankSize + 1 end
+  end
+  -- switch to active preset when active is on this bank
+  sameBank = math.floor(presetNo/state.bankSize) == math.floor(getActivePreset()/state.bankSize)
+  if sameBank and not up and getSelectedPreset() ~= getActivePreset() then
+    log('Selecting active preset.')
+    presetNo = getActivePreset()
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
