@@ -660,6 +660,7 @@ function prgSwitchDirect(up)
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
+  loadSelectedPreset()
   updateDirectLoadButtons()
 end
 
@@ -669,6 +670,7 @@ function pageSwitchDirect()
   local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
   logDebug('Switching bank: ' .. result)
   selectPreset(result)
+  loadSelectedPreset()
   updateDirectLoadButtons()
 end
 
@@ -709,6 +711,7 @@ function _bankSwitch(up)
   end
   logDebug('Switching bank: ' .. presetNo)
   selectPreset(presetNo)
+  loadSelectedPreset()
 end
 
 function toggleCollapse()
