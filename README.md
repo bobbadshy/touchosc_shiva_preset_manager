@@ -9,8 +9,8 @@ If you like this software, and use it frequently or in a commercial context,
 please consider supporting the project with a small donation! Check out the
 [Donations](#donations) section at the end of this Readme. Thank you! 🙂
 
-License note: Please note that starting with version v0.2 the license for this
-repository has been changed to GPL-3.0. Thank you!
+***License note:** Please note that starting with version **v0.2** the license for this
+repository has changed from MIT to **GPL-3.0**. Thank you!*
 
 ## Contents
 
