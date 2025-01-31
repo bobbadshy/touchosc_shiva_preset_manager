@@ -7,7 +7,7 @@ detailed feature list below!
 
 If you like this software, and use it frequently or in a commercial context,
 please consider supporting the project with a small donation! Check out the
-[Donations](#donations) section at the end of this Readme. ~~Thank~~ you! 🙂
+[Donations](#donations) section at the end of this Readme. Thank you! 🙂
 
 ## Contents
 
