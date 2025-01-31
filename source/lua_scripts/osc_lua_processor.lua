@@ -1,12 +1,4 @@
 ---@diagnostic disable: lowercase-global, undefined-global, undefined-field
--- ##########
--- # == Configuration ==
--- #
--- name for alternative, global preset store table
-local globalPresetStoreName = 'shivaPresetStoreGlobal'
--- #
--- ##########
-
 -- CONSTANTS
 local COLOR_GRP_BACKGROUND = '000000DB'
 local COLOR_TEXTDEFAULT = 'FFFFFFD0'
@@ -168,15 +160,8 @@ function initDebug()
 end
 
 function initShiva()
-  local gs = presetManager.parent:findByName(globalPresetStoreName, true)
-  if gs ~= nil then
-    local s = gs.parent.name .. '.' .. gs.name
-    log('FOUND GLOBAL PRESET STORE TABLE: ' .. s)
-    shiva.presetStore = gs.children
-  else
-    shiva.presetStore = presetModule.shivaPresetStoreInternal.children
-    log('Using default internal preset store table: ' .. presetModule.shivaPresetStoreInternal.name)
-  end
+  log('Using preset store table: ' .. presetManager.name .. '.' .. presetManager.children.shivaPresetStore.name)
+  shiva.presetStore = presetManager.children.shivaPresetStore.children
   state.maxPreset = #shiva.presetStore - 1
   shiva.allPages = {
     shiva.groupDirectLoadButtonsMain,
