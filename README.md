@@ -1,6 +1,8 @@
 # Shiva Preset Manager
 
-*Shiva Preset Manager* is a sophisticated preset module (OSC template) that can be added to your existing [TouchOSC](https://hexler.net/touchosc) control surface to save, load and manage presets of your control settings.
+*Shiva Preset Manager* is a sophisticated preset module (OSC template) that can
+be added to your existing [TouchOSC](https://hexler.net/touchosc) control
+surface to save, load and manage presets of your control settings.
 
 ## Contents
 
@@ -21,30 +23,69 @@
 - Select controls by:
   - MIDI message attached
   - OSC message attached
-  - Special string prefixes at start of a control's tag field value: In addition to MIDI or OSC message select mode, controls can always be explicitly included or excluded by adding on of the strings **"shiva"** or **"noshiva"** to the start of any contol's tag! 
-- Optionally limit preset to a certain base group, so multiple preset modules can be added to a surface, e.g. one on every pager page.
+  - Special string prefixes at start of a control's tag field value:
+
+    *To explicitly include or exclude single controls or a whole group, add
+    either the string **"shiva"** or **"noshiva"** to the start of the contol or
+    group tag!*
+
+- Optionally limit preset to a certain base group, so multiple preset modules
+  can be added to a surface, e.g. one on every pager page.
+
 - Saves the controls' `x`, `y`, and `text` values into the preset.
-- ***Interactive settings:*** The above settings can be changed on-the-fly in the running TouchOS surface:
-  - Long-tap (hold) the toggle icon on the title bar to open the settings page.
-  - When choosing the control select mode in the settings, the number of recognized controls is indicated, and all selected controls are blinked shortly.
-- Preset name editor.
-  - Tap on the bigger multi-line name display to edit the currently active preset name.
-- Direct access load mode
-- Small collapsed mode (tap on heading)
-- Extended manager mode (for saving and loading):
-  - Switch between modes by tapping the toggle icon on the title bar.
+
+- Extended Manager mode
+  
+  The default mode. Switch between modes by tapping the toggle icon on the title
+  bar.
+  
+- Direct Access mode
+
+  Easy and quick access to all saved presets through navigation buttons, or by
+  intuitive swiping through preset pages.
+
+- Small collapsed mode
+  
+  Tap on heading to switch between collapsed and normal mode.
+
 - Copy, paste, and delete presets between preset slots through context menu.
-  - The context menu is invoked when you long-tap (hold) on:
-    - the small selected preset no. display in Extended mode, or
-    - any of the preset buttons in Direct access mode.
-- Fail-safe load and save
+  
+  The context menu is invoked when you long-tap (hold) on:
+    - The small selected preset no. display in Extended Manager mode, or
+    - Any of the preset buttons in Direct Access mode.
+
+- Preset name editor
+  - Tap on the bigger multi-line name display to edit the currently active
+    preset name.
+
+- Interactive settings
+  
+  Settings can be changed on-the-fly in the running TouchOS surface:
+  - Long-tap (hold) the toggle icon on the title bar to open the settings page.
+  - When choosing the control select mode in the settings, the number of
+    recognized controls is indicated, and all selected controls are blinked
+    shortly.
+
+- Fail-safe load and save by requiring "Save" or "Load" function select.
+
 - Automatic and manual preset crossfading
+
 - "Randomize all controls now!" option (available in the interactive settings).
+
 - Last preset is automatically loaded on surface startup.
-- Auto-detect and indicate if controls have been modified since last preset loading.
-  - Tap on the single-line preset info display to *blink ;)* all controls that currently differ from preset values.
-- Restore controls working state cache with 10 undo steps, if you accidently loaded a preset and want to revert to a previous working state.
-- A basic skin settings config group in TouchOSC Editor view, to allow quick changes to colors, borders, backgrounds, etc. of elements, and apply those changes at startup.
+
+- Auto-detect and indicate if controls have been modified since last preset
+  loading.
+  - Tap on the single-line preset info display to *blink* all controls that
+    currently differ from preset values.
+
+- Restore controls working state cache with 10 undo steps, if you accidently
+  loaded a preset and want to revert to a previous working state.
+
+- A basic skin settings config group in TouchOSC Editor view, to allow quick
+  changes to colors, borders, backgrounds, etc. of elements, and apply those
+  changes at startup.
+
 - ...
 
 ## Demo video
