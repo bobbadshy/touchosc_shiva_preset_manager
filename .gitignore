@@ -1,1 +1,5 @@
-shiva_preset_manager_new.tosc
+##########
+
+_build/
+_export/
+source/xml/*.xml.bak

@@ -1,10 +1,18 @@
 #!/bin/bash
+#
+# Compresses all .xml files back into .tosc
+#
+# IMPORTANT! Run from repo root with:
+#
+# ./scripts/compress.sh
+#
 
-# Compresses the .xml file back into a .tosc file
+# read config
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/config.sh"
 
-s="xml_export/shiva_preset_manager.xml"
-t="shiva_preset_manager_new.tosc"
+echo -e "\n == Compress .xml to .tosc ==\n"
 
-echo "Compressing $s to $t .."
-
-pigz -c -z < "$s" > "$t"
+echo -e "Compressing $XML_EXPORT >> $TOSC_BUILD"
+xmllint --noblanks "$XML_EXPORT" > "$XML_EXPORT.tmp"
+mv "$XML_EXPORT.tmp" "$XML_EXPORT"
+pigz -c -z < "$XML_EXPORT" > "$TOSC_BUILD"
