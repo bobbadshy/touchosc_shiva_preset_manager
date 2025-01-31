@@ -483,16 +483,12 @@ end
 function toggleSave()
   showSelectMessage()
   if shiva.btnFnSave.values.x == 0 then
-    if getSelectedPreset() == getActivePreset() then
-      lcdMessage(getActivePresetName())
-    else
-      lcdMessage(getSelectedPresetName())
-    end
+    lcdMessage(getActivePresetName())
   else
     if state.selectedIsEmpty then
       lcdMessage('ENTER NAME:\ntap here')
     else
-      lcdMessage('enter to save')
+      lcdMessage('EDIT NAME:\ntap here')
     end
   end
 end
@@ -545,9 +541,9 @@ function fadeUpdate()
 end
 
 function lcdTap()
-  if userWantsToSave() and state.selectedIsEmpty then
-    state.kbdTarget = KBDTARGETNEWSAVE
-    startKeyboard(self.ID, getSelectedPresetName())
+  if userWantsToSave() then
+    state.kbdTarget = KBDTARGETACTIVEPRESET
+    startKeyboard(self.ID, getActivePresetName())
   elseif userWantsToLoad() then
     -- when load is active, sync back to showing selected preset
     lcdMessage(getSelectedPresetName())
@@ -894,10 +890,8 @@ function saveToSelectedPreset()
   local presetNo = getSelectedPreset()
   state.allControls = nil
   getAllCurrentValues(true)
-  if state.selectedIsEmpty then
-    state.currValues[RESERVED][PRESETNAMEID] = getSelectedPresetName()
-  end
-  logDebug('Saving to preset: ' .. presetNo .. ' - ' .. getSelectedPresetName())
+  state.currValues[RESERVED][PRESETNAMEID] = getActivePresetName()
+  logDebug('Saving to preset: ' .. presetNo .. ' with name ' .. state.currValues[RESERVED][PRESETNAMEID])
   -- grid index starts at 1
   shiva.presetStore[presetNo + 1].values.text = json.fromTable(state.currValues)
   state.presetValues = state.currValues
