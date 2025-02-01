@@ -373,8 +373,9 @@ detailed feature list below!</p>
 <p>If you like this software, and use it frequently or in a commercial context,
 please consider supporting the project with a small donation! Check out the
 <a href="#donations">Donations</a> section at the end of this Readme. Thank you! 🙂</p>
-<p>License note: Please note that starting with version v0.2 the license for this
-repository has been changed to GPL-3.0. Thank you!</p>
+<p><em><strong>License note:</strong> Please note that starting with version <strong>v0.2</strong> the license for this
+repository has changed from MIT to <strong>GPL-3.0</strong>. Thank you!</em></p>
+<p><strong>Updating from previous versions:</strong> To keep your old presets, when updating from a previous version of Shiva Preset Manager, see <em><a href="#">&quot;Migrating from a previous version&quot;</a></em>.</p>
 <h2 id="contents">Contents</h2>
 <ul>
 <li><a href="#shiva-preset-manager">Shiva Preset Manager</a>
@@ -386,6 +387,7 @@ repository has been changed to GPL-3.0. Thank you!</p>
 <li><a href="#usage">Usage</a>
 <ul>
 <li><a href="#re-using-the-self-contained-on-screen-keyboard-group-for-your-own-surfaces">Re-using the self-contained on-screen keyboard group for your own surfaces</a></li>
+<li><a href="#migrating-from-a-previous-version">Migrating from a previous version</a></li>
 </ul>
 </li>
 <li><a href="#download">Download</a></li>
@@ -616,6 +618,73 @@ end
 </li>
 </ul>
 </details>
+<h3 id="migrating-from-a-previous-version">Migrating from a previous version</h3>
+<p>When updating from a previous version of Shiva Preset Manager, follow these
+steps to migrate your presets to the new version:</p>
+<ol>
+<li>
+<p>Open your template, that you want to update, in Editor view.</p>
+</li>
+<li>
+<p>In your template, rename the old instance of preset manager, e.g. rename it
+to &quot;shivaPresetManagerOld&quot;.</p>
+</li>
+<li>
+<p>Copy and paste the new version of preset manager into your template.</p>
+</li>
+<li>
+<p>Expand the <em>new</em> &quot;shivaPresetManager&quot; group.</p>
+</li>
+<li>
+<p>Copy and paste the <strong>old</strong> &quot;shivaPresetStore&quot; group – from the old preset
+manager instance – into the new instance.</p>
+</li>
+<li>
+<p>Rename the copied group to <strong>&quot;shivaPresetStoreOld&quot;</strong>. The name must match
+exactly, otherwise, no migration will be started.</p>
+</li>
+<li>
+<p>Inside the new preset manager instance, you should now have <strong>two!</strong> preset
+stores: &quot;shivaPresetStore&quot; and &quot;shivaPresetStoreOld&quot;</p>
+</li>
+<li>
+<p><strong>Remove</strong> the old instance of Shiva Preset Manager from your template before
+starting it up!</p>
+</li>
+<li>
+<p>Enable Script log view in TouchOsc, and then start your template.</p>
+</li>
+<li>
+<p>If the migration is successfull, you should get a log output like:</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>[...]
+CONTROL(luaProcessor) Applying layout.. 
+CONTROL(luaProcessor) Clearing working state cache.. 
+CONTROL(luaProcessor) ==== Migration started ==== 
+CONTROL(luaProcessor) Old preset store found! 
+CONTROL(luaProcessor) Found new style preset store with all presets in one label .. 
+CONTROL(luaProcessor) Copied preset 0 
+CONTROL(luaProcessor) Copied preset 2 
+CONTROL(luaProcessor) Copied preset 4 
+CONTROL(luaProcessor) Copied preset 1 
+[...]
+CONTROL(luaProcessor) Copied XX old presets. 
+CONTROL(luaProcessor) ==== Migration finished. ==== 
+[...]
+</div></code></pre>
+<ol start="11">
+<li>
+<p>Stop the template. You can now remove the copied &quot;shivaPresetStoreOld&quot; group
+from the new preset manager instance.</p>
+</li>
+<li>
+<p>Save your template to finish the migration.</p>
+</li>
+<li>
+<p>Done.</p>
+</li>
+</ol>
 <h2 id="download">Download</h2>
 <p>Check the
 <a href="https://github.com/bobbadshy/touchosc_shiva_preset_manager/releases">Releases</a>
