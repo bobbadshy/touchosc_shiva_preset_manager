@@ -139,8 +139,8 @@ function init()
   log('INIT processor..')
   initConfig()
   initShiva()
-  log('Presets total: ' .. #shiva.presetStore)
-  log('Banks: ' ..  math.ceil(#shiva.presetStore/state.bankSize))
+  log('Presets total: ' .. state.maxPreset+1)
+  log('Banks: ' ..  state.bankCount)
   log('Max preset no. in bank: ' .. getIndexInBank(state.maxPreset))
   registerHandlers()
   applyLayout()
@@ -163,8 +163,8 @@ end
 
 function initShiva()
   log('Using preset store table: ' .. presetManager.name .. '.' .. presetManager.children.shivaPresetStore.name)
-  shiva.presetStore = presetManager.children.shivaPresetStore.children
-  state.maxPreset = #shiva.presetStore - 1
+  shiva.presetStore = presetManager.children.shivaPresetStore
+  state.maxPreset = state.bankCount*state.bankSize-1
   shiva.allPages = {
     shiva.groupDirectLoadButtonsMain,
     shiva.groupManagerMain,
@@ -173,6 +173,54 @@ function initShiva()
     shiva.groupKeyboardLargeMain,
     shiva.groupContextMenu,
   }
+end
+
+function migrateOldStore()
+  local oldStore = presetManager:findByName('shivaPresetStoreOld')
+  if oldStore == nil then return end
+  log('==== Migration started ====')
+  log('Old preset store found!')
+  if oldStore.tag == 'MIGRATED' then
+    log('Old presets already migrated! To repeat the migration, delete the tag "MIGRATED" from old preset store group.')
+    log('==== Migration cancelled. ====')
+    return
+  end
+  local result = {}
+  local c = 0
+  if oldStore.type == ControlType.GROUP then
+    log('Found old style preset store with one label per preset ..')
+    local oldPresets = oldStore.children
+    local data
+    for i=1,#oldPresets do
+      data = oldPresets[i].values.text
+      if not (data == nil or not string.match(data, '^{.+}$')) then
+        saveToPreset(i-1, json.toTable(data))
+        c = c+1
+        log('Copied preset ' .. i-1)
+      end
+    end
+    oldStore.tag = 'MIGRATED'
+  elseif oldStore.type == ControlType.LABEL then
+    log('Found new style preset store with all presets in one label ..')
+    data = oldStore.values.text
+    if data == nil or not string.match(data, '^{.+}$') then
+      log('Could not read old preset store data. Store is empty or malformed. Exiting')
+      return
+    end
+    data = json.toTable(data)
+    for k,v in pairs(data) do
+      saveToPreset(k, v)
+      c = c+1
+      log('Copied preset ' .. k)
+    end
+    oldStore.tag = 'MIGRATED'
+  else
+    log('Could determine format of old preset Store. No presets copied!')
+    log('==== Migration cancelled. ====')
+    return
+  end
+  log('Copied ' .. c .. ' old presets.')
+  log('==== Migration finished. ====')
 end
 
 function initConfig()
@@ -248,12 +296,8 @@ function cycleView()
 end
 
 function initPresets()
-  state.allPresets = {}
-  for i=0,state.bankCount*state.bankSize-1 do
-    if json.toTable(getJsonFromPresetStore(i)) ~= false then
-      state.allPresets[tostring(i)] = json.toTable(getJsonFromPresetStore(i))
-    end
-  end
+  migrateOldStore()
+  state.allPresets = getPresetStorefromLabel()
   if getSelectedPreset() == nil then selectPreset(0) end
   local presetNo = getActivePreset()
   if presetNo == nil then
@@ -771,9 +815,8 @@ function clipBoardPaste()
     lcdMessage('cannot paste\nno clipboard')
     return
   end
-  -- TODO: remove
-  shiva.presetStore[getSelectedPreset() + 1].values.text = state.clipBoard
   state.allPresets[tostring(getSelectedPreset())] = json.toTable(state.clipBoard)
+  commitAllPresets()
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('pasted to\npreset ' .. getIndexInBank(getSelectedPreset()))
@@ -783,9 +826,8 @@ function deletePreset()
   -- TODO: workaround ..not realy sure why I still get a msg even though its disable..?
   if not shiva.menuContext.children.entryDelete.properties.interactive then return end
   logDebug('clipboard delete')
-  -- TODO: remove
-  shiva.presetStore[getSelectedPreset() + 1].values.text = ''
   state.allPresets[tostring(getSelectedPreset())] = nil
+  commitAllPresets()
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('delete\npreset ' .. getIndexInBank(getSelectedPreset()))
@@ -926,24 +968,54 @@ end
 -- === PRESET VALUES HANDLING, LOADING AND SAVING ===
 
 function isPresetEmpty(p)
-  return getJsonFromPresetStore(p) == false
+  return state.allPresets[tostring(p)] == nil
 end
 
 function saveToSelectedPreset()
+  saveToPreset(getSelectedPreset())
+end
+
+function saveToPreset(presetNo, _t)
   -- Saves current control values to the selected preset
-  local presetNo = getSelectedPreset()
-  state.allControls = nil
-  getAllCurrentValues(true)
-  state.currValues[RESERVED][PRESETNAMEID] = getActivePresetName()
+  if presetNo == nil then return end
+  if _t == nil then
+    state.allControls = nil
+    getAllCurrentValues(true)
+    state.currValues[RESERVED][PRESETNAMEID] = getActivePresetName()
+  else
+    state.currValues = _copyTable(_t)
+  end
   logDebug('Saving to preset: ' .. presetNo .. ' with name ' .. state.currValues[RESERVED][PRESETNAMEID])
   state.allPresets[tostring(presetNo)] = _copyTable(state.currValues)
-  -- grid index starts at 1
-  shiva.presetStore[presetNo + 1].values.text = json.fromTable(state.currValues)
+  commitAllPresets()
   state.presetValues = state.currValues
   infoMessage('saved ' .. getIndexInBank(presetNo))
   logDebug('Saved values: ' .. json.fromTable(state.currValues))
   setActivePreset(presetNo)
   applySelectedPreset()
+end
+
+function commitAllPresets()
+  _savePresetStoreToLabel(state.allPresets)
+end
+
+function _commitPresetToStore(data, presetNo)
+  local store = getPresetStorefromLabel()
+  store[tostring(presetNo)] = _copyTable(data)
+  _savePresetStoreToLabel(store)
+end
+
+function getPresetStorefromLabel()
+  local r = shiva.presetStore.values.text
+  if (r == nil or not string.match(r, '^{.+}$')) then
+    log('Preset store malformed or not initialized. Re-initializing store!')
+    return {}
+  end
+  return json.toTable(r)
+end
+
+function _savePresetStoreToLabel(data)
+  shiva.presetStore.values.text = json.fromTable(data)
 end
 
 function loadSelectedPreset()
@@ -984,19 +1056,6 @@ function getNameFromPreset(p)
   if data == nil then return '' end
   if data[RESERVED] == nil or data[RESERVED][PRESETNAMEID] == nil then return p .. ' [unknown]' end
   return data[RESERVED][PRESETNAMEID]
-end
-
-function getJsonFromPresetStore(presetNo)
-  -- grid index starts at 1
-  local result = shiva.presetStore[presetNo + 1].values.text
-  if (result == nil or not string.match(result, '^{.+}$')) then
-    logDebug('Preset empty while loading: ' .. presetNo)
-    return false
-  end
-  logDebug('Preset json data loaded: ' .. presetNo)
-  logDebug('Found values:')
-  logDebug(result)
-  return result
 end
 
 function getActivePresetName()
@@ -1441,9 +1500,8 @@ end
 
 function purgePresetStore()
   log('Clear all presets enabled! CLEARING ALL PRESETS NOW!')
-  for i = 1, #shiva.presetStore do
-    shiva.presetStore[i].values.text = ''
-  end
+  state.allPresets = {}
+  commitAllPresets()
 end
 
 function randomizeControlsNow()
