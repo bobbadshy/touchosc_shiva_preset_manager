@@ -790,31 +790,71 @@ end
 function hideAllPages()
   saveLastPage()
   for i=1,#shiva.allPages do shiva.allPages[i].properties.visible = false end
-  shiva.lblDirectHeading.properties.visible = true
+  for i=1,#shiva.groupDirectLoad do
+    shiva.groupDirectLoad[i].properties.visible = false
+  end
   shiva.borderGroupBottom.properties.visible = false
+end
+
+function showTitle()
+  shiva.groupDirectLoad.lblDirectHeading.properties.visible = true
+  shiva.groupDirectLoad.buttonDirectToggleEdit.properties.visible = true
+  shiva.groupDirectLoad.lblDirectEdit.properties.visible = true
+end
+
+function showTitleButtons()
+  shiva.groupDirectLoad.dspDirectInfo.properties.visible = true
+  shiva.groupDirectLoad.btnMinusDirectBankLoad.properties.visible = true
+  shiva.groupDirectLoad.btnPlusDirectBankLoad.properties.visible = true
+  shiva.groupDirectLoad.bgLbl.properties.visible = true
+  shiva.groupDirectLoad.buttonDirectToggleEdit.properties.visible = true
+  shiva.groupDirectLoad.lblDirectEdit.properties.visible = true
 end
 
 function showEditor()
   hideAllPages()
+  showTitle()
   shiva.borderGroupBottom.visible = true
   shiva.groupManagerMain.visible = true
 end
 
 function showDirectLoad()
   hideAllPages()
-  shiva.lblDirectHeading.visible = false
+  showTitleButtons()
   shiva.borderGroupBottom.visible = true
   shiva.groupDirectLoadButtonsMain.visible = true
 end
 
 function showCollapsed()
   hideAllPages()
+  showTitle()
 end
 
 function showRunSettings()
   hideAllPages()
+  showTitle()
   shiva.borderGroupBottom.visible = true
   shiva.groupRunSettingsMain.visible = true
+end
+
+function showKeyboard()
+  hideAllPages()
+  shiva.borderGroupBottom.visible = true
+  if shiva.stBtnLargeKeyboard.values.x == 1 then
+    local kbdFrame = shiva.groupKeyboardLargeMain.frame
+    local mdFrame = presetModuleMain.frame
+    kbdFrame.y = mdFrame.y+70
+    kbdFrame.x = mdFrame.x+10
+    if kbdFrame.x + kbdFrame.w > presetManager.frame.w then
+      kbdFrame.x = presetManager.frame.w - kbdFrame.w - 5
+    end
+    if kbdFrame.y + kbdFrame.h > presetManager.frame.h then
+      kbdFrame.y = presetManager.frame.h - kbdFrame.h - 5
+    end
+    shiva.groupKeyboardLargeMain.visible = true
+  else
+    shiva.groupKeyboardMain.visible = true
+  end
 end
 
 function showLastPage()
@@ -862,26 +902,6 @@ end
 
 function showingKeyboard()
   return shiva.groupKeyboardMain.visible or shiva.groupKeyboardLargeMain.visible
-end
-
-function showKeyboard()
-  hideAllPages()
-  shiva.borderGroupBottom.visible = true
-  if shiva.stBtnLargeKeyboard.values.x == 1 then
-    local kbdFrame = shiva.groupKeyboardLargeMain.frame
-    local mdFrame = presetModuleMain.frame
-    kbdFrame.y = mdFrame.y+70
-    kbdFrame.x = mdFrame.x+10
-    if kbdFrame.x + kbdFrame.w > presetManager.frame.w then
-      kbdFrame.x = presetManager.frame.w - kbdFrame.w - 5
-    end
-    if kbdFrame.y + kbdFrame.h > presetManager.frame.h then
-      kbdFrame.y = presetManager.frame.h - kbdFrame.h - 5
-    end
-    shiva.groupKeyboardLargeMain.visible = true
-  else
-    shiva.groupKeyboardMain.visible = true
-  end
 end
 
 function startKeyboard(target, text)
