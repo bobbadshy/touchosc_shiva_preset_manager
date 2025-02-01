@@ -842,9 +842,11 @@ end
 function hideAllPages()
   saveLastPage()
   for i=1,#shiva.allPages do shiva.allPages[i].properties.visible = false end
-  for i=1,#shiva.groupDirectLoad do
-    shiva.groupDirectLoad[i].properties.visible = false
-  end
+  shiva.groupDirectLoad.dspDirectInfo.properties.visible = false
+  shiva.groupDirectLoad.btnMinusDirectBankLoad.properties.visible = false
+  shiva.groupDirectLoad.btnPlusDirectBankLoad.properties.visible = false
+  shiva.groupDirectLoad.lblDirectHeading.properties.visible = false
+  shiva.groupDirectLoad.bgLbl.properties.visible = false
   shiva.borderGroupBottom.properties.visible = false
 end
 
