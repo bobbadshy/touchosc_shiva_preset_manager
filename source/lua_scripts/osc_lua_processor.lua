@@ -249,8 +249,8 @@ end
 
 function initPresets()
   state.allPresets = {}
-  for i=1,state.bankCount*state.bankSize do
-    state.allPresets[tostring(i-1)] = json.toTable(getJsonFromPresetStore(i-1))
+  for i=0,state.bankCount*state.bankSize-1 do
+    state.allPresets[tostring(i)] = json.toTable(getJsonFromPresetStore(i))
   end
   if getSelectedPreset() == nil then selectPreset(0) end
   local presetNo = getActivePreset()
@@ -976,14 +976,10 @@ function applySelectedPreset()
 end
 
 function getNameFromPreset(p)
-  local jsonValues = getJsonFromPresetStore(p)
-  if not jsonValues then return '' end
-  local n
-  if json.toTable(jsonValues)[RESERVED] ~= nil then
-    n = json.toTable(jsonValues)[RESERVED][PRESETNAMEID]
-  end
-  if n == nil then return p .. ' [unknown]' end
-  return n
+  local data = state.allPresets[tostring(p)]
+  if data == nil then return '' end
+  if data[RESERVED] == nil or data[RESERVED][PRESETNAMEID] == nil then return p .. ' [unknown]' end
+  return data[RESERVED][PRESETNAMEID]
 end
 
 function getJsonFromPresetStore(presetNo)
