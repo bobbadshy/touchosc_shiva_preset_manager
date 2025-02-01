@@ -7,9 +7,9 @@ local database = self.parent.parent.children.luaProcessor
 -- How fast to slow down (0.01..0.1)
 local drag = 0.05
 -- How fast to snap back into position (1..10)
-local springiness = 5
+local springiness = 7
 -- Pixel speed at which we start snapping into position (5..30)
-local minSpeed = 15
+local minSpeed = 20
 -- #
 -- ##########
 
@@ -19,7 +19,7 @@ local speed = 0
 local swiping = false
 local swiped = false
 local home = false
-local delay = 25
+local delay = 30
 local last = 0
 local tapped = false
 local swipe
