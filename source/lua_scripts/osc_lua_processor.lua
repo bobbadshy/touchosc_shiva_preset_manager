@@ -771,9 +771,9 @@ function clipBoardPaste()
     lcdMessage('cannot paste\nno clipboard')
     return
   end
-  state.allPresets[tostring(getSelectedPreset())] = json.toTable(state.clipBoard)
   -- TODO: remove
   shiva.presetStore[getSelectedPreset() + 1].values.text = state.clipBoard
+  state.allPresets[tostring(getSelectedPreset())] = json.toTable(state.clipBoard)
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('pasted to\npreset ' .. getIndexInBank(getSelectedPreset()))
@@ -783,8 +783,8 @@ function deletePreset()
   -- TODO: workaround ..not realy sure why I still get a msg even though its disable..?
   if not shiva.menuContext.children.entryDelete.properties.interactive then return end
   logDebug('clipboard delete')
-  shiva.presetStore[getSelectedPreset() + 1].values.text = ''
   -- TODO: remove
+  shiva.presetStore[getSelectedPreset() + 1].values.text = ''
   state.allPresets[tostring(getSelectedPreset())] = nil
   updateDirectLoadButtons()
   hideContextMenu()
