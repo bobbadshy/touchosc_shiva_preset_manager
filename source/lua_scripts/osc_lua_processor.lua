@@ -77,6 +77,7 @@ local state = {
   rootName = nil,
   presetRootCtrl = '',
   -- some collections
+  allPresets = {},
   allControls = nil,
   currValues = {},
   presetValues = {},
@@ -87,12 +88,13 @@ local state = {
   modifiedText = '',
   selectedPreset = 0,
   presetModified = false,
+  bankCount = 16,
+  bankSize = 130,
   maxPreset = 0,
   selectedIsEmpty = false,
   collapsed = false,
   ignoreToggle = false,
   lastPage = nil,
-  bankSize = 130,
   buttonCount = 30,
   -- Target where to put the text from keyboard after edit
   kbdTarget = '',
@@ -143,7 +145,7 @@ function init()
   registerHandlers()
   applyLayout()
   clearWork()
-  initPreset()
+  initPresets()
   disableFade()
   initCrossfade()
   getAllCurrentValues(true)
@@ -245,7 +247,11 @@ function cycleView()
   end
 end
 
-function initPreset()
+function initPresets()
+  state.allPresets = {}
+  for i=1,state.bankCount*state.bankSize do
+    state.allPresets[tostring(i-1)] = json.toTable(getJsonFromPresetStore(i-1))
+  end
   if getSelectedPreset() == nil then selectPreset(0) end
   local presetNo = getActivePreset()
   if presetNo == nil then
@@ -926,6 +932,7 @@ function saveToSelectedPreset()
   getAllCurrentValues(true)
   state.currValues[RESERVED][PRESETNAMEID] = getActivePresetName()
   logDebug('Saving to preset: ' .. presetNo .. ' with name ' .. state.currValues[RESERVED][PRESETNAMEID])
+  state.allPresets[tostring(presetNo)] = _copyTable(state.currValues)
   -- grid index starts at 1
   shiva.presetStore[presetNo + 1].values.text = json.fromTable(state.currValues)
   state.presetValues = state.currValues
@@ -939,15 +946,15 @@ function loadSelectedPreset()
   -- load currently selected preset values
   local presetNo = getSelectedPreset()
   logDebug('Loading preset: ' .. presetNo)
-  local jsonValues = getJsonFromPresetStore(presetNo)
-  if not jsonValues then
+  local data = _copyTable(state.allPresets[tostring(presetNo)])
+  if data == nil then
     lcdMessage('load error\npreset empty')
     setSelectedPresetName(getBankString(presetNo))
     state.selectedIsEmpty = true
     return false
   end
   state.selectedIsEmpty = false
-  state.presetValues = json.toTable(jsonValues)
+  state.presetValues = data
   ensurePresetDefaultName(presetNo)
   setSelectedPresetName(state.presetValues[RESERVED][PRESETNAMEID])
   lcdMessage(getSelectedPresetName())
@@ -1951,4 +1958,14 @@ function getSelectModeStr()
   if shiva.groupRunSettings.stBtnSelectOsc.values.x == 1 then table.insert(t, 'OSC') end
   if #t == 0 then table.insert(t, '"shiva"') end
   return table.concat(t, ' + ')
+end
+
+function _copyTable(obj, _s)
+  if type(obj) ~= 'table' then return obj end
+  if _s and _s[obj] then return _s[obj] end
+  local s = _s or {}
+  local res = obj
+  s[obj] = res
+  for k, v in pairs(obj) do res[_copyTable(k, s)] = _copyTable(v, s) end
+  return res
 end
