@@ -250,7 +250,9 @@ end
 function initPresets()
   state.allPresets = {}
   for i=0,state.bankCount*state.bankSize-1 do
-    state.allPresets[tostring(i)] = json.toTable(getJsonFromPresetStore(i))
+    if json.toTable(getJsonFromPresetStore(i)) ~= false then
+      state.allPresets[tostring(i)] = json.toTable(getJsonFromPresetStore(i))
+    end
   end
   if getSelectedPreset() == nil then selectPreset(0) end
   local presetNo = getActivePreset()
@@ -742,8 +744,6 @@ function clipBoardCut()
   end
   state.clipBoard = json.fromTable(state.presetValues)
   deletePreset()
-  updateDirectLoadButtons()
-  hideContextMenu()
   lcdMessage('cut to clipboard\npreset ' .. getIndexInBank(getSelectedPreset()))
 end
 
@@ -771,6 +771,8 @@ function clipBoardPaste()
     lcdMessage('cannot paste\nno clipboard')
     return
   end
+  state.allPresets[tostring(getSelectedPreset())] = json.toTable(state.clipBoard)
+  -- TODO: remove
   shiva.presetStore[getSelectedPreset() + 1].values.text = state.clipBoard
   updateDirectLoadButtons()
   hideContextMenu()
@@ -782,6 +784,8 @@ function deletePreset()
   if not shiva.menuContext.children.entryDelete.properties.interactive then return end
   logDebug('clipboard delete')
   shiva.presetStore[getSelectedPreset() + 1].values.text = ''
+  -- TODO: remove
+  state.allPresets[tostring(getSelectedPreset())] = nil
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('delete\npreset ' .. getIndexInBank(getSelectedPreset()))
