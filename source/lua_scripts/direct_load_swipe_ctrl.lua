@@ -10,6 +10,8 @@ local drag = 0.05
 local springiness = 7
 -- Pixel speed at which we start snapping into position (5..30)
 local minSpeed = 20
+-- Update delay cycle for snapping into position
+local updateDelay = 30
 -- #
 -- ##########
 
@@ -19,7 +21,7 @@ local speed = 0
 local swiping = false
 local swiped = false
 local home = false
-local delay = 30
+local delay = updateDelay
 local last = 0
 local tapped = false
 local swipe
@@ -54,6 +56,7 @@ function update()
   local now = getMillis()
   if (now - last < delay) or swiping or home then return end
   last = now
+  if not home then delay = updateDelay end
   getHome()
 end
 
@@ -86,6 +89,7 @@ function getHome()
     swipeFrame.x = -width
     latched = 1
     home = true
+    delay = 500
     return
   end
   pan(speed)
@@ -113,6 +117,7 @@ function onPointer(pointers)
   local delta = math.floor(pointers[1].x - last_pos.x)
   last_pos = { x = pointers[1].x, y = pointers[1].y }
   if state == PointerState.BEGIN then
+    delay = 500
     swiped = false
     swiping = true
     home = false
@@ -125,6 +130,7 @@ function onPointer(pointers)
     pan(speed)
   elseif state == PointerState.END then
     swiping = false
+    if not home then delay = updateDelay end
   end
   if self.values.touch and not swiped then
     if getMillis() - self.pointers[1].created > 1000 and not tapped then
