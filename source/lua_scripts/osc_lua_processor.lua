@@ -88,7 +88,7 @@ local state = {
   modifiedText = '',
   selectedPreset = 0,
   presetModified = false,
-  bankCount = 16,
+  bankCount = nil,
   bankSize = 130,
   maxPreset = 0,
   selectedIsEmpty = false,
@@ -96,6 +96,8 @@ local state = {
   ignoreToggle = false,
   lastPage = nil,
   buttonCount = 30,
+  migrateCount = nil,
+  migrateLabels = nil,
   -- Target where to put the text from keyboard after edit
   kbdTarget = '',
   -- keep track of working state stack
@@ -134,98 +136,68 @@ local state = {
 
 -- === INIT  ===
 
+-- #####
+-- This complicated init is due to the fact that our init is taking quite long
+-- in some cases, especially when migrating lots of old presets ..
+-- Because of this, we run into the "Too many cycles" error of TouchOsc very
+-- quickly. This "stepped" initialization avoids this, and splits init up into
+-- small, fast steps.
+-- #####
+local initQueue = {}
+local initialized = false
+
 function init()
-  initDebug()
-  log('INIT processor..')
-  initConfig()
-  initShiva()
-  log('Presets total: ' .. state.maxPreset+1)
-  log('Banks: ' ..  state.bankCount)
-  log('Max preset no. in bank: ' .. getIndexInBank(state.maxPreset))
-  registerHandlers()
-  applyLayout()
-  clearWork()
-  initPresets()
-  disableFade()
-  initCrossfade()
-  getAllCurrentValues(true)
-  initGui()
+  log('init() was called.')
+  if initQueue[1] == nil then
+    initialized = false
+    startInit()
+  end
+end
+
+function initialize()
+  if initialized then return end
+  -- go through init queue ony by one..
+  if initQueue[1]() == true then
+    table.remove(initQueue, 1)
+    if initQueue[1] == nil then initialized = true end
+  end
+end
+
+function startInit()
+  initQueue = {
+    initDebug,
+    initLayout,
+    initConfig,
+    initShiva,
+    initControls,
+    initPresets,
+    initFader,
+    initGui,
+  }
+end
+
+function update()
+  if not initialized then initialize() return end
+  local now = getMillis()
+  updateFast(now)
+  updateSlow(now)
+  updateFade(now)
 end
 
 function initDebug()
+  log('Init debug ..')
   if shiva.stBtnEnableDebug.values.x == 0 then
     DEBUG = false
   else
     DEBUG = true
   end
   logDebug('#### Debug logging ENABLED. ####')
-end
-
-function initShiva()
-  log('Using preset store table: ' .. presetManager.name .. '.' .. presetManager.children.shivaPresetStore.name)
-  shiva.presetStore = presetManager.children.shivaPresetStore
-  state.maxPreset = state.bankCount*state.bankSize-1
-  shiva.allPages = {
-    shiva.groupDirectLoadButtonsMain,
-    shiva.groupManagerMain,
-    shiva.groupRunSettingsMain,
-    shiva.groupKeyboardMain,
-    shiva.groupKeyboardLargeMain,
-    shiva.groupContextMenu,
-  }
-end
-
-function migrateOldStore()
-  local oldStore = presetManager:findByName('shivaPresetStoreOld')
-  if oldStore == nil then return end
-  log('==== Migration started ====')
-  log('Old preset store found!')
-  if oldStore.tag == 'MIGRATED' then
-    log('Old presets already migrated! To repeat the migration, delete the tag "MIGRATED" from old preset store group.')
-    log('==== Migration cancelled. ====')
-    return
-  end
-  local result = {}
-  local c = 0
-  if oldStore.type == ControlType.GROUP then
-    log('Found old style preset store with one label per preset ..')
-    local oldPresets = oldStore.children
-    local data
-    for i=1,#oldPresets do
-      data = oldPresets[i].values.text
-      if not (data == nil or not string.match(data, '^{.+}$')) then
-        saveToPreset(i-1, json.toTable(data))
-        c = c+1
-        log('Copied preset ' .. i-1)
-      end
-    end
-    oldStore.tag = 'MIGRATED'
-  elseif oldStore.type == ControlType.LABEL then
-    log('Found new style preset store with all presets in one label ..')
-    data = oldStore.values.text
-    if data == nil or not string.match(data, '^{.+}$') then
-      log('Could not read old preset store data. Store is empty or malformed. Exiting')
-      return
-    end
-    data = json.toTable(data)
-    for k,v in pairs(data) do
-      saveToPreset(k, v)
-      c = c+1
-      log('Copied preset ' .. k)
-    end
-    oldStore.tag = 'MIGRATED'
-  else
-    log('Could determine format of old preset Store. No presets copied!')
-    log('==== Migration cancelled. ====')
-    return
-  end
-  log('Copied ' .. c .. ' old presets.')
-  log('==== Migration finished. ====')
+  log('Init processor..')
+  return true
 end
 
 function initConfig()
-  log('Initializing config')
-  initDebug()
+  log('Init config ..')
   state.rootName = shiva.groupRunSettings.stLblPresetRoot.values.text
   state.presetRootCtrl = state.rootName == '' and root or root:findByName(state.rootName, true)
   if state.presetRootCtrl == nil then
@@ -236,21 +208,135 @@ function initConfig()
   else
     shiva.groupRunSettings.stLblShowRoot.values.text = 'Group found :)'
   end
+  lcdMessage('Controls Select:\n' .. getSelectModeStr())
+  return true
+end
+
+function initShiva()
+  log('Init shiva ..')
+  log('Using preset store table: ' .. presetManager.name .. '.' .. presetManager.children.shivaPresetStore.name)
+  shiva.presetStore = presetManager.children.shivaPresetStore.children
+  state.bankCount = #shiva.presetStore
+  state.maxPreset = state.bankCount*state.bankSize-1
+  shiva.allPages = {
+    shiva.groupDirectLoadButtonsMain,
+    shiva.groupManagerMain,
+    shiva.groupRunSettingsMain,
+    shiva.groupKeyboardMain,
+    shiva.groupKeyboardLargeMain,
+    shiva.groupContextMenu,
+  }
+  registerHandlers()
+  log('Presets total: ' .. state.maxPreset+1)
+  log('Banks: ' ..  state.bankCount)
+  log('Max preset no. in bank: ' .. getIndexInBank(state.maxPreset))
+  return true
+end
+
+function initControls()
   state.allControls = nil
+  getAllCurrentValues(true)
+  return true
+end
+
+function initPresets()
+  if not migrateOldStore() then return false end
+  log('Init presets ..')
+  getPresetStorefromLabels()
+  if getSelectedPreset() == nil then selectPreset(0) end
+  local presetNo = getActivePreset()
+  if presetNo == nil then
+    presetNo = 0
+  else
+    presetNo = math.max(0, math.min(state.maxPreset, presetNo))
+  end
+  -- cleanest way to get a sane initial state if no presets exist..
+  selectPreset(presetNo)
+  if not applySelectedPreset() then activateSelectedPreset() end
+  return true
+end
+
+function migrateOldStore()
+  local t = getMillis()
+  local oldStore = presetManager:findByName('shivaPresetStoreOld')
+  if oldStore == nil then return true end
+  if state.migrateCount == nil then
+    log('==== Migration started ====')
+    log('Old preset store found!')
+    state.migrateCount = 0
+    state.migrateLabels = 1
+  else
+    log('continue migration ..')
+  end
+  if oldStore.tag == 'MIGRATED' then
+    log('Old presets already migrated! To repeat the migration, delete the tag "MIGRATED" from old preset store group.')
+    log('==== Migration cancelled. ====')
+    return true
+  end
+  local c = 0
+  if oldStore.type ~= ControlType.GROUP then
+    log('Could not determine format of old preset Store. No presets copied!')
+    log('==== Migration cancelled. ====')
+    oldStore.tag = 'MIGRATED'
+    return true
+  end
+  local oldPresets = oldStore.children
+  local data
+  for i=state.migrateLabels,#oldPresets do
+    data = oldPresets[i].values.text
+    if not (data == nil or not string.match(data, '^{.+}$')) then
+      data = json.toTable(data)
+      if #oldPresets >= 100 then
+        log ('Found old style presets with one preset per label')
+        saveToPreset(i-1, data, false)
+        c = c+1
+        state.migrateLabels = state.migrateLabels+1
+        state.migrateCount = state.migrateCount+1
+        log('Copied preset ' .. i-1)
+        if c == 20 then return false end
+      else
+        log('Found new style presets with one bank per label, bank ' .. i-1)
+        for k,v in pairs(data) do
+          saveToPreset(k, v, false)
+          state.migrateCount = state.migrateCount+1
+          log('Copied preset ' .. k)
+        end
+        state.migrateLabels = state.migrateLabels+1
+        return false
+      end
+    end
+  end
+  oldStore.tag = 'MIGRATED'
+  commitAllPresetsToLabels()
+  log('Copied ' .. state.migrateCount .. ' old presets.')
+  log('==== Migration finished. ====')
+  state.migrateCount = nil
+  state.migrateLabels = nil
+  return true
+end
+
+function initFader()
+  log('Init fader ..')
   state.autoFade = false
   toggleFadeMode()
-  lcdMessage('Controls Select:\n' .. getSelectModeStr())
+  disableFade()
+  initCrossfade()
+  return true
+end
+
+function initLayout()
+  if shiva.skinSettings.applyLayout.values.x == 0 then log ('Skip apply layout ..') return true end
+  log('Apply layout ..')
+  applySkinGeneric()
+  applySkinSingle(shiva.lblDirectHeading, shiva.skinSettings.templateHeading)
+  -- TODO: Workaround, cause the blinking tends to kill the text color...
+  shiva.lcdMessage.properties.textColor = COLOR_MSG_DISPLAY_TXT
+  return true
 end
 
 function initGui()
-  -- ensure all controls show in the right state
-  -- TODO: Currently not used ..way!! too complicated with dynamic text colors!!
-  -- maybe this can still be done as local msg between label and button,
-  -- have to think ..
-  for i = state.buttonCount+1, 2*state.buttonCount do
-    -- save button colors to tag .. :(
-    shiva.groupDirectLoadButtons[i].tag = Color.toHexString(shiva.groupDirectLoadButtons[i].properties.textColor)
-  end
+  log('Init GUI ..')
+  clearWork()
   updateDirectLoadButtons()
   updateLabelFade()
   ignoreToggle = false
@@ -268,46 +354,7 @@ function initGui()
   lcdMessageDelayed('Welcome to\n"Shiva"\nPreset Module')
   log('Init finished.')
   log('== Welcome to "Shiva" Preset Module! Happy Jamin\' :-) ==')
-end
-
-function cycleView()
-  if shiva.groupContextMenu.visible then return end
-  if showingKeyboard() then return end
-  if showingRunSettings() then
-    initConfig()
-    if state.lastPage ~= showRunSettings then
-      showLastPage()
-    elseif state.collapsed then
-      showCollapsed()
-    else
-      showEditor()
-    end
-    return
-  end
-  if showingDirectLoad() then
-    if state.collapsed then showCollapsed() else showEditor() end
-  elseif showingEditor() then
-    showDirectLoad()
-  elseif showingCollapsed() then
-    showDirectLoad()
-  else
-    showEditor()
-  end
-end
-
-function initPresets()
-  migrateOldStore()
-  state.allPresets = getPresetStorefromLabel()
-  if getSelectedPreset() == nil then selectPreset(0) end
-  local presetNo = getActivePreset()
-  if presetNo == nil then
-    presetNo = 0
-  else
-    presetNo = math.max(0, math.min(state.maxPreset, presetNo))
-  end
-  -- cleanest way to get a sane initial state if no presets exist..
-  selectPreset(presetNo)
-  if not applySelectedPreset() then activateSelectedPreset() end
+  return true
 end
 
 -- === CALLBACK HANDLERS ===
@@ -392,13 +439,6 @@ function longTap(cmd, val)
     selectPreset(p)
     if loadSelectedPreset() then showContextMenu() else showContextMenu(CB_ONLYPASTE) end
   end
-end
-
-function update()
-  local now = getMillis()
-  updateFast(now)
-  updateSlow(now)
-  updateFade(now)
 end
 
 -- === CALLBACK HELPER FUNCTIONS ===
@@ -630,6 +670,31 @@ function toggleEdit()
   -- end
 end
 
+function cycleView()
+  if shiva.groupContextMenu.visible then return end
+  if showingKeyboard() then return end
+  if showingRunSettings() then
+    initConfig()
+    if state.lastPage ~= showRunSettings then
+      showLastPage()
+    elseif state.collapsed then
+      showCollapsed()
+    else
+      showEditor()
+    end
+    return
+  end
+  if showingDirectLoad() then
+    if state.collapsed then showCollapsed() else showEditor() end
+  elseif showingEditor() then
+    showDirectLoad()
+  elseif showingCollapsed() then
+    showDirectLoad()
+  else
+    showEditor()
+  end
+end
+
 function directSelect(c,v)
   if userReleasedDirectLoadButttons() then
     -- If the whole parent control does not register any touch anmyore,
@@ -815,8 +880,7 @@ function clipBoardPaste()
     lcdMessage('cannot paste\nno clipboard')
     return
   end
-  state.allPresets[tostring(getSelectedPreset())] = json.toTable(state.clipBoard)
-  commitAllPresets()
+  saveToPreset(getSelectedPreset(), json.toTable(state.clipBoard))
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('pasted to\npreset ' .. getIndexInBank(getSelectedPreset()))
@@ -827,7 +891,7 @@ function deletePreset()
   if not shiva.menuContext.children.entryDelete.properties.interactive then return end
   logDebug('clipboard delete')
   state.allPresets[tostring(getSelectedPreset())] = nil
-  commitAllPresets()
+  commitAllPresetsToLabels()
   updateDirectLoadButtons()
   hideContextMenu()
   lcdMessage('delete\npreset ' .. getIndexInBank(getSelectedPreset()))
@@ -977,47 +1041,61 @@ function saveToSelectedPreset()
   saveToPreset(getSelectedPreset())
 end
 
-function saveToPreset(presetNo, _t)
+function saveToPreset(presetNo, _t, commit)
   -- Saves current control values to the selected preset
   if presetNo == nil then return end
+  if commit == nil then commit = true end
   if _t == nil then
-    state.allControls = nil
     getAllCurrentValues(true)
     state.currValues[RESERVED][PRESETNAMEID] = getActivePresetName()
   else
     state.currValues = _copyTable(_t)
   end
   logDebug('Saving to preset: ' .. presetNo .. ' with name ' .. state.currValues[RESERVED][PRESETNAMEID])
+  -- #### DEBUG testing
+  -- local p = math.fmod(presetNo, state.bankSize)
+  -- for j=1,state.bankCount do
+  --   state.allPresets[tostring(p+(state.bankSize*(j-1)))] = _copyTable(state.currValues)
+  -- end
+  -- #### DEBUG testing
   state.allPresets[tostring(presetNo)] = _copyTable(state.currValues)
-  commitAllPresets()
-  state.presetValues = state.currValues
-  infoMessage('saved ' .. getIndexInBank(presetNo))
+  if commit then commitPresetBankToLabels(getBank(presetNo)) end
+  infoMessage('saved ' .. getBankStringShort(presetNo))
   logDebug('Saved values: ' .. json.fromTable(state.currValues))
-  setActivePreset(presetNo)
-  applySelectedPreset()
 end
 
-function commitAllPresets()
-  _savePresetStoreToLabel(state.allPresets)
+function getPresetStorefromLabels()
+  state.allPresets = {}
+  for i=1,state.bankCount do
+    for k,v in pairs(getPresetBankfromLabels(i)) do
+      state.allPresets[tostring(k)] = v
+    end
+  end
 end
 
-function _commitPresetToStore(data, presetNo)
-  local store = getPresetStorefromLabel()
-  store[tostring(presetNo)] = _copyTable(data)
-  _savePresetStoreToLabel(store)
-end
-
-function getPresetStorefromLabel()
-  local r = shiva.presetStore.values.text
-  if (r == nil or not string.match(r, '^{.+}$')) then
-    log('Preset store malformed or not initialized. Re-initializing store!')
+function getPresetBankfromLabels(bankNo)
+  data = shiva.presetStore[bankNo].values.text
+  if (data == nil or not string.match(data, '^{.*}$')) then
+    log('Preset bank ' .. bankNo .. ' malformed or not initialized. Re-initializing!')
+    shiva.presetStore[bankNo].values.text = json.fromTable({})
     return {}
   end
-  return json.toTable(r)
+  return json.toTable(data)
 end
 
-function _savePresetStoreToLabel(data)
-  shiva.presetStore.values.text = json.fromTable(data)
+function commitAllPresetsToLabels()
+  for i =1,state.bankCount do
+    commitPresetBankToLabels(i)
+  end
+end
+
+function commitPresetBankToLabels(bankNo)
+  local start = (bankNo-1)*state.bankSize
+  local bank = {}
+  for i=start,start+state.bankSize-1 do
+    bank[tostring(i)] = state.allPresets[tostring(i)]
+  end
+  shiva.presetStore[bankNo].values.text = json.fromTable(bank)
 end
 
 function loadSelectedPreset()
@@ -1215,28 +1293,11 @@ function getAllControls(pid, r)
   end
 end
 
-function getValueType(c)
-  -- annoying workaround :( check needed since if c.values.x does not exist,
-  -- it is equel to nil, but querying it also outputs a warning in script
-  -- console that I do not know how to turn of..
-  local result = 0
-  for i = 1, #c.values.keys do
-    if c.values.keys[i] == 'x' then
-      result = result + 1
-    elseif c.values.keys[i] == 'y' then
-      result = result + 2
-    elseif c.values.keys[i] == 'text' then
-      result = result + 4
-    end
-  end
-  return 0
-end
-
 function getAllCurrentValues(verbose)
   if verbose == nil then verbose = false end
   if verbose then
     if state.rootName == '' then
-      log('Preset base group. Using whole control surface')
+      log('No preset base group. Using whole control surface')
     else
       log('Preset base group name: ' .. state.presetRootCtrl.name)
       log('Preset base group has tag: ' .. state.presetRootCtrl.tag)
@@ -1258,11 +1319,12 @@ function getAllCurrentValues(verbose)
     if #c.values.keys == 0 then
       if verbose then log('SKIP control ' .. c.parent.name .. '.' .. ctrlName) end
     else
-      if verbose then logDebug(
-      'Add control ' .. c.parent.name .. '.' .. ctrlName)
+      if verbose then
+        logDebug('Add control ' .. c.parent.name .. '.' .. ctrlName)
       end
       count = count + 1
       state.currValues[id] = {}
+      state.currValues[id]['tag'] = c.tag
       for i=1, #c.values.keys do
         valueName = c.values.keys[i]
         if valueName ~= 'touch' then
@@ -1303,6 +1365,7 @@ function writeToControls(values)
         else
           logDebug(
           'Apply values to control ' .. ctrl.parent.name .. '.' .. ctrlName)
+          if value['tag'] ~= nil then ctrl.tag = value['tag'] end
           for i=1, #ctrl.values.keys do
             valueName = ctrl.values.keys[i]
             if valueName ~= 'touch' then
@@ -1503,7 +1566,7 @@ end
 function purgePresetStore()
   log('Clear all presets enabled! CLEARING ALL PRESETS NOW!')
   state.allPresets = {}
-  commitAllPresets()
+  commitAllPresetsToLabels()
 end
 
 function randomizeControlsNow()
@@ -1537,7 +1600,6 @@ function applySkinGeneric()
     logDebug('Applying buttons')
     for _,ctrl in pairs(ctrls) do
       if string.match(ctrl.name, '^btn.+') then
-        logDebug('btn: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateButton.properties.color -- default was 66D1FFD9
         ctrl.properties.background = shiva.skinSettings.templateButton.properties.background
         ctrl.properties.outline = shiva.skinSettings.templateButton.properties.outline
@@ -1547,11 +1609,9 @@ function applySkinGeneric()
         ctrl.properties.font = shiva.skinSettings.templateButton.properties.font
       end
       if string.match(ctrl.name, '^btnMinus.+') or string.match(ctrl.name, '^btnPlus.+') then
-        logDebug('btn: ' .. ctrl.name)
         ctrl.properties.textSize = shiva.skinSettings.templateButton.properties.textSize - 3
       end
       if string.match(ctrl.name, '^btnFn.+') then
-        logDebug('btn: ' .. ctrl.name)
         if (
           ctrl.parent.name == "groupKeyboard" and
           ctrl.type == ControlType.LABEL
@@ -1572,7 +1632,6 @@ function applySkinGeneric()
         string.match(ctrl.name, '^btnMinusDirect.+') or
         string.match(ctrl.name, '^bgLbl')
       ) then
-        logDebug('btnPageDirect: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templatePageButtonDirect.properties.color -- default was 66D1FFD9
         ctrl.properties.background = shiva.skinSettings.templatePageButtonDirect.properties.background
         ctrl.properties.outline = shiva.skinSettings.templatePageButtonDirect.properties.outline
@@ -1586,7 +1645,6 @@ function applySkinGeneric()
         string.match(ctrl.name, '^pagePlusDirect.+') or
         string.match(ctrl.name, '^pageMinusDirect.+')
       ) then
-        logDebug('btnPageDirect: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templatePageButtonDirect.properties.color -- default was 66D1FFD9
         ctrl.properties.background = shiva.skinSettings.templatePageButtonDirect.properties.background
         ctrl.properties.textSize = shiva.skinSettings.templatePageButtonDirect.properties.textSize - 3
@@ -1597,7 +1655,6 @@ function applySkinGeneric()
     logDebug('Applying labels..')
     for _,ctrl in pairs(ctrls) do
       if string.match(ctrl.name, '^lbl.+') then
-        logDebug('lbl: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateLabel.properties.color -- default was 66D1FFD9
         ctrl.properties.textColor = shiva.skinSettings.templateLabel.properties.textColor -- default was FFFFFFD0
         ctrl.properties.background = shiva.skinSettings.templateLabel.properties.background
@@ -1607,9 +1664,7 @@ function applySkinGeneric()
         ctrl.properties.textSize = shiva.skinSettings.templateLabel.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateLabel.properties.font
       end
-      logDebug('Applying displays..')
       if string.match(ctrl.name, '^dsp.+') then
-        logDebug('dsp: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateDisplay.properties.color -- default was 66D1FFD9
         ctrl.properties.textColor = shiva.skinSettings.templateDisplay.properties.textColor -- default was FFFFFFD0
         ctrl.properties.background = shiva.skinSettings.templateDisplay.properties.background
@@ -1619,9 +1674,7 @@ function applySkinGeneric()
         ctrl.properties.textSize = shiva.skinSettings.templateDisplay.properties.textSize
         ctrl.properties.font = shiva.skinSettings.templateDisplay.properties.font
       end
-      logDebug('Applying digits..')
       if string.match(ctrl.name, '^[0-9]+$') then
-        logDebug('Digits: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateDigits.properties.color -- default was 66D1FFD9
         ctrl.properties.textColor = shiva.skinSettings.templateDigits.properties.textColor -- default was FFFFFFD0
         ctrl.properties.background = shiva.skinSettings.templateDigits.properties.background
@@ -1632,7 +1685,6 @@ function applySkinGeneric()
         ctrl.properties.font = shiva.skinSettings.templateDigits.properties.font
       end
       if string.match(ctrl.name, '^button[0-9]+$') then
-        logDebug('Digits: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateDigits.properties.color -- default was 66D1FFD9
         ctrl.properties.textColor = shiva.skinSettings.templateDigits.properties.textColor -- default was FFFFFFD0
         ctrl.properties.background = false
@@ -1643,7 +1695,6 @@ function applySkinGeneric()
         ctrl.properties.font = shiva.skinSettings.templateDigits.properties.font
       end
       if string.match(ctrl.name, '^[0-9]+filler$') then
-        logDebug('Digits: ' .. ctrl.name)
         c = Color(
           shiva.skinSettings.templateDigits.properties.color.r,
           shiva.skinSettings.templateDigits.properties.color.g,
@@ -1660,14 +1711,12 @@ function applySkinGeneric()
         ctrl.properties.font = shiva.skinSettings.templateDigits.properties.font
       end
       if string.match(ctrl.name, '^pagerDirect.+') then
-        logDebug('pagerDirect: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateButtonDirect.properties.color -- default was 66D1FFD9
         ctrl.properties.background = shiva.skinSettings.templateButtonDirect.properties.background
         ctrl.properties.outline = shiva.skinSettings.templateButtonDirect.properties.outline
         ctrl.properties.outlineStyle = shiva.skinSettings.templateButtonDirect.properties.outlineStyle
       end
       if ctrl.parent.parent.name == 'groupDirectLoadButtons' then
-        logDebug('btnDirect: ' .. ctrl.name)
         if string.match(ctrl.name, '^[0-9]+$') then
           ctrl.properties.color = shiva.skinSettings.templateButtonDirect.properties.color -- default was 66D1FFD9
           ctrl.properties.background = shiva.skinSettings.templateButtonDirect.properties.background
@@ -1687,7 +1736,6 @@ function applySkinGeneric()
     logDebug('Applying text displays..')
     for _,ctrl in pairs(ctrls) do
       if string.match(ctrl.name, '^lcd.+') then
-        logDebug('lcd: ' .. ctrl.name)
         ctrl.properties.color = shiva.skinSettings.templateLCD.properties.color
         ctrl.properties.textColor = shiva.skinSettings.templateLCD.properties.textColor
         ctrl.properties.background = shiva.skinSettings.templateLCD.properties.background
@@ -1712,15 +1760,6 @@ function applySkinSingle(c, t)
   c.properties.outlineStyle = t.properties.outlineStyle
   c.properties.cornerRadius = t.properties.cornerRadius
   c.properties.textSize = t.properties.textSize
-end
-
-function applyLayout()
-  if shiva.skinSettings.applyLayout.values.x == 0 then return end
-  log('Applying layout..')
-  applySkinGeneric()
-  applySkinSingle(shiva.lblDirectHeading, shiva.skinSettings.templateHeading)
-  -- TODO: Workaround, cause the blinking tends to kill the text color...
-  shiva.lcdMessage.properties.textColor = COLOR_MSG_DISPLAY_TXT
 end
 
 -- === GUI STATE HANDLING ===
@@ -2020,12 +2059,12 @@ function getSelectModeStr()
   return table.concat(t, ' + ')
 end
 
-function _copyTable(obj, _s)
+function _copyTable(obj)
+  -- return json.toTable(json.fromTable(obj))
   if type(obj) ~= 'table' then return obj end
-  if _s and _s[obj] then return _s[obj] end
-  local s = _s or {}
-  local res = obj
-  s[obj] = res
-  for k, v in pairs(obj) do res[_copyTable(k, s)] = _copyTable(v, s) end
+  local res = {}
+  for k, v in pairs(obj) do
+    res[tostring(k)] = _copyTable(v)
+  end
   return res
 end
