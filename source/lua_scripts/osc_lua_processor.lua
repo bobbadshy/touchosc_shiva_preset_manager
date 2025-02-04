@@ -429,8 +429,12 @@ function longTap(cmd, val)
     showRunSettings()
   elseif string.match(val, '^direct[0-9]+$') then
     local p = string.sub(val, 7)
-    setSelectedPreset(p)
-    if loadSelectedPreset() then showContextMenu() else showContextMenu(CB_ONLYPASTE) end
+    loadPreset(p)
+    if isSelectedPresetEmpty() then
+      showContextMenu(CB_ONLYPASTE)
+    else
+      showContextMenu()
+    end
   end
 end
 
@@ -626,7 +630,7 @@ function lcdTap()
     -- If name was already modified through kbd entry, save that value first!
     local s = getActivePresetName()
     selectActivePreset()
-    loadSelectedPreset()
+    loadPreset(getSelectedPreset())
     setActivePresetName(s)
     lcdMessage(getActivePresetName())
     addDisplaysToBlink()
@@ -733,8 +737,7 @@ function pagerDirect(cmd, val)
   local bankPage = shiva.pagerDirectPageLoad.values.x
   local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
   logDebug('Switching bank: ' .. result)
-  setSelectedPreset(result)
-  loadSelectedPreset()
+  loadPreset(result)
   updateDirectLoadButtons()
 end
 
@@ -748,8 +751,7 @@ function prgSwitch(up)
   else
     presetNo = presetNo == 0 and state.maxPreset or presetNo - 1
   end
-  setSelectedPreset(presetNo)
-  loadSelectedPreset()
+  loadPreset(presetNo)
 end
 
 function pageSwitchManager(up)
@@ -772,8 +774,7 @@ function _pageSwitch(up)
     if presetNo < 0 then presetNo = state.maxPreset - 9 end
   end
   logDebug('Switching bank: ' .. presetNo)
-  setSelectedPreset(presetNo)
-  loadSelectedPreset()
+  loadPreset(presetNo)
 end
 
 function bankSwitchManager(up)
@@ -812,8 +813,7 @@ function _bankSwitch(up)
     presetNo = getActivePreset()
   end
   logDebug('Switching bank: ' .. presetNo)
-  setSelectedPreset(presetNo)
-  loadSelectedPreset()
+  loadPreset(presetNo)
 end
 
 function toggleCollapse()
@@ -1104,30 +1104,28 @@ function setSelectedPreset(presetNo)
   logDebug('New selected preset: ' .. getSelectedPreset())
 end
 
--- Loads actual values for the currently selected preset.
-function loadSelectedPreset()
-  local presetNo = getSelectedPreset()
-  logDebug('Loading preset: ' .. presetNo)
-  local data = _copyTable(state.allPresets[tostring(presetNo)])
-  if data == nil then
-    lcdMessage('load error\npreset empty')
-    setSelectedPresetName(getBankString(presetNo))
-    return false
-  end
-  state.presetValues = data
-  ensurePresetDefaultName(presetNo)
-  setSelectedPresetName(state.presetValues[RESERVED][PRESETNAMEID])
-  lcdMessage(getSelectedPresetName())
-  showSelectMessage()
-  return true
-end
-
 function isSelectedPresetEmpty()
   return isPresetEmpty(getSelectedPreset())
 end
 
 function isPresetEmpty(p)
   return state.allPresets[tostring(p)] == nil
+end
+
+-- Selects and loads values for preset p.
+function loadPreset(p)
+  setSelectedPreset(p)
+  logDebug('Loading preset: ' .. p)
+  if isSelectedPresetEmpty() then
+    state.presetValues = {}
+    lcdMessage('load error\npreset empty')
+  else
+    state.presetValues = _copyTable(state.allPresets[tostring(p)])
+  end
+  ensurePresetDefaultName(p)
+  setSelectedPresetName()
+  lcdMessage(getSelectedPresetName())
+  showSelectMessage()
 end
 
 
@@ -1140,8 +1138,8 @@ end
 
 function applySelectedPreset()
   -- loads and applies the currently selected preset
-  local result = loadSelectedPreset()
-  if not result then return false end
+  loadPreset(getSelectedPreset())
+  if isSelectedPresetEmpty() then return false end
   activateSelectedPreset()
   if writeToControls(state.presetValues) then
     showDynamicInfoForActivePreset()
@@ -1185,7 +1183,11 @@ function getSelectedPresetName()
   return tostring(shiva.dspSelected.tag)
 end
 
+
 function setSelectedPresetName(s)
+  if s == nil then
+    s = state.presetValues[RESERVED][PRESETNAMEID]
+  end
   shiva.dspSelected.tag = s
 end
 
@@ -1218,7 +1220,7 @@ function ensurePresetDefaultName(presetNo)
     state.presetValues[RESERVED] = {}
   end
   if state.presetValues[RESERVED][PRESETNAMEID] == nil then
-    state.presetValues[RESERVED][PRESETNAMEID] = 'preset ' .. presetNo
+    state.presetValues[RESERVED][PRESETNAMEID] = getBankString(presetNo)
   end
 end
 
@@ -1231,7 +1233,7 @@ function showSelectMessage()
   local s
   if userWantsToLoad() then
     s = 'load ' .. getBankStringShort(presetNo)
-  elseif shiva.btnFnSave.values.x == 1 then
+  elseif userWantsToSave() then
     s = 'save ' .. getBankStringShort(presetNo)
   else
     s = 'select ' .. getBankStringShort(presetNo)
@@ -1988,8 +1990,7 @@ function addDigitToPreset(s)
   if tonumber(v) >= state.bankSize then
     v = s
   end
-  setSelectedPreset(p+v)
-  loadSelectedPreset()
+  loadPreset(p+v)
 end
 
 function addControlToBlink(c)
