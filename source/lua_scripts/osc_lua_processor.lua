@@ -1118,13 +1118,16 @@ function loadPreset(p)
   logDebug('Loading preset: ' .. p)
   if isSelectedPresetEmpty() then
     state.presetValues = {}
-    lcdMessage('load error\npreset empty')
   else
     state.presetValues = _copyTable(state.allPresets[tostring(p)])
   end
   ensurePresetDefaultName(p)
   setSelectedPresetName()
-  lcdMessage(getSelectedPresetName())
+  if isSelectedPresetEmpty() then
+    lcdMessage('load error\npreset empty')
+  else
+    lcdMessage(getSelectedPresetName())
+  end
   showSelectMessage()
 end
 
