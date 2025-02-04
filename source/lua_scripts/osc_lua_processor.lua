@@ -74,7 +74,7 @@ local shiva = {
 local handlers = {}
 local state = {
   -- from where to get controls
-  rootName = nil,
+  presetRootName = nil,
   presetRootCtrl = '',
   -- some collections
   allPresets = {},
@@ -147,20 +147,18 @@ local initQueue = {}
 local initialized = false
 
 function init()
-  log('init() was called.')
   if initQueue[1] == nil then
     initialized = false
     startInit()
   end
 end
 
-function initialize()
-  if initialized then return end
-  -- go through init queue ony by one..
-  if initQueue[1]() == true then
-    table.remove(initQueue, 1)
-    if initQueue[1] == nil then initialized = true end
-  end
+function update()
+  if not initialized then initialize() return end
+  local now = getMillis()
+  updateFast(now)
+  updateSlow(now)
+  updateFade(now)
 end
 
 function startInit()
@@ -176,32 +174,41 @@ function startInit()
   }
 end
 
-function update()
-  if not initialized then initialize() return end
-  local now = getMillis()
-  updateFast(now)
-  updateSlow(now)
-  updateFade(now)
+function initialize()
+  if initQueue[1]() == true then
+    table.remove(initQueue, 1)
+    if initQueue[1] == nil then initialized = true end
+  end
 end
 
 function initDebug()
-  log('Init debug ..')
+  log('Init processor ..')
   if shiva.stBtnEnableDebug.values.x == 0 then
     DEBUG = false
+    log('Debug log disabled.')
   else
     DEBUG = true
+    logDebug('#### Debug log ENABLED.')
   end
-  logDebug('#### Debug logging ENABLED. ####')
-  log('Init processor..')
+  return true
+end
+
+function initLayout()
+  if shiva.skinSettings.applyLayout.values.x == 0 then log('Skip apply layout ..') return true end
+  log('Apply layout ..')
+  applySkinGeneric()
+  applySkinSingle(shiva.lblDirectHeading, shiva.skinSettings.templateHeading)
+  -- TODO: Workaround, cause the blinking tends to kill the text color...
+  shiva.lcdMessage.properties.textColor = COLOR_MSG_DISPLAY_TXT
   return true
 end
 
 function initConfig()
   log('Init config ..')
-  state.rootName = shiva.groupRunSettings.stLblPresetRoot.values.text
-  state.presetRootCtrl = state.rootName == '' and root or root:findByName(state.rootName, true)
+  state.presetRootName = shiva.groupRunSettings.stLblPresetRoot.values.text
+  state.presetRootCtrl = state.presetRootName == '' and root or root:findByName(state.presetRootName, true)
   if state.presetRootCtrl == nil then
-    log('WARNING! Control group "' .. state.rootName .. '" not found! Using root!')
+    log('WARNING! Control group "' .. state.presetRootName .. '" not found! Using root!')
     shiva.groupRunSettings.stLblShowRoot.values.text = 'GROUP NAME ERROR! Using root!'
     lcdMessageDelayed('WARNING! base group error!')
     state.presetRootCtrl = root
@@ -234,6 +241,7 @@ function initShiva()
 end
 
 function initControls()
+  log('Init controls ..')
   state.allControls = nil
   getAllCurrentValues(true)
   return true
@@ -243,15 +251,11 @@ function initPresets()
   if not migrateOldStore() then return false end
   log('Init presets ..')
   getPresetStorefromLabels()
-  if getSelectedPreset() == nil then selectPreset(0) end
-  local presetNo = getActivePreset()
-  if presetNo == nil then
-    presetNo = 0
-  else
-    presetNo = math.max(0, math.min(state.maxPreset, presetNo))
-  end
-  -- cleanest way to get a sane initial state if no presets exist..
-  selectPreset(presetNo)
+  local p = getActivePreset()
+  if p == nil then p = 0 end
+  p = math.clamp(p, 0, state.maxPreset)
+  setSelectedPreset(p)
+
   if not applySelectedPreset() then activateSelectedPreset() end
   return true
 end
@@ -321,16 +325,6 @@ function initFader()
   toggleFadeMode()
   disableFade()
   initCrossfade()
-  return true
-end
-
-function initLayout()
-  if shiva.skinSettings.applyLayout.values.x == 0 then log ('Skip apply layout ..') return true end
-  log('Apply layout ..')
-  applySkinGeneric()
-  applySkinSingle(shiva.lblDirectHeading, shiva.skinSettings.templateHeading)
-  -- TODO: Workaround, cause the blinking tends to kill the text color...
-  shiva.lcdMessage.properties.textColor = COLOR_MSG_DISPLAY_TXT
   return true
 end
 
@@ -436,7 +430,7 @@ function longTap(cmd, val)
     showRunSettings()
   elseif string.match(val, '^direct[0-9]+$') then
     local p = string.sub(val, 7)
-    selectPreset(p)
+    setSelectedPreset(p)
     if loadSelectedPreset() then showContextMenu() else showContextMenu(CB_ONLYPASTE) end
   end
 end
@@ -700,7 +694,7 @@ function directSelect(c,v)
     -- If the whole parent control does not register any touch anmyore,
     -- we can be sure the user has released, either outside the parent,
     -- or on the final button choice. So, we can select.
-    selectPreset(tonumber(string.sub(v, 7)))
+    setSelectedPreset(tonumber(string.sub(v, 7)))
     if directLoad() then updateDirectLoadButtons() end
   else
     updateDirectLoadButtons()
@@ -740,7 +734,7 @@ function pagerDirect(cmd, val)
   local bankPage = shiva.pagerDirectPageLoad.values.x
   local result = math.floor(presetNo - math.fmod(presetNo, state.bankSize) + bankPage * 10)
   logDebug('Switching bank: ' .. result)
-  selectPreset(result)
+  setSelectedPreset(result)
   loadSelectedPreset()
   updateDirectLoadButtons()
 end
@@ -755,7 +749,7 @@ function prgSwitch(up)
   else
     presetNo = presetNo == 0 and state.maxPreset or presetNo - 1
   end
-  selectPreset(presetNo)
+  setSelectedPreset(presetNo)
   loadSelectedPreset()
 end
 
@@ -779,7 +773,7 @@ function _pageSwitch(up)
     if presetNo < 0 then presetNo = state.maxPreset - 9 end
   end
   logDebug('Switching bank: ' .. presetNo)
-  selectPreset(presetNo)
+  setSelectedPreset(presetNo)
   loadSelectedPreset()
 end
 
@@ -819,7 +813,7 @@ function _bankSwitch(up)
     presetNo = getActivePreset()
   end
   logDebug('Switching bank: ' .. presetNo)
-  selectPreset(presetNo)
+  setSelectedPreset(presetNo)
   loadSelectedPreset()
 end
 
@@ -1076,7 +1070,7 @@ end
 function getPresetBankfromLabels(bankNo)
   data = shiva.presetStore[bankNo].values.text
   if (data == nil or not string.match(data, '^{.*}$')) then
-    log('Preset bank ' .. bankNo .. ' malformed or not initialized. Re-initializing!')
+    log('Bank ' .. bankNo-1 .. ' malformed or not initialized. Re-initializing.')
     shiva.presetStore[bankNo].values.text = json.fromTable({})
     return {}
   end
@@ -1190,22 +1184,22 @@ function getSelectedPreset()
   return state.selectedPreset
 end
 
+function setSelectedPreset(presetNo)
+  -- Saves the passed value as the currently selected preset number.
+  -- The selected preset is eligible for loading and applying.
+  state.selectedPreset = presetNo
+  shiva.dspSelected.values.text = getIndexInBank(presetNo)
+  -- Show bank and preset in bankk no.
+  shiva.dspDirectInfo.values.text = getBankString(presetNo)
+  showSelectMessage()
+  logDebug('New selected preset: ' .. getSelectedPreset())
+end
+
 function selectActivePreset()
   -- Restores all displays and selected no. to active preset
   showDynamicInfoForActivePreset()
-  selectPreset(getActivePreset())
+  setSelectedPreset(getActivePreset())
   lcdMessage(getActivePresetName())
-end
-
-function selectPreset(presetNo)
-  -- Saves the passed value as the currently selected preset number.
-  -- The selected preset is eligible for loading and applying.
-  shiva.dspSelected.values.text = getIndexInBank(presetNo)
-  state.selectedPreset = presetNo
-  -- Show bank and preset in bankk no.
-  shiva.dspDirectInfo.values.text = getBankString(presetNo)
-  showSelectMessage(presetNo)
-  logDebug('New selected preset: ' .. getSelectedPreset())
 end
 
 function ensurePresetDefaultName(presetNo)
@@ -1218,8 +1212,8 @@ function ensurePresetDefaultName(presetNo)
   end
 end
 
-function showSelectMessage(presetNo)
-  presetNo = presetNo or getSelectedPreset()
+function showSelectMessage()
+  local presetNo = getSelectedPreset()
   if presetNo == getActivePreset() then
     showDynamicInfoForActivePreset()
     return
@@ -1296,7 +1290,7 @@ end
 function getAllCurrentValues(verbose)
   if verbose == nil then verbose = false end
   if verbose then
-    if state.rootName == '' then
+    if state.presetRootName == '' then
       log('No preset base group. Using whole control surface')
     else
       log('Preset base group name: ' .. state.presetRootCtrl.name)
@@ -1524,7 +1518,7 @@ function restoreWork()
     state.currValues[RESERVED] ~= nil and
     state.currValues[RESERVED][PRESETIDID] ~= nil
   ) then
-    selectPreset(state.currValues[RESERVED][PRESETIDID])
+    setSelectedPreset(state.currValues[RESERVED][PRESETIDID])
     applySelectedPreset()
   end
   -- now restore
@@ -1984,7 +1978,7 @@ function addDigitToPreset(s)
   if tonumber(v) >= state.bankSize then
     v = s
   end
-  selectPreset(p+v)
+  setSelectedPreset(p+v)
   loadSelectedPreset()
 end
 
