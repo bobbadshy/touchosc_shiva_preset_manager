@@ -91,7 +91,6 @@ local state = {
   bankCount = nil,
   bankSize = 130,
   maxPreset = 0,
-  selectedIsEmpty = false,
   collapsed = false,
   ignoreToggle = false,
   lastPage = nil,
@@ -560,7 +559,7 @@ function toggleSave()
   if shiva.btnFnSave.values.x == 0 then
     lcdMessage(getActivePresetName())
   else
-    if state.selectedIsEmpty then
+    if isSelectedPresetEmpty() then
       lcdMessage('ENTER NAME:\ntap here')
     else
       lcdMessage('EDIT NAME:\ntap here')
@@ -1025,11 +1024,7 @@ function startKeyboard(target, text)
   end
 end
 
--- === PRESET VALUES HANDLING, LOADING AND SAVING ===
-
-function isPresetEmpty(p)
-  return state.allPresets[tostring(p)] == nil
-end
+-- === PRESET LOADING AND SAVING ===
 
 function saveToSelectedPreset()
   saveToPreset(getSelectedPreset())
@@ -1092,18 +1087,33 @@ function commitPresetBankToLabels(bankNo)
   shiva.presetStore[bankNo].values.text = json.fromTable(bank)
 end
 
+-- === PRESET HANDLING ===
+
+-- Returns the currently selected preset no.
+function getSelectedPreset()
+  return state.selectedPreset
+end
+
+-- Sets the selected preset no., and updates preset displays.
+function setSelectedPreset(presetNo)
+  state.selectedPreset = presetNo
+  -- also update displays
+  shiva.dspSelected.values.text = getIndexInBank(presetNo)
+  shiva.dspDirectInfo.values.text = getBankString(presetNo)
+  showSelectMessage()
+  logDebug('New selected preset: ' .. getSelectedPreset())
+end
+
+-- Loads actual values for the currently selected preset.
 function loadSelectedPreset()
-  -- load currently selected preset values
   local presetNo = getSelectedPreset()
   logDebug('Loading preset: ' .. presetNo)
   local data = _copyTable(state.allPresets[tostring(presetNo)])
   if data == nil then
     lcdMessage('load error\npreset empty')
     setSelectedPresetName(getBankString(presetNo))
-    state.selectedIsEmpty = true
     return false
   end
-  state.selectedIsEmpty = false
   state.presetValues = data
   ensurePresetDefaultName(presetNo)
   setSelectedPresetName(state.presetValues[RESERVED][PRESETNAMEID])
@@ -1111,6 +1121,22 @@ function loadSelectedPreset()
   showSelectMessage()
   return true
 end
+
+function isSelectedPresetEmpty()
+  return isPresetEmpty(getSelectedPreset())
+end
+
+function isPresetEmpty(p)
+  return state.allPresets[tostring(p)] == nil
+end
+
+
+
+
+
+
+
+
 
 function applySelectedPreset()
   -- loads and applies the currently selected preset
@@ -1123,6 +1149,12 @@ function applySelectedPreset()
     infoMessage('loaded with errors!')
   end
   return true
+end
+
+function activateSelectedPreset()
+  shiva.dspInfo.tag = getSelectedPreset()
+  setActivePresetName(getSelectedPresetName())
+  lcdMessage(getActivePresetName())
 end
 
 function getNameFromPreset(p)
@@ -1149,12 +1181,6 @@ function setActivePreset(presetNo)
   shiva.dspInfo.tag = presetNo
 end
 
-function activateSelectedPreset()
-  shiva.dspInfo.tag = getSelectedPreset()
-  setActivePresetName(getSelectedPresetName())
-  lcdMessage(getActivePresetName())
-end
-
 function getSelectedPresetName()
   return tostring(shiva.dspSelected.tag)
 end
@@ -1177,22 +1203,6 @@ end
 
 function getBank(p)
   return math.floor(p/state.bankSize)
-end
-
-function getSelectedPreset()
-  -- returns the currently selected preset number.
-  return state.selectedPreset
-end
-
-function setSelectedPreset(presetNo)
-  -- Saves the passed value as the currently selected preset number.
-  -- The selected preset is eligible for loading and applying.
-  state.selectedPreset = presetNo
-  shiva.dspSelected.values.text = getIndexInBank(presetNo)
-  -- Show bank and preset in bankk no.
-  shiva.dspDirectInfo.values.text = getBankString(presetNo)
-  showSelectMessage()
-  logDebug('New selected preset: ' .. getSelectedPreset())
 end
 
 function selectActivePreset()
